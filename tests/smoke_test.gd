@@ -138,12 +138,16 @@ func _run() -> void:
 	var bombs: RefCounted = load("res://tests/bomb_test.gd").new()
 	await bombs.run(self)
 
+	print("== Arcade: arquitectura y dos jugadores")
+	var arcade: RefCounted = load("res://tests/arcade_test.gd").new()
+	await arcade.run(self)
+
 	print("== Escena Main")
 	check(ProjectSettings.get_setting("application/run/main_scene") == "res://scenes/main/Main.tscn", "Main es la escena principal")
 	var main := (load("res://scenes/main/Main.tscn") as PackedScene).instantiate()
 	root.add_child(main)
 	await wait_frames(10)
-	check(main.current_screen != null and main.current_screen.name == "BootScreen", "Main carga BootScreen")
+	check(main.current_screen != null and main.current_screen.name == "TitleScreen", "Main carga la pantalla de título")
 	await wait_frames(30)
 	main.queue_free()
 

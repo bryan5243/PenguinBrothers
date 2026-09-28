@@ -16,6 +16,9 @@ func run(test: Node) -> void:
 	var level := (load(TEST_LEVEL) as PackedScene).instantiate()
 	t.get_tree().root.add_child(level)
 	p = level.player
+	# Correr y deslizarse están desactivados en el ajuste arcade; se prueban activándolos.
+	p.config = p.config.duplicate() as PlayerConfig
+	p.config.run_enabled = true
 	await t.wait_frames(20)
 	t.check(p.is_on_floor() and _in(&"Idle"), "arranca de pie en el suelo")
 	t.check(p.animator.animation == &"idle", "animación idle")

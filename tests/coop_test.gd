@@ -95,6 +95,8 @@ func _camera() -> void:
 
 
 func _stand_on_partner() -> void:
+	# Juntos primero: separados más que la pantalla, la cámara retendría a J1.
+	p2.global_position = Vector2(600, 400)
 	await _place(p1, Vector2(600, GROUND_Y))
 	await _place(p2, Vector2(600, 480), false)
 	await t.wait_frames(60)

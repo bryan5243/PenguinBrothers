@@ -170,22 +170,25 @@ func _player_knockback() -> void:
 	await _place(p, Vector2(400, GROUND_Y))
 	var hp := p.health.current_health
 	var data := p.bombs.current_type()
+	t.check(data.hurts_players, "arcade: las bombas también dañan a los jugadores")
 	var bomb := pool.acquire_bomb(data, 0)
 	bomb.arm_at(Vector2(370, GROUND_Y - 13))
 	await t.wait_frames(2)
 	bomb.detonate()
-	t.check(p.velocity.x > 100.0 and p.velocity.y < 0.0 and p.health.current_health == hp,
-		"la explosión empuja al jugador sin dañarlo")
-	var hurting := data.duplicate() as BombData
-	hurting.hurts_players = true
+	t.check(p.health.current_health == hp - data.damage and p.velocity.x > 0.0,
+		"la explosión daña y empuja al jugador (también al compañero)")
+	var push_only := data.duplicate() as BombData
+	push_only.hurts_players = false
 	await _place(p, Vector2(400, GROUND_Y))
 	await t.wait_frames(int(p.config.invulnerability_time * 60.0))
 	hp = p.health.current_health
-	bomb = pool.acquire_bomb(hurting, 0)
+	bomb = pool.acquire_bomb(push_only, 0)
 	bomb.arm_at(Vector2(370, GROUND_Y - 13))
 	await t.wait_frames(2)
 	bomb.detonate()
-	t.check(p.health.current_health == hp - hurting.damage, "un tipo con hurts_players sí daña")
+	t.check(p.velocity.x > 100.0 and p.velocity.y < 0.0 and p.health.current_health == hp,
+		"un tipo sin hurts_players solo empuja")
+	p.health.reset()
 	await _place(p, Vector2(300, GROUND_Y))
 	var held := p.bombs.place_bomb()
 	await t.wait_frames(10)
