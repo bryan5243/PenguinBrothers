@@ -1,5 +1,5 @@
 extends RefCounted
-## Pruebas del sistema de bombas (Fase 4) sobre el nivel de prueba.
+## Pruebas del sistema de bombas (arcade, Fase 3) sobre el laboratorio de movimiento.
 ## Las ejecuta tests/smoke_test.gd; `t` es el nodo de prueba (check, wait_frames).
 
 const TEST_LEVEL := "res://scenes/worlds/test_level/PlayerTestLevel.tscn"
@@ -21,7 +21,7 @@ func run(test: Node) -> void:
 	p = level.player
 	pool = level.get_node("BombPool") as BombPool
 	t.check(pool != null and pool.size() == pool.initial_bombs, "el nivel tiene un BombPool precargado")
-	t.check(p.bombs.current_type() != null and p.bombs.current_type().id == &"blue", "bomba inicial: azul")
+	t.check(p.bombs.current_type() != null and p.bombs.current_type().id == &"black", "bomba inicial: la normal (negra)")
 
 	await _throw_and_limit()
 	await _explode_and_reuse()
@@ -40,10 +40,13 @@ func _data() -> void:
 	var green := load("res://data/bombs/green_bomb.tres") as BombData
 	var black := load("res://data/bombs/black_bomb.tres") as BombData
 	t.check(blue != null and green != null and black != null, "tipos de bomba como datos (.tres)")
-	t.check(blue.damage < green.damage and green.damage < black.damage, "daño: azul < verde < negra")
-	t.check(blue.explosion_radius < green.explosion_radius and green.explosion_radius < black.explosion_radius,
-		"radio: azul < verde < negra")
-	t.check(blue.texture != null and green.texture != null and black.texture != null, "cada tipo tiene su sprite")
+	t.check(blue.damage < black.damage and black.damage < green.damage, "daño: azul < normal < verde")
+	t.check(blue.explosion_radius < black.explosion_radius and black.explosion_radius < green.explosion_radius,
+		"alcance: azul (pequeña) < normal < verde (grande)")
+	var anims := true
+	for d in [blue, green, black]:
+		anims = anims and d.frames != null and d.frames.has_animation(&"fuse") and d.frames.has_animation(&"explode")
+	t.check(anims, "cada tipo tiene su mecha animada y su explosión")
 
 
 func _throw_and_limit() -> void:
@@ -52,7 +55,7 @@ func _throw_and_limit() -> void:
 	var active := pool.active_bombs()
 	t.check(active.size() == 1 and active[0].owner_index == 0, "Q lanza una bomba del jugador 1")
 	var bomb := active[0]
-	t.check(bomb.linear_velocity.x > 200.0 and bomb.linear_velocity.y < 0.0, "sale hacia delante y hacia arriba")
+	t.check(bomb.velocity.x > 200.0 and bomb.velocity.y < 0.0, "sale hacia delante y hacia arriba")
 	t.check(p.animator.animation == &"throw", "animación de lanzar")
 	for i in 4:
 		await _press("p1_bomb")
@@ -98,7 +101,7 @@ func _place_pick_carry_throw() -> void:
 	Input.action_release("p1_move_right")
 	t.check(bomb.global_position.distance_to(p.bombs.hold_position()) < 1.0, "la bomba sigue a las manos")
 	await _press("p1_interact")
-	t.check(p.bombs.held_bomb == null and bomb.state == Bomb.State.ARMED and bomb.linear_velocity.x > 200.0,
+	t.check(p.bombs.held_bomb == null and bomb.state == Bomb.State.ARMED and bomb.velocity.x > 200.0,
 		"E la lanza")
 	await _clear_bombs()
 
@@ -112,7 +115,7 @@ func _drop_and_kick() -> void:
 	await t.wait_frames(3)
 	await _press("p1_interact")
 	Input.action_release("p1_crouch")
-	t.check(p.bombs.held_bomb == null and absf(bomb.linear_velocity.x) < 120.0, "abajo + E la suelta suavemente")
+	t.check(p.bombs.held_bomb == null and absf(bomb.velocity.x) < 120.0, "abajo + E la suelta suavemente")
 	await t.wait_frames(20)
 	await _place(p, Vector2(bomb.global_position.x - 90.0, GROUND_Y))
 	bomb.fuse_left = 5.0
@@ -120,7 +123,7 @@ func _drop_and_kick() -> void:
 	var kicked := false
 	for i in 50:
 		await t.wait_frames(1)
-		if bomb.linear_velocity.x > p.config.kick_speed * 0.6:
+		if bomb.velocity.x > p.config.kick_speed * 0.6:
 			kicked = true
 			break
 	Input.action_release("p1_move_right")
@@ -133,14 +136,14 @@ func _switch_type() -> void:
 	var on_changed := func(_i: int, id: StringName) -> void: changed[0] = id
 	EventBus.bomb_type_changed.connect(on_changed)
 	await _press("p1_switch_bomb")
-	t.check(p.bombs.current_type().id == &"green" and changed[0] == &"green", "R cambia a la bomba verde")
+	t.check(p.bombs.current_type().id == &"blue" and changed[0] == &"blue", "R cambia a la bomba azul")
 	await _press("p1_switch_bomb")
 	await _press("p1_switch_bomb")
-	t.check(p.bombs.current_type().id == &"blue", "el cambio es cíclico")
-	p.bombs.ammo[&"green"] = 0
+	t.check(p.bombs.current_type().id == &"black", "el cambio es cíclico")
+	p.bombs.ammo[&"blue"] = 0
 	await _press("p1_switch_bomb")
-	t.check(p.bombs.current_type().id == &"black", "se salta los tipos sin munición")
-	p.bombs.ammo[&"green"] = -1
+	t.check(p.bombs.current_type().id == &"green", "se salta los tipos sin munición")
+	p.bombs.ammo[&"blue"] = -1
 	p.bombs.current_index = 0
 	EventBus.bomb_type_changed.disconnect(on_changed)
 
@@ -168,6 +171,7 @@ func _damage_and_chain() -> void:
 
 func _player_knockback() -> void:
 	await _place(p, Vector2(400, GROUND_Y))
+	p.health.reset()
 	var hp := p.health.current_health
 	var data := p.bombs.current_type()
 	t.check(data.hurts_players, "arcade: las bombas también dañan a los jugadores")
