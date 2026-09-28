@@ -1,0 +1,31 @@
+{
+  "source": "assets/references/characters/general_sheet_characters_enemies_bombs_items.png",
+  "sphere_diameter": 48,
+  "bomb_canvas": 96,
+  "bombs": {
+    "normal": {
+      "file": "assets/bombs/normal.png",
+      "source_sphere_diameter": 56.0
+    },
+    "blue": {
+      "file": "assets/bombs/blue.png",
+      "source_sphere_diameter": 50.0
+    },
+    "green": {
+      "file": "assets/bombs/green.png",
+      "source_sphere_diameter": 52.0
+    },
+    "black": {
+      "file": "assets/bombs/black.png",
+      "source_sphere_diameter": 57.0
+    }
+  },
+  "explosion": [
+    "assets/effects/explosion/explosion_1.png",
+    "assets/effects/explosion/explosion_2.png",
+    "assets/effects/explosion/explosion_3.png",
+    "assets/effects/explosion/explosion_4.png",
+    "assets/effects/explosion/explosion_5.png"
+  ],
+  "explosion_canvas": 92
+}
