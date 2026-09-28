@@ -46,6 +46,9 @@ extends Resource
 @export var body_radius := 16.0
 @export var body_height := 60.0
 @export var crouch_height := 38.0
+## Altura extra de la plataforma de la cabeza sobre la colisión, para que el compañero
+## quede apoyado sobre el dibujo (penacho incluido) y no hundido en él.
+@export var head_platform_offset := 12.0
 
 @export_group("Vida")
 @export var max_health := 3

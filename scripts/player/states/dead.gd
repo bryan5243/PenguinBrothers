@@ -1,6 +1,7 @@
 extends PlayerState
 ## Muerte estilo arcade: salta, gira y cae fuera de la pantalla atravesando el escenario.
-## Tras `respawn_delay` descuenta una vida y reaparece, o termina la partida.
+## Tras `respawn_delay` descuenta una vida y reaparece (junto al compañero en cooperativo);
+## sin vidas queda eliminado y GameManager termina la partida si no queda nadie.
 
 const DEATH_JUMP_RATIO := 0.8
 const SPIN_SPEED := 9.0
@@ -15,6 +16,7 @@ func enter(_message := {}) -> void:
 	player.set_low_profile(false)
 	player.collision_layer = 0
 	player.collision_mask = 0
+	player.set_head_platform(false)
 	player.velocity = Vector2(0.0, -player.config.jump_force * DEATH_JUMP_RATIO)
 	player.animator.set_blinking(false)
 	player.animator.play_animation(PlayerAnimator.DEATH, true)
@@ -39,6 +41,8 @@ func physics_update(delta: float) -> void:
 	if lives_left > 0:
 		player.respawn()
 	else:
+		# Sin vidas: queda fuera. La partida termina cuando no queda ningún jugador.
 		player.visible = false
 		player.velocity = Vector2.ZERO
-		EventBus.game_over.emit()
+		player.tag.visible = false
+		GameManager.eliminate_player(player.player_index)

@@ -16,6 +16,9 @@ signal respawned
 enum Character { BLUE_PENGUIN, PINK_PENGUIN }
 
 const PLATFORM_LAYER := 6
+const PLAYER_COLORS: Array[Color] = [Color(0.45, 0.72, 1.0), Color(1.0, 0.55, 0.82)]
+## Ancho de la plataforma sobre la cabeza (el compañero puede pararse encima).
+const HEAD_PLATFORM_WIDTH := 30.0
 
 @export_range(0, 1) var player_index := 0
 @export var character: Character = Character.BLUE_PENGUIN
@@ -46,6 +49,9 @@ var _drop_timer := 0.0
 @onready var body_shape: CollisionShape2D = $CollisionShape2D
 @onready var ladder_detector: Area2D = $LadderDetector
 @onready var ceiling_check: ShapeCast2D = $CeilingCheck
+@onready var head_platform: AnimatableBody2D = $HeadPlatform
+@onready var head_shape: CollisionShape2D = $HeadPlatform/Shape
+@onready var tag: Label = $Tag
 
 
 func _ready() -> void:
@@ -63,6 +69,13 @@ func _ready() -> void:
 	health.died.connect(_on_died)
 	health.invulnerability_changed.connect(animator.set_blinking)
 	animator.setup(character)
+	add_collision_exception_with(head_platform)
+	# La plataforma de la cabeza se mueve a mano (top_level): un AnimatableBody2D sincronizado
+	# con la física solo sigue sus propios movimientos, y así el motor calcula su velocidad
+	# para llevar encima al compañero.
+	head_platform.top_level = true
+	head_platform.global_position = global_position
+	_setup_tag()
 	EventBus.player_spawned.emit(self, player_index)
 
 
@@ -71,6 +84,7 @@ func _physics_process(delta: float) -> void:
 	_update_timers(delta)
 	state_machine.physics_update(delta)
 	move_and_slide()
+	head_platform.global_position = global_position
 	if global_position.y > fall_death_y and not health.is_dead:
 		health.kill(null)
 
@@ -173,6 +187,8 @@ func set_low_profile(low: bool) -> void:
 	var h := config.crouch_height if low else config.body_height
 	capsule.height = maxf(h, config.body_radius * 2.0)
 	body_shape.position = Vector2(0.0, -h * 0.5)
+	if head_shape:
+		head_shape.position = Vector2(0.0, -h - config.head_platform_offset)
 
 
 ## ¿Hay espacio para ponerse de pie?
@@ -213,7 +229,26 @@ func take_damage(amount: int, source: Node = null) -> void:
 	health.take_damage(amount, source)
 
 
-func respawn(at: Vector2 = spawn_position) -> void:
+## Dónde reaparecer: junto a un compañero vivo y apoyado (cooperativo) o en el punto de inicio.
+func get_respawn_position() -> Vector2:
+	for other in get_tree().get_nodes_in_group(&"players"):
+		var partner := other as Player
+		if partner and partner != self and partner.is_alive() and partner.is_on_floor() \
+				and not partner.state_machine.is_in(&"Climb"):
+			return partner.global_position
+	return spawn_position
+
+
+func is_alive() -> bool:
+	return not health.is_dead and visible
+
+
+## Activa o desactiva la plataforma de la cabeza (se desactiva al morir).
+func set_head_platform(enabled: bool) -> void:
+	head_platform.collision_layer = (1 << (PLATFORM_LAYER - 1)) if enabled else 0
+
+
+func respawn(at: Vector2 = get_respawn_position()) -> void:
 	global_position = at
 	velocity = Vector2.ZERO
 	facing = 1
@@ -224,6 +259,7 @@ func respawn(at: Vector2 = spawn_position) -> void:
 	collision_layer = 1 << 1
 	collision_mask = 1 | (1 << (PLATFORM_LAYER - 1))
 	visible = true
+	set_head_platform(true)
 	animator.reset_visual()
 	state_machine.transition_to(&"Idle")
 	EventBus.player_respawned.emit(player_index)
@@ -243,6 +279,12 @@ func _on_damaged(amount: int, source: Node) -> void:
 	animator.flash()
 	AudioManager.play_sfx("hurt")
 	state_machine.transition_to(&"Hurt")
+
+
+func _setup_tag() -> void:
+	tag.text = "P%d" % (player_index + 1)
+	tag.add_theme_color_override("font_color", PLAYER_COLORS[player_index])
+	tag.visible = GameManager.is_coop()
 
 
 func _on_died() -> void:
