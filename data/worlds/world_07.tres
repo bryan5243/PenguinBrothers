@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="WorldData" format=3]
+
+[ext_resource type="Script" path="res://scripts/core/data/world_data.gd" id="1_h04bd"]
+
+[resource]
+script = ExtResource("1_h04bd")
+number = 7
+id = &"bosque_bambu"
+display_name = "Bosque de Bambú"
+description = "Bosque denso de bambú y puentes colgantes."
+enemy_ids = Array[StringName]([&"warrior_panda", &"ninja_monkey", &"tanuki", &"giant_wasp"])
+boss_id = &"amur_tiger"
+music_key = "music_world_07"

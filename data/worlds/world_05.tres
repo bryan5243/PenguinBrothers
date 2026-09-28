@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="WorldData" format=3]
+
+[ext_resource type="Script" path="res://scripts/core/data/world_data.gd" id="1_eiudn"]
+
+[resource]
+script = ExtResource("1_eiudn")
+number = 5
+id = &"zona_artica"
+display_name = "Zona Ártica"
+description = "Hielo eterno, auroras y bases polares."
+enemy_ids = Array[StringName]([&"motor_penguin", &"polar_owl", &"walrus", &"arctic_hare"])
+boss_id = &"polar_bear"
+music_key = "music_world_05"

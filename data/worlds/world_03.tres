@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="WorldData" format=3]
+
+[ext_resource type="Script" path="res://scripts/core/data/world_data.gd" id="1_4lxx0"]
+
+[resource]
+script = ExtResource("1_4lxx0")
+number = 3
+id = &"montana_nevada"
+display_name = "Montaña Nevada"
+description = "Cumbres heladas, nieve y pendientes resbaladizas."
+enemy_ids = Array[StringName]([&"warrior_seal", &"arctic_rabbit", &"small_yeti", &"enemy_penguin"])
+boss_id = &"snow_leopard"
+music_key = "music_world_03"

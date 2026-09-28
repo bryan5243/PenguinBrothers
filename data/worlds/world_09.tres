@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="WorldData" format=3]
+
+[ext_resource type="Script" path="res://scripts/core/data/world_data.gd" id="1_vq67d"]
+
+[resource]
+script = ExtResource("1_vq67d")
+number = 9
+id = &"ciudad_neon"
+display_name = "Ciudad Neón"
+description = "Rascacielos, carteles luminosos y tejados."
+enemy_ids = Array[StringName]([&"hacker_monkey", &"robot_dog", &"flying_ship", &"digital_ghost"])
+boss_id = &"mega_drone"
+music_key = "music_world_09"

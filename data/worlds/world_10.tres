@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="WorldData" format=3]
+
+[ext_resource type="Script" path="res://scripts/core/data/world_data.gd" id="1_08gc5"]
+
+[resource]
+script = ExtResource("1_08gc5")
+number = 10
+id = &"castillo_celestial"
+display_name = "Castillo Celestial"
+description = "Castillo entre las nubes y templos del cielo."
+enemy_ids = Array[StringName]([&"wind_bird", &"cloud_warrior", &"lightning_spirit", &"kairyu"])
+boss_id = &"celestial_dragon"
+music_key = "music_world_10"
