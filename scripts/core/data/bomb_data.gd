@@ -11,8 +11,9 @@ extends Resource
 @export var damage := 1
 @export var explosion_radius := 96.0
 @export var knockback := 420.0
-## Daña también a los jugadores (por defecto solo los empuja).
-@export var hurts_players := false
+## Daña también a los jugadores, compañero incluido (arcade: la explosión no distingue).
+## Desactivado, la explosión solo empuja a los jugadores.
+@export var hurts_players := true
 ## Retraso al detonar por reacción en cadena (otra explosión la alcanza).
 @export var chain_delay := 0.12
 ## Escena de efecto de explosión. Vacío = scenes/bombs/Explosion.tscn.

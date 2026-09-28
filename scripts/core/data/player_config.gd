@@ -6,16 +6,20 @@ extends Resource
 
 @export_group("Movimiento")
 @export var move_speed := 240.0
+## Arcade: velocidad constante y respuesta inmediata al joystick. Correr (y el
+## deslizamiento, que sale de correr) queda desactivado salvo que se active aquí.
+@export var run_enabled := false
 @export var run_speed := 340.0
 ## Segundos de movimiento continuo en el suelo antes de pasar a correr.
 @export var run_delay := 0.55
-@export var acceleration := 2200.0
-@export var air_acceleration := 1400.0
-@export var friction := 2600.0
-@export var air_friction := 600.0
+@export var acceleration := 6000.0
+@export var air_acceleration := 3600.0
+@export var friction := 6000.0
+@export var air_friction := 2400.0
 
 @export_group("Salto")
-@export var jump_force := 640.0
+## 680 con gravedad 1750 = salto de ~132 px: sube un piso de la arena (112 px).
+@export var jump_force := 680.0
 @export var gravity := 1750.0
 @export var max_fall_speed := 950.0
 ## Velocidad vertical máxima al soltar el botón de salto (salto variable).
@@ -62,6 +66,10 @@ extends Resource
 ## Patada al caminar contra una bomba libre en el suelo.
 @export var kick_speed := 460.0
 @export var kick_min_speed := 120.0
+
+@export_group("Dos jugadores")
+## Velocidad a la que un pingüino empuja al otro al caminar contra él (si chocan entre sí).
+@export var push_speed := 110.0
 
 @export_group("Cuerpo")
 @export var body_radius := 16.0

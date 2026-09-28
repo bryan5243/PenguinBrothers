@@ -41,6 +41,11 @@ var carried_object: Node2D = null
 ## Altura bajo la cual el jugador muere. Se inicializa desde config; el nivel puede cambiarla.
 var fall_death_y := 1400.0
 var is_low := false
+## true: reaparece junto al compañero si está vivo y apoyado. false (arenas arcade):
+## siempre en su punto de inicio.
+var respawn_near_partner := true
+## Los dos pingüinos chocan entre sí (se bloquean y se empujan). Lo activa la Arena.
+var players_collide := false
 
 var _coyote_timer := 0.0
 var _jump_buffer_timer := 0.0
@@ -94,6 +99,8 @@ func _physics_process(delta: float) -> void:
 	state_machine.physics_update(delta)
 	bombs.handle_input()
 	move_and_slide()
+	if players_collide:
+		_push_partner(delta)
 	head_platform.global_position = global_position
 	bombs.update_held()
 	if global_position.y > fall_death_y and not health.is_dead:
@@ -255,6 +262,8 @@ func take_damage(amount: int, source: Node = null) -> bool:
 
 ## Dónde reaparecer: junto a un compañero vivo y apoyado (cooperativo) o en el punto de inicio.
 func get_respawn_position() -> Vector2:
+	if not respawn_near_partner:
+		return spawn_position
 	for other in get_tree().get_nodes_in_group(&"players"):
 		var partner := other as Player
 		if partner and partner != self and partner.is_alive() and partner.is_on_floor() \
@@ -281,7 +290,7 @@ func respawn(at: Vector2 = get_respawn_position()) -> void:
 	set_low_profile(false)
 	set_platform_collision(true)
 	collision_layer = 1 << 1
-	collision_mask = 1 | (1 << (PLATFORM_LAYER - 1))
+	_apply_collision_mask()
 	visible = true
 	set_head_platform(true)
 	bombs.drop_held()
@@ -305,6 +314,33 @@ func _on_damaged(amount: int, source: Node) -> void:
 	animator.flash()
 	AudioManager.play_sfx("hurt")
 	state_machine.transition_to(&"Hurt")
+
+
+## Activa o desactiva el choque con el otro pingüino (capa 2 en la máscara).
+func set_players_collide(enabled: bool) -> void:
+	players_collide = enabled
+	_apply_collision_mask()
+
+
+func _apply_collision_mask() -> void:
+	collision_mask = 1 | (1 << (PLATFORM_LAYER - 1))
+	if players_collide:
+		collision_mask |= 1 << 1
+
+
+## Caminando contra el compañero en el suelo, lo empuja despacio (él choca con las paredes).
+func _push_partner(delta: float) -> void:
+	if absf(input.move_axis) < 0.2:
+		return
+	var dir := signf(input.move_axis)
+	for i in get_slide_collision_count():
+		var col := get_slide_collision(i)
+		var partner := col.get_collider() as Player
+		if partner == null or not partner.is_alive() or absf(col.get_normal().x) < 0.7:
+			continue
+		if signf(partner.global_position.x - global_position.x) != dir:
+			continue
+		partner.move_and_collide(Vector2(dir * config.push_speed * delta, 0.0))
 
 
 ## Alcanzado por una explosión (lo llama Explosion). Las bombas empujan a los jugadores;

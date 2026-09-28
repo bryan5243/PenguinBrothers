@@ -1,5 +1,5 @@
 extends PlayerState
-## Caminar y correr. Tras moverse de forma continua `run_delay` segundos pasa a correr.
+## Caminar (y correr si `run_enabled`: tras moverse de forma continua `run_delay` segundos).
 
 var _run_timer := 0.0
 var _direction := 0
@@ -19,7 +19,7 @@ func physics_update(delta: float) -> void:
 	else:
 		_run_timer = 0.0
 		_direction = dir
-	var speed := cfg.run_speed if _run_timer >= cfg.run_delay else cfg.move_speed
+	var speed := cfg.run_speed if cfg.run_enabled and _run_timer >= cfg.run_delay else cfg.move_speed
 	player.face_input()
 	player.apply_gravity(delta)
 	player.apply_horizontal(delta, axis * speed)
