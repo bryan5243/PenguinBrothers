@@ -1,27 +1,28 @@
 extends SceneTree
-## Construye un SpriteFrames por personaje a partir de su manifest.json.
+## Construye un SpriteFrames por personaje (y por tipo de bomba) a partir de su manifest.json.
 ## Uso (después de importar los PNG):
 ##   godot --headless --path . --import
 ##   godot --headless --path . -s tools/build_sprite_frames.gd
-## Recorre assets/characters/*/manifest.json y guarda <personaje>_frames.tres al lado.
+## Recorre assets/characters/*/manifest.json y assets/bombs/*/manifest.json y guarda
+## <carpeta>_frames.tres al lado.
 
 const CHARACTERS_DIR := "res://assets/characters"
+const SOURCE_DIRS: Array[String] = ["res://assets/characters", "res://assets/bombs"]
 
 
 func _initialize() -> void:
-	var dir := DirAccess.open(CHARACTERS_DIR)
-	if dir == null:
-		push_error("No existe %s" % CHARACTERS_DIR)
-		quit(1)
-		return
 	var built := 0
-	for folder in dir.get_directories():
-		var base := CHARACTERS_DIR.path_join(folder)
-		var manifest_path := base.path_join("manifest.json")
-		if not FileAccess.file_exists(manifest_path):
+	for root_dir in SOURCE_DIRS:
+		var dir := DirAccess.open(root_dir)
+		if dir == null:
 			continue
-		if _build(base, folder, manifest_path):
-			built += 1
+		for folder in dir.get_directories():
+			var base := root_dir.path_join(folder)
+			var manifest_path := base.path_join("manifest.json")
+			if not FileAccess.file_exists(manifest_path):
+				continue
+			if _build(base, folder, manifest_path):
+				built += 1
 	print("SpriteFrames generados: %d" % built)
 	quit(0 if built > 0 else 1)
 
@@ -48,12 +49,16 @@ func _build(base: String, folder: String, manifest_path: String) -> bool:
 	# Datos de normalización: todos los fotogramas comparten lienzo (pies en el borde
 	# inferior, centro del cuerpo en el centro). La altura de referencia es la del dibujo
 	# visible del primer fotograma de idle; PlayerAnimator la usa para la escala global.
-	var first := frames.get_frame_texture(&"idle", 0)
+	var first_anim: StringName = &"idle" if frames.has_animation(&"idle") else frames.get_animation_names()[0]
+	var first := frames.get_frame_texture(first_anim, 0)
 	var canvas := Vector2i(first.get_width(), first.get_height())
 	var reference_height := int(manifest.get("reference_height", 0))
 	if reference_height <= 0:
 		reference_height = first.get_image().get_used_rect().size.y
+	var check_canvas := frames.has_animation(&"idle")
 	for anim_name in frames.get_animation_names():
+		if not check_canvas:
+			break
 		for i in frames.get_frame_count(anim_name):
 			var t := frames.get_frame_texture(anim_name, i)
 			if Vector2i(t.get_width(), t.get_height()) != canvas:
@@ -62,6 +67,9 @@ func _build(base: String, folder: String, manifest_path: String) -> bool:
 				return false
 	frames.set_meta(&"canvas_size", canvas)
 	frames.set_meta(&"reference_height", reference_height)
+	for key in ["sphere_diameter", "explosion_diameter"]:
+		if manifest.has(key):
+			frames.set_meta(StringName(key), float(manifest[key]))
 	var out := base.path_join("%s_frames.tres" % folder)
 	var err := ResourceSaver.save(frames, out)
 	print("  %s: %d animaciones, lienzo %s, altura de referencia %d -> %s (%s)" % [folder,

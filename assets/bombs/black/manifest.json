@@ -1,0 +1,31 @@
+{
+  "source": "assets/references/characters/blue_penguin_moves_and_bombs.png",
+  "sphere_diameter": 48,
+  "explosion_diameter": 152.0,
+  "animations": {
+    "fuse": {
+      "frames": [
+        "fuse_1.png",
+        "fuse_2.png",
+        "fuse_3.png",
+        "fuse_4.png",
+        "fuse_5.png",
+        "fuse_6.png"
+      ],
+      "fps": 10,
+      "loop": true
+    },
+    "explode": {
+      "frames": [
+        "explosion_1.png",
+        "explosion_2.png",
+        "explosion_3.png",
+        "explosion_4.png",
+        "explosion_5.png",
+        "explosion_6.png"
+      ],
+      "fps": 16,
+      "loop": false
+    }
+  }
+}

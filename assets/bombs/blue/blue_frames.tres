@@ -1,0 +1,59 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/bombs/blue/explosion_1.png" id="1_jf3yy"]
+[ext_resource type="Texture2D" path="res://assets/bombs/blue/explosion_2.png" id="2_djgno"]
+[ext_resource type="Texture2D" path="res://assets/bombs/blue/explosion_3.png" id="3_uc0xn"]
+[ext_resource type="Texture2D" path="res://assets/bombs/blue/explosion_4.png" id="4_lo7hw"]
+[ext_resource type="Texture2D" path="res://assets/bombs/blue/explosion_5.png" id="5_edohy"]
+[ext_resource type="Texture2D" path="res://assets/bombs/blue/fuse_1.png" id="6_p8mm7"]
+[ext_resource type="Texture2D" path="res://assets/bombs/blue/fuse_2.png" id="7_usr23"]
+[ext_resource type="Texture2D" path="res://assets/bombs/blue/fuse_3.png" id="8_qxupl"]
+[ext_resource type="Texture2D" path="res://assets/bombs/blue/fuse_4.png" id="9_2wr6q"]
+[ext_resource type="Texture2D" path="res://assets/bombs/blue/fuse_5.png" id="10_v83oe"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_jf3yy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_djgno")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_uc0xn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_lo7hw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_edohy")
+}],
+"loop": 0,
+"name": &"explode",
+"speed": 16.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_p8mm7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_usr23")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_qxupl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_2wr6q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_v83oe")
+}],
+"loop": 1,
+"name": &"fuse",
+"speed": 10.0
+}]
+metadata/canvas_size = Vector2i(160, 160)
+metadata/reference_height = 114
+metadata/sphere_diameter = 48.0
+metadata/explosion_diameter = 152.0

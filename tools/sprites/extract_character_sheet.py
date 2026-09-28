@@ -70,9 +70,51 @@ GROUND_ANIMS = None  # todas las animaciones comparten la línea de pies
 
 PROFILES = {
     "blue_penguin": {
-        "sheet": "assets/references/characters/blue_penguin_full_animations.png",
-        "reference": "idle_1",
+        # Varias hojas: "full" (todas las acciones) y "moves" (movimiento con más fotogramas).
+        # Cada hoja se escala con UN factor propio para que su idle mida lo mismo que el de la
+        # hoja base; nunca se escala fotograma a fotograma.
+        "sheets": {
+            "full": "assets/references/characters/blue_penguin_full_animations.png",
+            "moves": "assets/references/characters/blue_penguin_moves_and_bombs.png",
+        },
+        "base_sheet": "moves",
+        # Fotograma de cada hoja que se usa para igualar la escala entre hojas.
+        "sheet_reference": {"full": "idle_1", "moves": "mv_idle_1"},
+        "reference": "mv_idle_1",
         "frames": {
+            # --- hoja "moves" (blue_penguin_moves_and_bombs.png)
+            "mv_idle_1": ((15, 38, 97, 148), [], "moves"),
+            "mv_idle_2": ((114, 38, 195, 148), [], "moves"),
+            "mv_idle_3": ((211, 40, 297, 150), [], "moves"),
+            "mv_idle_4": ((311, 40, 400, 152), [], "moves"),
+            "mv_walk_1": ((14, 184, 97, 286), [], "moves"),
+            "mv_walk_2": ((123, 184, 208, 286), [], "moves"),
+            "mv_walk_3": ((230, 184, 314, 286), [], "moves"),
+            "mv_walk_4": ((336, 184, 419, 286), [], "moves"),
+            "mv_walk_5": ((434, 183, 517, 287), [], "moves"),
+            "mv_walk_6": ((532, 185, 614, 287), [], "moves"),
+            "mv_walk_7": ((625, 181, 708, 286), [], "moves"),
+            "mv_walk_8": ((713, 181, 809, 286), [], "moves"),
+            "mv_walk_9": ((802, 180, 899, 283), [], "moves"),
+            "mv_land_1": ((27, 480, 135, 575), [], "moves"),
+            "mv_land_2": ((149, 477, 250, 576), [], "moves"),
+            "mv_land_3": ((260, 476, 363, 578), [], "moves"),
+            "mv_jump_1": ((433, 436, 546, 573), [], "moves"),
+            "mv_jump_2": ((553, 433, 658, 560), [], "moves"),
+            "mv_fall_1": ((668, 460, 776, 577), [], "moves"),
+            "mv_fall_2": ((783, 472, 877, 577), [], "moves"),
+            "mv_slide_1": ((880, 481, 1021, 576), [
+                {"rect": (880, 540, 925, 576), "only": ["white", "grey"]}], "moves"),
+            "mv_slide_2": ((1015, 496, 1179, 576), [
+                {"rect": (1015, 520, 1075, 576), "only": ["white", "grey"]}], "moves"),
+            "mv_slide_3": ((1178, 496, 1328, 576), [
+                {"rect": (1178, 520, 1232, 576), "only": ["white", "grey"]}], "moves"),
+            "mv_slide_4": ((1328, 493, 1493, 576), [
+                {"rect": (1328, 520, 1385, 576), "only": ["white", "grey"]}], "moves"),
+            "mv_crouch_1": ((16, 615, 116, 703), [], "moves"),
+            "mv_crouch_2": ((131, 615, 232, 705), [], "moves"),
+            "mv_crouch_3": ((256, 613, 358, 705), [], "moves"),
+            # --- hoja "full" (blue_penguin_full_animations.png)
             # --- fila 0
             "idle_1": ((15, 36, 88, 154), []),
             "idle_2": ((88, 36, 155, 154), []),
@@ -177,14 +219,15 @@ PROFILES = {
         # Nombres estándar del proyecto (docs/GAMEPLAY.md). Equivalencias con la
         # nomenclatura blue_penguin_*: ladder -> climb, pickup -> lift.
         "animations": {
-            "idle": {"frames": ["idle_1", "idle_2", "idle_1", "idle_2"], "fps": 3, "loop": True},
-            "walk": {"frames": ["walk_1", "walk_2", "walk_3", "walk_2"], "fps": 10, "loop": True},
+            "idle": {"frames": ["mv_idle_1", "mv_idle_2", "mv_idle_3", "mv_idle_4", "mv_idle_3", "mv_idle_2"],
+                     "fps": 6, "loop": True},
+            "walk": {"frames": ["mv_walk_%d" % i for i in range(1, 10)], "fps": 14, "loop": True},
             "run": {"frames": ["run_1", "run_2", "run_3", "run_4"], "fps": 12, "loop": True},
-            "jump": {"frames": ["jump_1", "jump_2", "jump_3"], "fps": 10, "loop": False},
-            "fall": {"frames": ["fall_1"], "fps": 1, "loop": False},
-            "land": {"frames": ["land_1", "land_2", "land_3"], "fps": 24, "loop": False},
-            "crouch": {"frames": ["crouch_1", "crouch_2"], "fps": 12, "loop": False},
-            "slide": {"frames": ["slide_1", "slide_2", "slide_3"], "fps": 8, "loop": False},
+            "jump": {"frames": ["mv_jump_1", "mv_jump_2"], "fps": 8, "loop": False},
+            "fall": {"frames": ["mv_fall_1", "mv_fall_2"], "fps": 6, "loop": False},
+            "land": {"frames": ["mv_land_1", "mv_land_2"], "fps": 20, "loop": False},
+            "crouch": {"frames": ["mv_crouch_1", "mv_crouch_2", "mv_crouch_3"], "fps": 14, "loop": False},
+            "slide": {"frames": ["mv_slide_1", "mv_slide_2", "mv_slide_3", "mv_slide_4"], "fps": 10, "loop": False},
             "climb": {"frames": ["climb_1", "climb_2", "climb_3", "climb_4"], "fps": 8, "loop": True},
             "lift": {"frames": ["lift_1", "lift_2"], "fps": 8, "loop": False},
             "carry": {"frames": ["carry_1", "carry_2"], "fps": 6, "loop": True},
@@ -202,6 +245,7 @@ PROFILES = {
             "fire_attack_2": "las llamas envuelven al personaje",
             "bomb_wait / explosion_reaction": "poses de apoyo; no las usa ningún estado todavía",
             "specials": "auras de poder fundidas con el personaje (fase de poderes)",
+            "moves: idle 5-15, walk 10-14, correr": "variantes con polvo o giros; correr está desactivado en el arcade",
         },
     },
 }
@@ -284,20 +328,46 @@ def anchors(cell: np.ndarray, mask: np.ndarray) -> tuple:
 
 def main(name: str) -> None:
     profile = PROFILES[name]
-    sheet = np.array(Image.open(ROOT / profile["sheet"]).convert("RGBA"))
+    sheet_paths = profile.get("sheets", {"full": profile.get("sheet")})
+    sheets = {k: np.array(Image.open(ROOT / v).convert("RGBA")) for k, v in sheet_paths.items()}
+    default_sheet = "full" if "full" in sheets else next(iter(sheets))
     out = ROOT / "assets/characters" / name
     (out / "source").mkdir(parents=True, exist_ok=True)
     (out / "processed").mkdir(parents=True, exist_ok=True)
 
-    items = {}
-    for fname, (box, ops) in profile["frames"].items():
+    def cut(entry):
+        box, ops = entry[0], entry[1]
+        sheet_key = entry[2] if len(entry) > 2 else default_sheet
         x0, y0, x1, y1 = box
-        cell = sheet[y0:y1, x0:x1].copy()
+        cell = sheets[sheet_key][y0:y1, x0:x1].copy()
+        return sheet_key, cell, isolate(cell, ops, (x0, y0))
+
+    # Un factor de escala por hoja (igualar el idle de referencia de cada hoja al de la base).
+    scales = {k: 1.0 for k in sheets}
+    base = profile.get("base_sheet", default_sheet)
+    refs = profile.get("sheet_reference", {})
+    if base in refs:
+        _, _, base_mask = cut(profile["frames"][refs[base]])
+        base_h = np.ptp(np.nonzero(base_mask)[0]) + 1
+        for key, ref_name in refs.items():
+            _, _, m = cut(profile["frames"][ref_name])
+            scales[key] = base_h / (np.ptp(np.nonzero(m)[0]) + 1)
+
+    items = {}
+    for fname, entry in profile["frames"].items():
+        sheet_key, cell, mask = cut(entry)
         Image.fromarray(cell).save(out / "source" / f"{fname}.png")
-        mask = isolate(cell, ops, (x0, y0))
+        s = scales[sheet_key]
+        if abs(s - 1.0) > 1e-3:
+            rgba = cell.copy()
+            rgba[..., 3] = np.where(mask, 255, 0)
+            size = (max(1, round(rgba.shape[1] * s)), max(1, round(rgba.shape[0] * s)))
+            rgba = np.array(Image.fromarray(rgba).resize(size, Image.LANCZOS))
+            mask = rgba[..., 3] > 127
+            cell = rgba
         bottom, cx = anchors(cell, mask)
         ys, xs = np.nonzero(mask)
-        items[fname] = {"cell": cell, "mask": mask, "bottom": bottom, "cx": cx,
+        items[fname] = {"cell": cell, "mask": mask, "bottom": bottom, "cx": cx, "sheet": sheet_key,
                         "left": cx - xs.min(), "right": xs.max() + 1 - cx, "top": bottom + 1 - ys.min()}
 
     half = int(np.ceil(max(max(i["left"], i["right"]) for i in items.values()))) + CANVAS_PADDING
@@ -322,12 +392,14 @@ def main(name: str) -> None:
         dst[sel] = src[sel]
         Image.fromarray(canvas).save(out / "processed" / f"{fname}.png")
         ys, xs = np.nonzero(canvas[..., 3])
-        report[fname] = {"visible": [int(xs.min()), int(ys.min()), int(xs.max() + 1), int(ys.max() + 1)]}
+        report[fname] = {"sheet": it["sheet"],
+                         "visible": [int(xs.min()), int(ys.min()), int(xs.max() + 1), int(ys.max() + 1)]}
 
     ref = report[profile["reference"]]["visible"]
     manifest = {
         "character": name,
-        "source": profile["sheet"],
+        "source": sheet_paths,
+        "sheet_scales": {k: round(v, 4) for k, v in scales.items()},
         "canvas": [width, height],
         "anchor": "pies en el borde inferior, centro del cuerpo en la mitad horizontal",
         "reference_frame": profile["reference"],

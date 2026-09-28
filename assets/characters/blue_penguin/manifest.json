@@ -1,32 +1,46 @@
 {
   "character": "blue_penguin",
-  "source": "assets/references/characters/blue_penguin_full_animations.png",
+  "source": {
+    "full": "assets/references/characters/blue_penguin_full_animations.png",
+    "moves": "assets/references/characters/blue_penguin_moves_and_bombs.png"
+  },
+  "sheet_scales": {
+    "full": 1.0408,
+    "moves": 1.0
+  },
   "canvas": [
-    154,
-    111
+    162,
+    132
   ],
   "anchor": "pies en el borde inferior, centro del cuerpo en la mitad horizontal",
-  "reference_frame": "idle_1",
-  "reference_height": 98,
+  "reference_frame": "mv_idle_1",
+  "reference_height": 102,
   "animations": {
     "idle": {
       "frames": [
-        "processed/idle_1.png",
-        "processed/idle_2.png",
-        "processed/idle_1.png",
-        "processed/idle_2.png"
+        "processed/mv_idle_1.png",
+        "processed/mv_idle_2.png",
+        "processed/mv_idle_3.png",
+        "processed/mv_idle_4.png",
+        "processed/mv_idle_3.png",
+        "processed/mv_idle_2.png"
       ],
-      "fps": 3,
+      "fps": 6,
       "loop": true
     },
     "walk": {
       "frames": [
-        "processed/walk_1.png",
-        "processed/walk_2.png",
-        "processed/walk_3.png",
-        "processed/walk_2.png"
+        "processed/mv_walk_1.png",
+        "processed/mv_walk_2.png",
+        "processed/mv_walk_3.png",
+        "processed/mv_walk_4.png",
+        "processed/mv_walk_5.png",
+        "processed/mv_walk_6.png",
+        "processed/mv_walk_7.png",
+        "processed/mv_walk_8.png",
+        "processed/mv_walk_9.png"
       ],
-      "fps": 10,
+      "fps": 14,
       "loop": true
     },
     "run": {
@@ -41,44 +55,45 @@
     },
     "jump": {
       "frames": [
-        "processed/jump_1.png",
-        "processed/jump_2.png",
-        "processed/jump_3.png"
+        "processed/mv_jump_1.png",
+        "processed/mv_jump_2.png"
       ],
-      "fps": 10,
+      "fps": 8,
       "loop": false
     },
     "fall": {
       "frames": [
-        "processed/fall_1.png"
+        "processed/mv_fall_1.png",
+        "processed/mv_fall_2.png"
       ],
-      "fps": 1,
+      "fps": 6,
       "loop": false
     },
     "land": {
       "frames": [
-        "processed/land_1.png",
-        "processed/land_2.png",
-        "processed/land_3.png"
+        "processed/mv_land_1.png",
+        "processed/mv_land_2.png"
       ],
-      "fps": 24,
+      "fps": 20,
       "loop": false
     },
     "crouch": {
       "frames": [
-        "processed/crouch_1.png",
-        "processed/crouch_2.png"
+        "processed/mv_crouch_1.png",
+        "processed/mv_crouch_2.png",
+        "processed/mv_crouch_3.png"
       ],
-      "fps": 12,
+      "fps": 14,
       "loop": false
     },
     "slide": {
       "frames": [
-        "processed/slide_1.png",
-        "processed/slide_2.png",
-        "processed/slide_3.png"
+        "processed/mv_slide_1.png",
+        "processed/mv_slide_2.png",
+        "processed/mv_slide_3.png",
+        "processed/mv_slide_4.png"
       ],
-      "fps": 8,
+      "fps": 10,
       "loop": false
     },
     "climb": {
@@ -172,428 +187,724 @@
     }
   },
   "frames": {
-    "idle_1": {
+    "mv_idle_1": {
+      "sheet": "moves",
+      "visible": [
+        44,
+        30,
+        121,
+        132
+      ]
+    },
+    "mv_idle_2": {
+      "sheet": "moves",
+      "visible": [
+        48,
+        29,
+        122,
+        132
+      ]
+    },
+    "mv_idle_3": {
+      "sheet": "moves",
+      "visible": [
+        46,
+        30,
+        124,
+        132
+      ]
+    },
+    "mv_idle_4": {
+      "sheet": "moves",
+      "visible": [
+        40,
+        27,
+        123,
+        132
+      ]
+    },
+    "mv_walk_1": {
+      "sheet": "moves",
+      "visible": [
+        45,
+        38,
+        122,
+        132
+      ]
+    },
+    "mv_walk_2": {
+      "sheet": "moves",
+      "visible": [
+        45,
+        37,
+        123,
+        132
+      ]
+    },
+    "mv_walk_3": {
+      "sheet": "moves",
+      "visible": [
+        45,
+        37,
+        122,
+        132
+      ]
+    },
+    "mv_walk_4": {
+      "sheet": "moves",
+      "visible": [
+        45,
+        37,
+        122,
+        132
+      ]
+    },
+    "mv_walk_5": {
+      "sheet": "moves",
+      "visible": [
+        46,
+        35,
+        122,
+        132
+      ]
+    },
+    "mv_walk_6": {
+      "sheet": "moves",
+      "visible": [
+        46,
+        37,
+        122,
+        132
+      ]
+    },
+    "mv_walk_7": {
+      "sheet": "moves",
       "visible": [
         47,
-        13,
-        114,
-        111
+        34,
+        124,
+        132
+      ]
+    },
+    "mv_walk_8": {
+      "sheet": "moves",
+      "visible": [
+        36,
+        36,
+        126,
+        132
+      ]
+    },
+    "mv_walk_9": {
+      "sheet": "moves",
+      "visible": [
+        35,
+        37,
+        126,
+        132
+      ]
+    },
+    "mv_land_1": {
+      "sheet": "moves",
+      "visible": [
+        28,
+        44,
+        130,
+        132
+      ]
+    },
+    "mv_land_2": {
+      "sheet": "moves",
+      "visible": [
+        34,
+        40,
+        129,
+        132
+      ]
+    },
+    "mv_land_3": {
+      "sheet": "moves",
+      "visible": [
+        36,
+        37,
+        132,
+        132
+      ]
+    },
+    "mv_jump_1": {
+      "sheet": "moves",
+      "visible": [
+        34,
+        2,
+        141,
+        132
+      ]
+    },
+    "mv_jump_2": {
+      "sheet": "moves",
+      "visible": [
+        41,
+        12,
+        140,
+        132
+      ]
+    },
+    "mv_fall_1": {
+      "sheet": "moves",
+      "visible": [
+        39,
+        22,
+        140,
+        132
+      ]
+    },
+    "mv_fall_2": {
+      "sheet": "moves",
+      "visible": [
+        39,
+        34,
+        126,
+        132
+      ]
+    },
+    "mv_slide_1": {
+      "sheet": "moves",
+      "visible": [
+        17,
+        46,
+        135,
+        132
+      ]
+    },
+    "mv_slide_2": {
+      "sheet": "moves",
+      "visible": [
+        8,
+        59,
+        142,
+        132
+      ]
+    },
+    "mv_slide_3": {
+      "sheet": "moves",
+      "visible": [
+        10,
+        58,
+        144,
+        132
+      ]
+    },
+    "mv_slide_4": {
+      "sheet": "moves",
+      "visible": [
+        5,
+        55,
+        144,
+        132
+      ]
+    },
+    "mv_crouch_1": {
+      "sheet": "moves",
+      "visible": [
+        33,
+        51,
+        127,
+        132
+      ]
+    },
+    "mv_crouch_2": {
+      "sheet": "moves",
+      "visible": [
+        31,
+        50,
+        125,
+        132
+      ]
+    },
+    "mv_crouch_3": {
+      "sheet": "moves",
+      "visible": [
+        33,
+        47,
+        129,
+        132
+      ]
+    },
+    "idle_1": {
+      "sheet": "full",
+      "visible": [
+        50,
+        30,
+        120,
+        132
       ]
     },
     "idle_2": {
+      "sheet": "full",
       "visible": [
-        52,
-        14,
-        113,
-        111
+        55,
+        31,
+        119,
+        132
       ]
     },
     "idle_3": {
+      "sheet": "full",
       "visible": [
-        53,
-        12,
-        115,
-        111
+        55,
+        29,
+        120,
+        132
       ]
     },
     "idle_4": {
+      "sheet": "full",
       "visible": [
-        52,
-        16,
-        111,
-        111
+        55,
+        33,
+        117,
+        132
       ]
     },
     "walk_1": {
+      "sheet": "full",
       "visible": [
-        51,
-        14,
-        112,
-        111
+        54,
+        31,
+        118,
+        132
       ]
     },
     "walk_2": {
+      "sheet": "full",
       "visible": [
-        50,
-        14,
-        110,
-        111
+        52,
+        31,
+        115,
+        132
       ]
     },
     "walk_3": {
+      "sheet": "full",
       "visible": [
-        51,
-        14,
-        113,
-        111
+        54,
+        31,
+        119,
+        132
       ]
     },
     "run_1": {
+      "sheet": "full",
       "visible": [
-        48,
-        11,
-        114,
-        111
+        51,
+        28,
+        120,
+        132
       ]
     },
     "run_2": {
+      "sheet": "full",
       "visible": [
-        45,
-        15,
-        115,
-        111
+        47,
+        32,
+        120,
+        132
       ]
     },
     "run_3": {
+      "sheet": "full",
       "visible": [
-        48,
-        13,
-        114,
-        111
+        50,
+        30,
+        119,
+        132
       ]
     },
     "run_4": {
+      "sheet": "full",
       "visible": [
-        45,
-        18,
-        114,
-        111
+        47,
+        35,
+        119,
+        132
       ]
     },
     "jump_1": {
+      "sheet": "full",
       "visible": [
-        53,
-        28,
-        110,
-        111
+        56,
+        46,
+        116,
+        132
       ]
     },
     "jump_2": {
+      "sheet": "full",
       "visible": [
-        54,
-        24,
-        112,
-        111
+        57,
+        41,
+        118,
+        132
       ]
     },
     "jump_3": {
+      "sheet": "full",
       "visible": [
-        47,
-        23,
-        113,
-        111
+        50,
+        40,
+        119,
+        132
       ]
     },
     "fall_1": {
+      "sheet": "full",
       "visible": [
-        48,
-        14,
-        111,
-        111
+        51,
+        31,
+        117,
+        132
       ]
     },
     "fall_2": {
+      "sheet": "full",
       "visible": [
-        52,
-        21,
-        106,
-        111
+        55,
+        38,
+        112,
+        132
       ]
     },
     "land_1": {
+      "sheet": "full",
       "visible": [
-        45,
-        20,
-        110,
-        111
+        47,
+        37,
+        115,
+        132
       ]
     },
     "land_2": {
+      "sheet": "full",
       "visible": [
-        43,
-        34,
-        107,
-        111
+        45,
+        52,
+        112,
+        132
       ]
     },
     "land_3": {
+      "sheet": "full",
       "visible": [
-        46,
-        38,
-        111,
-        111
+        48,
+        56,
+        116,
+        132
       ]
     },
     "crouch_1": {
+      "sheet": "full",
       "visible": [
-        51,
-        42,
-        106,
-        111
+        54,
+        60,
+        111,
+        132
       ]
     },
     "crouch_2": {
+      "sheet": "full",
       "visible": [
-        50,
-        42,
-        108,
-        111
+        52,
+        60,
+        113,
+        132
       ]
     },
     "slide_1": {
+      "sheet": "full",
       "visible": [
-        33,
-        43,
-        124,
-        111
+        35,
+        60,
+        130,
+        132
       ]
     },
     "slide_2": {
+      "sheet": "full",
       "visible": [
-        26,
-        44,
-        122,
-        111
+        28,
+        62,
+        128,
+        132
       ]
     },
     "slide_3": {
+      "sheet": "full",
       "visible": [
-        29,
-        53,
-        126,
-        111
+        31,
+        71,
+        132,
+        132
       ]
     },
     "climb_1": {
+      "sheet": "full",
       "visible": [
-        55,
-        32,
-        104,
-        111
+        58,
+        50,
+        109,
+        132
       ]
     },
     "climb_2": {
+      "sheet": "full",
       "visible": [
-        52,
-        20,
-        102,
-        111
+        54,
+        37,
+        106,
+        132
       ]
     },
     "climb_3": {
+      "sheet": "full",
       "visible": [
-        54,
-        19,
-        102,
-        111
+        57,
+        37,
+        107,
+        132
       ]
     },
     "climb_4": {
+      "sheet": "full",
       "visible": [
-        50,
-        24,
-        106,
-        111
+        52,
+        41,
+        111,
+        132
       ]
     },
     "lift_1": {
+      "sheet": "full",
       "visible": [
-        41,
-        21,
-        120,
-        111
+        43,
+        39,
+        126,
+        132
       ]
     },
     "lift_2": {
+      "sheet": "full",
       "visible": [
-        41,
-        13,
-        114,
-        111
+        43,
+        30,
+        119,
+        132
       ]
     },
     "carry_1": {
+      "sheet": "full",
       "visible": [
-        46,
-        17,
-        115,
-        111
+        48,
+        34,
+        120,
+        132
       ]
     },
     "carry_2": {
+      "sheet": "full",
       "visible": [
-        52,
-        11,
-        116,
-        111
+        55,
+        28,
+        122,
+        132
       ]
     },
     "throw_1": {
+      "sheet": "full",
       "visible": [
-        30,
-        30,
-        126,
-        111
+        31,
+        47,
+        132,
+        132
       ]
     },
     "throw_2": {
+      "sheet": "full",
       "visible": [
-        38,
-        34,
-        114,
-        111
+        40,
+        52,
+        119,
+        132
       ]
     },
     "place_bomb_1": {
+      "sheet": "full",
       "visible": [
-        41,
-        22,
-        115,
-        111
+        43,
+        39,
+        120,
+        132
       ]
     },
     "place_bomb_2": {
+      "sheet": "full",
       "visible": [
-        44,
-        21,
-        112,
-        111
+        47,
+        38,
+        118,
+        132
       ]
     },
     "place_bomb_3": {
+      "sheet": "full",
       "visible": [
-        47,
-        21,
-        111,
-        111
+        50,
+        38,
+        117,
+        132
       ]
     },
     "attack_1": {
+      "sheet": "full",
       "visible": [
-        42,
-        12,
-        118,
-        111
+        44,
+        29,
+        123,
+        132
       ]
     },
     "attack_2": {
+      "sheet": "full",
       "visible": [
-        48,
-        15,
-        125,
-        111
+        51,
+        32,
+        132,
+        132
       ]
     },
     "attack_3": {
+      "sheet": "full",
       "visible": [
-        46,
-        11,
-        115,
-        111
+        49,
+        28,
+        121,
+        132
       ]
     },
     "attack_4": {
+      "sheet": "full",
       "visible": [
-        46,
-        18,
-        112,
-        111
+        49,
+        35,
+        118,
+        132
       ]
     },
     "fire_attack_1": {
+      "sheet": "full",
       "visible": [
-        43,
-        13,
-        120,
-        111
+        45,
+        30,
+        126,
+        132
       ]
     },
     "hurt_1": {
+      "sheet": "full",
       "visible": [
-        37,
-        17,
-        119,
-        111
+        39,
+        34,
+        125,
+        132
       ]
     },
     "hurt_2": {
+      "sheet": "full",
       "visible": [
-        43,
-        12,
-        120,
-        111
+        45,
+        29,
+        126,
+        132
       ]
     },
     "hurt_3": {
+      "sheet": "full",
       "visible": [
-        51,
-        14,
-        125,
-        111
+        54,
+        31,
+        132,
+        132
       ]
     },
     "hurt_4": {
+      "sheet": "full",
       "visible": [
-        54,
-        10,
-        116,
-        111
+        56,
+        27,
+        121,
+        132
       ]
     },
     "death_1": {
+      "sheet": "full",
       "visible": [
-        29,
-        42,
-        136,
-        111
+        31,
+        60,
+        143,
+        132
       ]
     },
     "death_2": {
+      "sheet": "full",
       "visible": [
-        24,
-        37,
-        131,
-        111
+        25,
+        55,
+        137,
+        132
       ]
     },
     "death_3": {
+      "sheet": "full",
       "visible": [
-        40,
-        43,
-        152,
-        111
+        42,
+        61,
+        159,
+        132
       ]
     },
     "victory_1": {
+      "sheet": "full",
       "visible": [
-        34,
-        4,
-        117,
-        111
+        37,
+        20,
+        124,
+        132
       ]
     },
     "victory_2": {
+      "sheet": "full",
       "visible": [
-        22,
-        3,
-        118,
-        111
+        24,
+        19,
+        124,
+        132
       ]
     },
     "victory_3": {
+      "sheet": "full",
       "visible": [
-        39,
-        2,
-        128,
-        111
+        41,
+        19,
+        134,
+        132
       ]
     },
     "victory_4": {
+      "sheet": "full",
       "visible": [
-        36,
-        3,
-        128,
-        111
+        38,
+        20,
+        134,
+        132
       ]
     }
   },
@@ -601,6 +912,7 @@
     "swim": "el agua y las burbujas están fundidas con el personaje; hace falta arte sin fondo",
     "fire_attack_2": "las llamas envuelven al personaje",
     "bomb_wait / explosion_reaction": "poses de apoyo; no las usa ningún estado todavía",
-    "specials": "auras de poder fundidas con el personaje (fase de poderes)"
+    "specials": "auras de poder fundidas con el personaje (fase de poderes)",
+    "moves: idle 5-15, walk 10-14, correr": "variantes con polvo o giros; correr está desactivado en el arcade"
   }
 }

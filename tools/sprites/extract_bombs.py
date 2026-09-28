@@ -140,5 +140,110 @@ def main() -> None:
           f"{len(frames)} fases de explosión ({size}px)")
 
 
-if __name__ == "__main__":
+if __name__ == "__main__" and len(__import__("sys").argv) == 1:
     main()
+
+
+# ---------------------------------------------------------------------------
+# Hoja nueva (blue_penguin_moves_and_bombs.png, con transparencia): mecha animada y
+# explosión propia para cada tipo. Uso:  python3 tools/sprites/extract_bombs.py sheet
+SHEET2 = ROOT / "assets/references/characters/blue_penguin_moves_and_bombs.png"
+EXPLOSION_CANVAS = 160
+# tipo -> (cajas de la mecha, franjas x de la explosión), en píxeles de la hoja
+SHEET2_TYPES = {
+    # «Bomba normal (negra)» de la hoja -> tipo black del juego.
+    "black": ([(12, 790, 78, 892), (90, 790, 156, 892), (170, 790, 236, 892), (254, 790, 322, 892),
+               (338, 790, 404, 892), (422, 790, 488, 892)],
+              [(10, 75), (75, 145), (145, 232), (232, 330), (330, 415), (415, 510)]),
+    "blue": ([(526, 790, 590, 892), (616, 790, 680, 892), (702, 790, 772, 892), (796, 790, 864, 892),
+              (892, 790, 962, 892)],
+             [(520, 588), (588, 665), (665, 765), (765, 880), (880, 990)]),
+    "green": ([(1000, 785, 1090, 895), (1113, 785, 1200, 895), (1218, 785, 1305, 895),
+               (1321, 785, 1408, 895), (1428, 785, 1515, 895)],
+              [(1005, 1085), (1085, 1170), (1170, 1275), (1275, 1385), (1385, 1510)]),
+}
+EXPLOSION_Y = (888, 1010)
+
+
+def _main_component(alpha: np.ndarray) -> np.ndarray:
+    mask = (alpha > 200).astype(np.uint8)
+    n, lab, stats, _ = cv2.connectedComponentsWithStats(mask, 8)
+    if n <= 1:
+        return mask > 0
+    return lab == 1 + int(np.argmax(stats[1:, cv2.CC_STAT_AREA]))
+
+
+def _sphere(alpha: np.ndarray) -> tuple:
+    """Esfera de la bomba: fila más ancha en la parte alta del cuerpo (evita el polvo)."""
+    comp = _main_component(alpha)
+    ys = np.nonzero(comp)[0]
+    top, bottom = ys.min(), ys.max()
+    widths = comp.sum(axis=1)
+    limit = int(bottom - (bottom - top) * 0.12)
+    row = int(np.argmax(widths[:limit]))
+    cols = np.nonzero(comp[row])[0]
+    d = float(cols.max() - cols.min() + 1)
+    return (cols.min() + cols.max()) / 2.0, row, d
+
+
+def extract_sheet2() -> None:
+    sheet = np.array(Image.open(SHEET2).convert("RGBA"))
+    root_dir = ROOT / "assets/bombs"
+    summary = {}
+    for bid, (fuse_boxes, fx_cols) in SHEET2_TYPES.items():
+        out = root_dir / bid
+        out.mkdir(parents=True, exist_ok=True)
+        # Mecha: la hoja dibuja la bomba con tamaños algo distintos en cada fotograma; como es
+        # el mismo objeto, cada fotograma se ajusta para que la ESFERA mida SPHERE_DIAMETER y
+        # quede centrada (así la bomba no «late» ni tiembla al animar la mecha).
+        fuse_files = []
+        for i, (x0, y0, x1, y1) in enumerate(fuse_boxes, 1):
+            cell = sheet[y0:y1, x0:x1].copy()
+            cx, cy, d = _sphere(cell[..., 3])
+            scale = SPHERE_DIAMETER / d
+            # Quita el polvo del suelo: lo que queda por debajo de la esfera.
+            r = d / 2.0
+            yy, xx = np.mgrid[0:cell.shape[0], 0:cell.shape[1]]
+            below = (yy > cy + r * 0.75) & ((xx - cx) ** 2 + (yy - cy) ** 2 > (r + 1) ** 2)
+            cell[below, 3] = 0
+            img = Image.fromarray(cell)
+            img = img.resize((round(img.width * scale), round(img.height * scale)), Image.LANCZOS)
+            canvas = Image.new("RGBA", (BOMB_CANVAS, BOMB_CANVAS), (0, 0, 0, 0))
+            canvas.alpha_composite(img, (round(BOMB_CANVAS / 2 - cx * scale), round(BOMB_CANVAS / 2 - cy * scale)))
+            canvas.save(out / f"fuse_{i}.png")
+            fuse_files.append(f"fuse_{i}.png")
+        # Explosión: franjas de la hoja; escala única por tipo para que la fase más grande
+        # quepa en el lienzo; cada fase se centra en su caja visible.
+        cells = [sheet[EXPLOSION_Y[0]:EXPLOSION_Y[1], a:b].copy() for a, b in fx_cols]
+        boxes = []
+        for c in cells:
+            ys, xs = np.nonzero(c[..., 3] > 40)
+            boxes.append((xs.min(), ys.min(), xs.max() + 1, ys.max() + 1))
+        biggest = max(max(b[2] - b[0], b[3] - b[1]) for b in boxes)
+        fx_scale = (EXPLOSION_CANVAS - 8) / biggest
+        fx_files = []
+        visible_diameter = 0.0
+        for i, (c, b) in enumerate(zip(cells, boxes), 1):
+            crop = Image.fromarray(c).crop(b)
+            crop = crop.resize((max(1, round(crop.width * fx_scale)), max(1, round(crop.height * fx_scale))), Image.LANCZOS)
+            canvas = Image.new("RGBA", (EXPLOSION_CANVAS, EXPLOSION_CANVAS), (0, 0, 0, 0))
+            canvas.alpha_composite(crop, ((EXPLOSION_CANVAS - crop.width) // 2, (EXPLOSION_CANVAS - crop.height) // 2))
+            canvas.save(out / f"explosion_{i}.png")
+            fx_files.append(f"explosion_{i}.png")
+            visible_diameter = max(visible_diameter, float(max(crop.width, crop.height)))
+        manifest = {
+            "source": str(SHEET2.relative_to(ROOT)),
+            "sphere_diameter": SPHERE_DIAMETER,
+            "explosion_diameter": visible_diameter,
+            "animations": {
+                "fuse": {"frames": fuse_files, "fps": 10, "loop": True},
+                "explode": {"frames": fx_files, "fps": 16, "loop": False},
+            },
+        }
+        (out / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
+        summary[bid] = (len(fuse_files), len(fx_files), visible_diameter)
+    print("bombas (hoja nueva):", summary)
+
+
+if __name__ == "__main__" and len(__import__("sys").argv) > 1 and __import__("sys").argv[1] == "sheet":
+    extract_sheet2()
