@@ -32,6 +32,8 @@ Lee esto antes de modificar el proyecto.
   El jugador llama a `state_machine.physics_update()` él mismo (`auto_process = false`) para
   garantizar el orden entrada → estado → `move_and_slide()`. Estados en `scripts/player/states/`.
 - **Vida**: `HealthComponent` reutilizable.
+- **Jugadores en un nivel**: usa `PlayerSpawner` (crea 1 o 2 según el modo) y `CoopCamera`
+  (colócala después del spawner en el árbol). No instancies `Player.tscn` a mano en los niveles.
 - **Animación**: separada de la lógica (`PlayerAnimator`). Nombres estándar: `idle, walk, run, jump,
   fall, land, crouch, slide, climb, lift, carry, throw, place_bomb, hurt, death, victory`
   (enemigos: `idle, walk, attack, hurt, death, special`).

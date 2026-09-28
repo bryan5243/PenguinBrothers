@@ -9,11 +9,12 @@ Controles: teclado, mando y pantalla táctil.
 
 ## Estado
 
-**Fase 2 – Pingüino azul jugable: completada.** Ver [docs/ROADMAP.md](docs/ROADMAP.md).
+**Fase 3 – Dos pingüinos y cooperativo local: completada.** Ver [docs/ROADMAP.md](docs/ROADMAP.md).
 
-Al ejecutar el proyecto se abre una pantalla de arranque con un probador de controles
-en vivo y el botón **«Probar pingüino azul»**, que abre un nivel de prueba para caminar,
-correr, saltar, agacharse, deslizarse, trepar escaleras y bajar de plataformas.
+Al ejecutar el proyecto se abre una pantalla de arranque con un probador de controles en vivo
+y los botones **«Probar en solitario»** y **«Probar cooperativo»**, que abren un nivel de prueba
+para caminar, correr, saltar, agacharse, deslizarse, trepar escaleras, bajar de plataformas y,
+en cooperativo, subirse encima del compañero.
 
 ## Cómo abrirlo
 
@@ -52,7 +53,7 @@ assets/      Arte del juego. assets/references/ contiene las hojas de diseño or
 audio/       music, sfx, voices (vacías: el audio se agregará después)
 data/        Recursos .tres configurables (jugador, mundos; luego bombas, enemigos, poderes)
 docs/        Documentación de diseño
-tests/       Pruebas automatizadas (humo + movimiento del jugador)
+tests/       Pruebas automatizadas (humo, movimiento del jugador, cooperativo)
 tools/       Generación de configuración, SpriteFrames, nivel de prueba y extracción de sprites
 ```
 

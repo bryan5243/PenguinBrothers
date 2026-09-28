@@ -7,8 +7,8 @@ hacer commit y explicar qué se hizo, qué archivos cambiaron y cuál es el sigu
 |---|---|---|
 | 1 | Arquitectura base | ✅ Completada |
 | 2 | Jugador 1 (pingüino azul): movimiento, estados, animaciones | ✅ Completada |
-| 3 | Jugador 2 (pingüino rosa) y cooperativo local | Siguiente |
-| 4 | Sistema de bombas (azul, verde, negra) con pooling | Pendiente |
+| 3 | Jugador 2 (pingüino rosa) y cooperativo local | ✅ Completada |
+| 4 | Sistema de bombas (azul, verde, negra) con pooling | Siguiente |
 | 5 | Objetos interactivos (barriles, cajas, plataformas, puertas, escaleras) y power-ups | Pendiente |
 | 6 | HUD | Pendiente |
 | 7 | Mundo 1 – Isla Palmera: nivel jugable, cámara, checkpoints, meta | Pendiente |
@@ -49,14 +49,27 @@ hacer commit y explicar qué se hizo, qué archivos cambiaron y cuál es el sigu
 - Nivel de prueba con panel de depuración, accesible desde la pantalla de arranque.
 - Prueba automática ampliada a 92 comprobaciones (36 de movimiento).
 
-## Fase 3 – Jugador 2 (siguiente)
+## Fase 3 – Jugador 2 y cooperativo (completada)
 
-1. Extraer el pingüino rosa: `python3 tools/sprites/extract_penguin.py pink` (misma herramienta)
-   y generar su `SpriteFrames`.
-2. Asignarlo al `PlayerAnimator` (`pink_penguin_frames`).
-3. Cooperativo local: aparición de 2 jugadores, cada uno con sus controles; cámara que encuadre a ambos.
-4. Colisión/interacción básica entre jugadores (pararse encima del compañero) si encaja en el diseño.
-5. Pruebas del modo cooperativo.
+- 17 fotogramas del pingüino rosa (misma herramienta; se mejoró la limpieza de nieve para ambos)
+  y su `SpriteFrames`, asignado al J2.
+- `PlayerSpawner`: 1 o 2 jugadores según el modo, con marcadores de aparición.
+- `CoopCamera`: encuadra a ambos, se aleja al separarse y los retiene en pantalla.
+- Asignación automática de mandos (1 mando en cooperativo: J1 teclado, J2 mando).
+- Plataforma sobre la cabeza: un pingüino puede subirse encima del otro y ser transportado.
+- Reaparición junto al compañero, eliminación por jugador y fin de partida solo sin jugadores.
+- Etiquetas P1/P2 y botón «Probar cooperativo» en la pantalla de arranque.
+- Pruebas: 117 comprobaciones (25 nuevas de cooperativo).
+
+## Fase 4 – Sistema de bombas (siguiente)
+
+1. Clase base `Bomb` (RigidBody2D) configurada por `BombData`: mecha, radio, daño, empuje, rebote.
+2. Tipos iniciales como datos: azul (baja/pequeña), verde (media/mayor), negra (alta/grande).
+3. Colocar (abajo + bomba) y lanzar (bomba); patear bombas; cargar y lanzar con Interactuar.
+4. Explosión: daño en área a enemigos y objetos, empuje a jugadores y bombas, reacción en cadena.
+5. Pooling de bombas y efectos; extracción de los sprites de bombas y de las poses `place_bomb`,
+   `lift`, `carry`, `throw` de la hoja de referencia.
+6. Cambiar tipo de bomba (R / Y) y límite de bombas por jugador.
 
 ## Pendientes conocidos
 

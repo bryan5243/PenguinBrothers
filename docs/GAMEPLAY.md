@@ -16,7 +16,13 @@ Se configuran en `tools/setup_project.gd`.
 | Cambiar bomba | R | Enter / Num 2 | Y |
 | Pausa | Esc / P | Esc / P | Start |
 
-- Mando 1 controla al Jugador 1 y mando 2 al Jugador 2.
+- **Mandos** (`InputManager.refresh_gamepads()`, se recalcula al conectar o desconectar):
+
+  | Mandos conectados | Individual | Cooperativo |
+  |---|---|---|
+  | 0 | J1 con teclado (WASD o flechas) | J1 WASD, J2 flechas |
+  | 1 | J1 con teclado o mando | **J1 teclado, J2 mando** |
+  | 2 o más | J1 con cualquiera | Mando 1 → J1, mando 2 → J2 (el teclado sigue funcionando) |
 - **Modo individual**: el Jugador 1 acepta también los controles del Jugador 2
   (flechas, segundo mando). Así se puede jugar solo con las flechas, como pide el diseño.
 - **Pantalla táctil** (Fase 11): joystick virtual + botones Saltar, Bomba, Interactuar,
@@ -72,10 +78,30 @@ Idle ⇄ Move ──(abajo corriendo)──> Slide ──> Crouch / Idle
 
 ### Nivel de prueba
 
-`scenes/worlds/test_level/PlayerTestLevel.tscn` (desde la pantalla de arranque: «Probar pingüino azul»).
-Incluye plataformas, escalón, escalera, túnel bajo, vacío y panel de depuración (estado, velocidad,
-vida, vidas, animación). Se genera con `tools/build_player_test_level.gd`; su geometría usa
-placeholders de color hasta tener los tiles del Mundo 1 (Fase 7).
+`scenes/worlds/test_level/PlayerTestLevel.tscn` (pantalla de arranque: «Probar en solitario» o
+«Probar cooperativo»). Incluye plataformas, escalón, escalera, túnel bajo, vacío y panel de
+depuración (estado, vida, vidas y velocidad de cada jugador, zoom de cámara). Se genera con
+`tools/build_player_test_level.gd`; su geometría usa placeholders de color hasta tener los
+tiles del Mundo 1 (Fase 7).
+
+## Cooperativo local (Fase 3 · implementado)
+
+- **Aparición**: `PlayerSpawner` (`scripts/worlds/player_spawner.gd`) crea 1 o 2 jugadores según
+  `GameManager.game_mode`, en sus marcadores `P1` y `P2`. J1 = pingüino azul, J2 = pingüino rosa.
+- **Etiquetas**: «P1» / «P2» sobre cada pingüino, solo en cooperativo.
+- **Cámara compartida**: `CoopCamera` (`scripts/utilities/coop_camera.gd`) sigue el centro de los
+  jugadores vivos, se aleja hasta `min_zoom` (0,72) si se separan y, si aun así no caben, no deja
+  que ninguno salga de la pantalla. Respeta los límites del nivel. Parámetros exportados:
+  `max_zoom`, `min_zoom`, `zoom_speed`, `margin`, `view_offset`, `screen_edge_padding`.
+- **Pararse sobre el compañero**: cada pingüino tiene una plataforma atravesable sobre la cabeza
+  (`HeadPlatform`, capa 6, `head_platform_offset` = 12 px sobre la colisión). El de arriba es
+  transportado si el de abajo camina o salta, y baja con abajo + saltar. Útil para llegar más alto.
+- **Los jugadores no chocan entre sí** de lado: pueden cruzarse libremente.
+- **Vidas por jugador**: al morir, cada uno reaparece **junto a su compañero** si está vivo y en el
+  suelo (si no, en el punto de inicio). Sin vidas queda **eliminado** (`EventBus.player_eliminated`);
+  la partida termina (`EventBus.game_over`) solo cuando no queda ningún jugador activo.
+- Preparado para después: revivir al compañero, compartir objetos, ataques combinados,
+  puntuación individual y de equipo (`GameManager.scores` ya es por jugador).
 
 ## Animaciones
 
@@ -90,9 +116,10 @@ personaje incompleto no rompe el juego. También gestiona efectos visuales sin a
 jugabilidad: estirar/aplastar al saltar y aterrizar, destello rojo al recibir daño y parpadeo
 durante la invulnerabilidad. Poderes y transformaciones añadirán `SpriteFrames` alternativos.
 
-### Sprites del pingüino azul
+### Sprites de los pingüinos
 
-`assets/characters/blue_penguin/` (extraídos de la hoja de referencia):
+`assets/characters/blue_penguin/` y `assets/characters/pink_penguin/` (extraídos de la hoja de
+referencia con la misma herramienta; ambos tienen las mismas animaciones):
 
 | Animación | Fotogramas | Nota |
 |---|---|---|
@@ -108,12 +135,13 @@ durante la invulnerabilidad. Poderes y transformaciones añadirán `SpriteFrames
 | `hurt`, `death`, `victory` | — | **No existen en la hoja.** Se usan respaldos (`fall`/`idle`) con efectos. Pendiente de arte |
 | `lift`, `carry`, `throw`, `place_bomb` | — | Están en la hoja; se extraerán en las Fases 4–5 |
 
-Todos los fotogramas comparten un lienzo de 106×85 con los pies en el borde inferior, para que
-la animación no "salte". El sprite se muestra al 90 %.
+Los fotogramas de cada personaje comparten un lienzo (108×85 el azul, 108×82 el rosa) con los pies
+en el borde inferior, para que la animación no "salte". El sprite se muestra al 90 %. En `slide`
+queda una línea fina de nieve bajo el cuerpo: recortarla más dañaba el vientre blanco.
 
 Para regenerarlos (requiere Python con `rembg`, `opencv-python-headless`, `pillow`):
 ```bash
-python3 tools/sprites/extract_penguin.py blue
+python3 tools/sprites/extract_penguin.py blue   # o pink
 godot --headless --path . --import
 godot --headless --path . -s tools/build_sprite_frames.gd
 ```
@@ -154,7 +182,8 @@ fuerza, velocidad e invulnerabilidad, con nombres y diseños originales.
 Por jugador: vida, vidas, puntuación, bomba equipada y cantidad, poder activo.
 General: mundo, nivel, tiempo y botón de pausa. Adaptado a móvil.
 
-## Cámara (Fase 7)
+## Cámara
 
-`Camera2D` con seguimiento, límites del mapa, suavizado configurable y encuadre de ambos
-jugadores en cooperativo cuando sea posible.
+`CoopCamera` (Fase 3) ya sigue a los jugadores, respeta límites, suaviza y encuadra a ambos
+en cooperativo. En la Fase 7 se ajustará a los niveles reales del Mundo 1 (límites por nivel,
+zonas de cámara si hacen falta).
