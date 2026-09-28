@@ -9,10 +9,11 @@ Controles: teclado, mando y pantalla táctil.
 
 ## Estado
 
-**Fase 1 – Arquitectura base: completada.** Ver [docs/ROADMAP.md](docs/ROADMAP.md).
+**Fase 2 – Pingüino azul jugable: completada.** Ver [docs/ROADMAP.md](docs/ROADMAP.md).
 
 Al ejecutar el proyecto se abre una pantalla de arranque con un probador de controles
-en vivo para ambos jugadores. El jugador jugable llega en la Fase 2.
+en vivo y el botón **«Probar pingüino azul»**, que abre un nivel de prueba para caminar,
+correr, saltar, agacharse, deslizarse, trepar escaleras y bajar de plataformas.
 
 ## Cómo abrirlo
 
@@ -26,6 +27,12 @@ en vivo para ambos jugadores. El jugador jugable llega en la Fase 2.
 godot --headless --path . res://tests/SmokeTest.tscn
 ```
 Termina con código 0 si todas las comprobaciones pasan.
+
+## Sprites
+
+Los fotogramas se extraen de las hojas de `assets/references/` con scripts de Python
+(ver [docs/GAMEPLAY.md](docs/GAMEPLAY.md#sprites-del-pingüino-azul)) y se convierten en
+`SpriteFrames` con `tools/build_sprite_frames.gd`.
 
 ## Regenerar configuración
 
@@ -45,8 +52,8 @@ assets/      Arte del juego. assets/references/ contiene las hojas de diseño or
 audio/       music, sfx, voices (vacías: el audio se agregará después)
 data/        Recursos .tres configurables (jugador, mundos; luego bombas, enemigos, poderes)
 docs/        Documentación de diseño
-tests/       Prueba de humo automatizada
-tools/       Scripts de generación de configuración
+tests/       Pruebas automatizadas (humo + movimiento del jugador)
+tools/       Generación de configuración, SpriteFrames, nivel de prueba y extracción de sprites
 ```
 
 ## Documentación

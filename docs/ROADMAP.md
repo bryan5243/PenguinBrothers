@@ -6,8 +6,8 @@ hacer commit y explicar qué se hizo, qué archivos cambiaron y cuál es el sigu
 | Fase | Contenido | Estado |
 |---|---|---|
 | 1 | Arquitectura base | ✅ Completada |
-| 2 | Jugador 1 (pingüino azul): movimiento, estados, animaciones | Siguiente |
-| 3 | Jugador 2 (pingüino rosa) y cooperativo local | Pendiente |
+| 2 | Jugador 1 (pingüino azul): movimiento, estados, animaciones | ✅ Completada |
+| 3 | Jugador 2 (pingüino rosa) y cooperativo local | Siguiente |
 | 4 | Sistema de bombas (azul, verde, negra) con pooling | Pendiente |
 | 5 | Objetos interactivos (barriles, cajas, plataformas, puertas, escaleras) y power-ups | Pendiente |
 | 6 | HUD | Pendiente |
@@ -36,17 +36,32 @@ hacer commit y explicar qué se hizo, qué archivos cambiaron y cuál es el sigu
 - Hojas de referencia en `assets/references/`.
 - Prueba de humo automatizada (`tests/SmokeTest.tscn`, 54 comprobaciones).
 
-## Fase 2 – Jugador 1 (siguiente)
+## Fase 2 – Jugador 1 (completada)
 
-1. Extraer los fotogramas del pingüino azul desde
-   `assets/references/characters/penguins_blue_pink_animations.png` a `assets/characters/blue_penguin/`.
-2. Crear su `SpriteFrames` con los nombres estándar de animación.
-3. Implementar los estados: Idle, Walk/Run, Jump, Fall, Land, Crouch, Slide, Climb, Hurt, Dead.
-4. Escena de prueba con suelo, plataformas y escalera para validar el movimiento.
-5. Ampliar la prueba de humo con comprobaciones de movimiento.
+- 17 fotogramas del pingüino azul extraídos de la hoja de referencia a `assets/characters/blue_penguin/`
+  (herramienta `tools/sprites/extract_penguin.py`, reutilizable para el rosa) y su `SpriteFrames`
+  generado con `tools/build_sprite_frames.gd`.
+- 10 estados: Idle, Move (caminar/correr), Jump, Fall, Land, Crouch (con gateo), Slide, Climb, Hurt, Dead.
+- Coyote time, jump buffering, salto variable, giros ágiles, plataformas atravesables, escaleras,
+  cuerpo agachado con comprobación de techo, daño con empuje e invulnerabilidad, muerte por vacío,
+  vidas y reaparición.
+- `Ladder` reutilizable (`scenes/objects/Ladder.tscn`).
+- Nivel de prueba con panel de depuración, accesible desde la pantalla de arranque.
+- Prueba automática ampliada a 92 comprobaciones (36 de movimiento).
+
+## Fase 3 – Jugador 2 (siguiente)
+
+1. Extraer el pingüino rosa: `python3 tools/sprites/extract_penguin.py pink` (misma herramienta)
+   y generar su `SpriteFrames`.
+2. Asignarlo al `PlayerAnimator` (`pink_penguin_frames`).
+3. Cooperativo local: aparición de 2 jugadores, cada uno con sus controles; cámara que encuadre a ambos.
+4. Colisión/interacción básica entre jugadores (pararse encima del compañero) si encaja en el diseño.
+5. Pruebas del modo cooperativo.
 
 ## Pendientes conocidos
 
 - **Audio**: no hay archivos todavía; `AudioManager` ya tiene las claves registradas.
+- **Animaciones sin arte**: `hurt`, `death` y `victory` no están en la hoja de los pingüinos
+  (se usan respaldos). Conviene generar esos fotogramas.
 - **Mundos 7–10**: sin hoja de escenario; solo conceptos de enemigos.
 - **iOS**: la exportación final requiere una Mac con Xcode.

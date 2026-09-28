@@ -29,6 +29,8 @@ Lee esto antes de modificar el proyecto.
 - **Datos**: clases `Resource` en `scripts/core/data/` (`PlayerConfig`, `BombData`, `EnemyData`,
   `BossData`, `PowerUpData`, `WorldData`). El contenido nuevo es un `.tres` en `data/`.
 - **Estados**: `StateMachine` + `State` genéricos (`scripts/utilities/`) para jugador, enemigos y jefes.
+  El jugador llama a `state_machine.physics_update()` él mismo (`auto_process = false`) para
+  garantizar el orden entrada → estado → `move_and_slide()`. Estados en `scripts/player/states/`.
 - **Vida**: `HealthComponent` reutilizable.
 - **Animación**: separada de la lógica (`PlayerAnimator`). Nombres estándar: `idle, walk, run, jump,
   fall, land, crouch, slide, climb, lift, carry, throw, place_bomb, hurt, death, victory`
@@ -43,4 +45,6 @@ Lee esto antes de modificar el proyecto.
 3. `assets/references/` contiene hojas de diseño completas (Godot las ignora con `.gdignore`).
    Para usarlas en el juego, extrae los fotogramas a `assets/characters/`, `assets/enemies/`, etc.
 4. Crea placeholders solo si son indispensables para probar una mecánica, y que sean fáciles de reemplazar.
+   Extracción de sprites: `tools/sprites/extract_penguin.py` (Python + rembg) → `--import` →
+   `tools/build_sprite_frames.gd`. No edites a mano los PNG de `frames/`: regenera.
 5. Los poderes inspirados en anime usan nombres, diseños y efectos **originales**.

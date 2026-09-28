@@ -26,27 +26,56 @@ Se configuran en `tools/setup_project.gd`.
 Acciones del Input Map: `p1_move_left`, `p1_move_right`, `p1_up`, `p1_crouch`, `p1_jump`,
 `p1_interact`, `p1_bomb`, `p1_switch_bomb` (igual con `p2_`) y `pause`.
 
-## Movimiento del jugador (Fase 2)
+## Movimiento del jugador (Fase 2 · implementado)
 
-Parámetros en `data/player/default_player_config.tres` (`PlayerConfig`):
+Parámetros en `PlayerConfig` (`data/player/default_player_config.tres` usa los valores por defecto):
 
-| Parámetro | Valor inicial | Descripción |
+| Parámetro | Valor | Descripción |
 |---|---|---|
-| `move_speed` | 240 | Velocidad caminando (px/s) |
-| `run_speed` | 340 | Velocidad corriendo tras `run_delay` s |
+| `move_speed` / `run_speed` | 240 / 340 | Caminar; correr tras `run_delay` (0,55 s) de movimiento continuo |
 | `acceleration` / `air_acceleration` | 2200 / 1400 | Aceleración en suelo / aire |
-| `friction` / `air_friction` | 2600 / 600 | Frenado en suelo / aire |
-| `jump_force` | 640 | Impulso de salto |
-| `gravity` / `max_fall_speed` | 1750 / 950 | Gravedad y caída máxima |
-| `jump_cut_speed` | 240 | Salto variable al soltar el botón |
-| `coyote_time` / `jump_buffer_time` | 0.10 / 0.12 s | Tolerancias de salto |
-| `slide_speed` / `slide_duration` | 520 / 0.5 s | Deslizamiento sobre el vientre |
+| `friction` / `air_friction` | 2600 / 600 | Frenado en suelo / aire (girar usa el mayor valor: giros ágiles) |
+| `jump_force` / `gravity` / `max_fall_speed` | 640 / 1750 / 950 | Salto completo ≈ 122 px |
+| `jump_cut_speed` | 400 | Salto variable: al soltar pronto ≈ 42 px |
+| `coyote_time` / `jump_buffer_time` | 0,10 / 0,12 s | Tolerancias de salto |
+| `land_duration` / `land_min_fall_speed` | 0,08 s / 380 | Aterrizaje tras caída fuerte (no bloquea el control) |
+| `slide_speed` / `slide_duration` / `slide_friction` | 520 / 0,5 s / 700 | Deslizamiento sobre el vientre |
+| `slide_trigger_ratio` | 0,85 | Agacharse a ≥ 85 % de `run_speed` inicia el deslizamiento |
+| `crawl_speed` | 110 | Gatear agachado bajo un techo bajo |
 | `climb_speed` | 180 | Escaleras |
-| `max_health` / `invulnerability_time` | 3 / 1.6 s | Vida por vida y tiempo invulnerable tras daño |
+| `drop_through_time` | 0,25 s | Tiempo que se ignoran las plataformas al bajar |
+| `body_radius` / `body_height` / `crouch_height` | 16 / 60 / 38 | Cápsula de colisión de pie y agachado |
+| `max_health` / `invulnerability_time` | 3 / 1,6 s | Vida por vida; parpadeo tras recibir daño |
+| `knockback` / `hurt_duration` | (300, −420) / 0,45 s | Empuje y tiempo sin control al recibir daño |
+| `fall_death_y` / `respawn_delay` | 1400 / 1,5 s | Caída al vacío (el nivel puede cambiar la altura) y espera antes de reaparecer |
 
-Mecánicas previstas: aceleración y frenado, salto variable, coyote time, jump buffering,
-agacharse, deslizarse corriendo + abajo, bajar de plataformas (abajo + saltar), escaleras,
-recoger/transportar/lanzar/soltar barriles y bombas.
+### Estados (`scripts/player/states/`)
+
+```
+Idle ⇄ Move ──(abajo corriendo)──> Slide ──> Crouch / Idle
+  │      │                          (bajo techo: sigue agachado y gatea)
+  │      └──(abajo)──> Crouch ──(abajo+saltar en plataforma)──> Fall
+  ├──(saltar)──> Jump ──(v ≥ 0)──> Fall ──(suelo)──> Land / Idle / Move
+  ├──(arriba en escalera)──> Climb ──(arriba del todo)──> Idle
+  │                          (saltar)──> Jump
+  └── cualquier estado: daño ──> Hurt ;  vida 0 o vacío ──> Dead ──> reaparece / fin
+```
+
+- Orden por frame: `PlayerInput.update()` → temporizadores (coyote, buffer) → estado actual → `move_and_slide()`.
+- Coyote time y jump buffering están en `Player` y los comparten todos los estados.
+- Plataformas atravesables: capa 6; se colisiona desde arriba (`one_way_collision`).
+  Abajo + saltar las atraviesa; al trepar escaleras se ignoran.
+- Escaleras: `scenes/objects/Ladder.tscn` (Area2D, capa 5). La parte superior va a la altura de la
+  plataforma a la que lleva. Arriba para subir, abajo desde lo alto para bajar, saltar para soltarse.
+- Muerte: salto y giro arcade; tras `respawn_delay` se descuenta una vida en `GameManager` y
+  reaparece en `spawn_position` (los checkpoints la actualizarán en la Fase 7). Sin vidas: `EventBus.game_over`.
+
+### Nivel de prueba
+
+`scenes/worlds/test_level/PlayerTestLevel.tscn` (desde la pantalla de arranque: «Probar pingüino azul»).
+Incluye plataformas, escalón, escalera, túnel bajo, vacío y panel de depuración (estado, velocidad,
+vida, vidas, animación). Se genera con `tools/build_player_test_level.gd`; su geometría usa
+placeholders de color hasta tener los tiles del Mundo 1 (Fase 7).
 
 ## Animaciones
 
@@ -57,8 +86,37 @@ Nombres estándar (una `SpriteFrames` por personaje; nunca una animación gigant
 | `idle`, `walk`, `run`, `jump`, `fall`, `land`, `crouch`, `slide`, `climb`, `lift`, `carry`, `throw`, `place_bomb`, `hurt`, `death`, `victory` | `idle`, `walk`, `run`, `attack`, `hurt`, `death`, `special` |
 
 `PlayerAnimator` usa respaldos si falta una animación (por ejemplo `run` → `walk`), así un
-personaje incompleto no rompe el juego. Poderes y transformaciones añadirán conjuntos de
-`SpriteFrames` alternativos.
+personaje incompleto no rompe el juego. También gestiona efectos visuales sin afectar la
+jugabilidad: estirar/aplastar al saltar y aterrizar, destello rojo al recibir daño y parpadeo
+durante la invulnerabilidad. Poderes y transformaciones añadirán `SpriteFrames` alternativos.
+
+### Sprites del pingüino azul
+
+`assets/characters/blue_penguin/` (extraídos de la hoja de referencia):
+
+| Animación | Fotogramas | Nota |
+|---|---|---|
+| `idle` | 1 | |
+| `walk` | 3 (ciclo 1-2-3-2) | |
+| `run` | 2 | |
+| `jump` | 2 | Subida y punto alto |
+| `fall` | 1 | |
+| `land` | 1 | |
+| `crouch` | 1 | |
+| `slide` | 2 | Lanzarse y deslizarse |
+| `climb` | 4 | Vista de espalda; el 3 es el 1 reflejado (la celda original no se pudo recortar limpia) |
+| `hurt`, `death`, `victory` | — | **No existen en la hoja.** Se usan respaldos (`fall`/`idle`) con efectos. Pendiente de arte |
+| `lift`, `carry`, `throw`, `place_bomb` | — | Están en la hoja; se extraerán en las Fases 4–5 |
+
+Todos los fotogramas comparten un lienzo de 106×85 con los pies en el borde inferior, para que
+la animación no "salte". El sprite se muestra al 90 %.
+
+Para regenerarlos (requiere Python con `rembg`, `opencv-python-headless`, `pillow`):
+```bash
+python3 tools/sprites/extract_penguin.py blue
+godot --headless --path . --import
+godot --headless --path . -s tools/build_sprite_frames.gd
+```
 
 ## Bombas (Fase 4)
 
