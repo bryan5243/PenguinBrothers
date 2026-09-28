@@ -32,6 +32,12 @@ Lee esto antes de modificar el proyecto.
   El jugador llama a `state_machine.physics_update()` él mismo (`auto_process = false`) para
   garantizar el orden entrada → estado → `move_and_slide()`. Estados en `scripts/player/states/`.
 - **Vida**: `HealthComponent` reutilizable.
+- **Bombas**: `Bomb` (única escena para todos los tipos, datos en `BombData`), `Explosion` y
+  `BombPool` en `scripts/bombs/`; el jugador las usa con `PlayerBombs`. Lo que deba reaccionar a
+  una explosión implementa `take_damage()` o `apply_explosion()`.
+- **Visual del jugador**: `VisualRoot` (escala global única) → `Animator`; `GroundPoint` en los pies.
+  Todos los fotogramas de un personaje comparten lienzo (pies abajo, cuerpo centrado); no escales
+  por animación ni cambies la colisión según el dibujo.
 - **Jugadores en un nivel**: usa `PlayerSpawner` (crea 1 o 2 según el modo) y `CoopCamera`
   (colócala después del spawner en el árbol). No instancies `Player.tscn` a mano en los niveles.
 - **Animación**: separada de la lógica (`PlayerAnimator`). Nombres estándar: `idle, walk, run, jump,

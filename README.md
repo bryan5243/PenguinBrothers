@@ -9,12 +9,14 @@ Controles: teclado, mando y pantalla táctil.
 
 ## Estado
 
-**Fase 3 – Dos pingüinos y cooperativo local: completada.** Ver [docs/ROADMAP.md](docs/ROADMAP.md).
+**Fase 4 – Sistema de bombas: completada.** Ver [docs/ROADMAP.md](docs/ROADMAP.md).
 
 Al ejecutar el proyecto se abre una pantalla de arranque con un probador de controles en vivo
 y los botones **«Probar en solitario»** y **«Probar cooperativo»**, que abren un nivel de prueba
 para caminar, correr, saltar, agacharse, deslizarse, trepar escaleras, bajar de plataformas y,
-en cooperativo, subirse encima del compañero.
+en cooperativo, subirse encima del compañero. También se pueden lanzar, colocar, recoger,
+patear y encadenar bombas (azul, verde y negra) contra las dianas del nivel. F1 muestra la
+depuración visual del jugador.
 
 ## Cómo abrirlo
 

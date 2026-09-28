@@ -71,19 +71,39 @@ hacer commit y explicar qué se hizo, qué archivos cambiaron y cuál es el sigu
 - Escena de validación `scenes/player/BluePenguinAnimationTest.tscn`.
 - Pruebas: 140 comprobaciones (21 nuevas de normalización).
 
-## Fase 4 – Sistema de bombas (siguiente)
+## Fase 4 – Sistema de bombas (completada)
 
-1. Clase base `Bomb` (RigidBody2D) configurada por `BombData`: mecha, radio, daño, empuje, rebote.
-2. Tipos iniciales como datos: azul (baja/pequeña), verde (media/mayor), negra (alta/grande).
-3. Colocar (abajo + bomba) y lanzar (bomba); patear bombas; cargar y lanzar con Interactuar.
-4. Explosión: daño en área a enemigos y objetos, empuje a jugadores y bombas, reacción en cadena.
-5. Pooling de bombas y efectos; extracción de los sprites de bombas (las poses `place_bomb`,
-   `lift`, `carry`, `throw` del azul ya están extraídas).
-6. Cambiar tipo de bomba (R / Y) y límite de bombas por jugador.
+- `Bomb` (RigidBody2D) única para todos los tipos, configurada por `BombData`: mecha con aviso
+  de parpadeo, radio, daño, empuje, peso, gravedad, rebote, fricción, sprite, tinte y sonido.
+- Tipos como datos (`data/bombs/*.tres`, generados por `tools/setup_project.gd`):
+  azul (1 daño, radio 72), verde (2, 112), negra (3, 152). Tipo nuevo = `.tres` nuevo.
+- `PlayerBombs`: lanzar (Q / B), lanzamiento alto (arriba + bomba), colocar (abajo + bomba),
+  recoger / llevar / lanzar (E / X), soltar (abajo + E), cambiar tipo (R / Y) saltando los que no
+  tienen munición, límite de bombas propias en juego y munición por tipo.
+- Patadas: caminar contra una bomba libre en el suelo la lanza rodando.
+- `Explosion`: consulta de área (jugadores, enemigos, bombas, objetos), daño vía `take_damage`,
+  empuje a jugadores (daño solo si el tipo tiene `hurts_players`), impulso a cuerpos rígidos y
+  reacción en cadena con retraso; temblor de cámara; `EventBus.bomb_exploded`.
+- `BombPool`: bombas y explosiones reutilizables, precargadas por nivel.
+- Sprites de bombas y de la explosión extraídos de la hoja general (`tools/sprites/extract_bombs.py`).
+- Animaciones de acción superpuestas (`throw`, `place_bomb`, `lift`) y `carry` al llevar la bomba.
+- Nivel de prueba con dianas (`TestTarget`) para comprobar daño y radio.
+- Pruebas: 173 comprobaciones (31 nuevas de bombas).
+
+## Fase 5 – Objetos interactivos (siguiente)
+
+1. Clase base de objeto cargable (reutiliza recoger/llevar/lanzar de `PlayerBombs` generalizado
+   a `carried_object`): barriles y cajas.
+2. Barriles: se lanzan contra enemigos o interruptores; cajas rompibles con explosiones.
+3. Plataformas móviles (AnimatableBody2D), interruptores y puertas.
+4. Objetos destruibles que reaccionan a `apply_explosion`.
+5. Extraer sprites de barril, caja, plataformas y escaleras de las hojas de referencia.
 
 ## Pendientes conocidos
 
-- **Audio**: no hay archivos todavía; `AudioManager` ya tiene las claves registradas.
+- **Audio**: no hay archivos todavía; `AudioManager` ya tiene las claves registradas
+  (incluidas `explosion`, `bomb_throw`, `bomb_place`, `bomb_kick`, `bomb_switch`).
+- **Pingüino rosa y bombas**: sin poses de lanzar/colocar/llevar; usa respaldos.
 - **Pingüino rosa**: sigue con el diseño anterior (9 animaciones; `hurt`, `death`, `victory`,
   `lift`, `carry`, `throw`, `place_bomb` usan respaldos). Falta una hoja completa como la del azul.
 - **Nadar** (azul): el agua de la hoja está fundida con el dibujo; hace falta arte sin fondo.

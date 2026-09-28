@@ -213,18 +213,60 @@ animación y datos de escala/colisión/GroundPoint. Teclas: 1 idle · 2 caminar 
 Las pruebas automáticas (`tests/sprite_normalization_test.gd`) comprueban lienzo común, pies en la
 línea base, escala/offset/colisión/posición constantes al cambiar de animación y flip_h.
 
-## Bombas (Fase 4)
+## Bombas (Fase 4 · implementado)
 
-Clase base reutilizable + datos (`BombData`). Tipos iniciales:
+| Acción | Cómo |
+|---|---|
+| Lanzar una bomba nueva | Bomba (Q / Ctrl der. / B) |
+| Lanzamiento alto | Arriba + Bomba |
+| Colocarla delante de los pies | Abajo + Bomba (en el suelo) |
+| Recoger una bomba libre (propia o del compañero) | Interactuar (E / Shift der. / X) cerca de ella |
+| Lanzar la que lleva | Interactuar o Bomba |
+| Soltarla suavemente | Abajo + Interactuar (o Abajo + Bomba) |
+| Patear | Caminar contra una bomba libre en el suelo |
+| Cambiar de tipo | Cambiar bomba (R / Enter / Y); salta los tipos sin munición |
 
-| Tipo | Daño | Explosión |
-|---|---|---|
-| Azul | Bajo | Pequeña |
-| Verde | Medio | Mayor |
-| Negra | Alto | Grande |
+- Se pueden usar en `Idle`, `Move`, `Jump`, `Fall`, `Land` y `Crouch` (no escalando, deslizándose,
+  herido ni muerto). Al recibir daño, subir a una escalera o morir se suelta la bomba.
+- Llevar una bomba reduce la velocidad (`carry_speed_multiplier`) y muestra `carry`; la bomba va
+  en las manos (`bomb_hold_offset`) y su mecha sigue ardiendo: si explota en las manos se pierde.
+- Límite de bombas propias en juego: `max_active_bombs` (3). Munición por tipo: `BombData.ammo`
+  (-1 = infinita).
 
-Cada bomba define sprite, animación, mecha, radio, daño, empuje, efecto, sonido y partículas.
-Tipos nuevos = nuevo `.tres`, sin duplicar código. Las bombas usarán pooling.
+### Tipos (`data/bombs/`)
+
+| Tipo | Daño | Radio | Mecha | Empuje | Peso | Rebote |
+|---|---|---|---|---|---|---|
+| Azul | 1 | 72 | 2,2 s | 380 | 0,9 | 0,40 |
+| Verde | 2 | 112 | 2,5 s | 460 | 1,0 | 0,35 |
+| Negra | 3 | 152 | 2,8 s | 560 | 1,4 | 0,25 |
+
+Un tipo nuevo es un `.tres` de `BombData` más (añádelo a `BOMBS` en `tools/setup_project.gd` para
+que se genere y entre en `PlayerConfig.bomb_types`). La lógica es la misma escena `Bomb`.
+
+### Arquitectura
+
+```
+PlayerBombs (en Player) ── pide ──> BombPool (uno por nivel, grupo "bomb_pool")
+                                      ├── Bomb × N  (RigidBody2D, capa 4)
+                                      └── Explosion × M
+Bomb: POOLED -> ARMED (mecha) <-> HELD (en las manos) -> explota -> POOLED
+Explosion.apply_to_area(): círculo de radio `explosion_radius` sobre capas 2–5
+   ├── apply_explosion(center, data, owner, source)  → Player: empuje · Bomb: cadena
+   ├── take_damage(damage, source)                   → enemigos / objetos / TestTarget
+   └── RigidBody2D                                   → impulso hacia fuera
+```
+
+- Las bombas chocan con el mundo, las plataformas atravesables y otras bombas, pero no con los
+  jugadores (se atraviesan; la patada la detecta el `KickArea` de la bomba).
+- Enemigos, jefes y objetos de fases futuras solo tienen que implementar `take_damage()` o
+  `apply_explosion()` para reaccionar a las bombas.
+- La explosión avisa por `EventBus.bomb_exploded` (la cámara tiembla) y el cambio de tipo por
+  `EventBus.bomb_type_changed` (para el HUD de la Fase 6).
+- Sprites: `assets/bombs/` (esfera normalizada a 48 px en un lienzo de 96 px; la escena la escala a
+  `body_radius`) y `assets/effects/explosion/` (5 fases), extraídos con
+  `python3 tools/sprites/extract_bombs.py` de la hoja general. La bomba «normal» también se extrajo
+  para un futuro tipo.
 
 ## Vida y daño (Fase 2+)
 
