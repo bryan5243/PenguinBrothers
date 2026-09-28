@@ -19,6 +19,7 @@ signal power_up_collected(player_index: int, power_up_id: StringName)
 
 # Combate y objetos
 signal bomb_exploded(position: Vector2, radius: float, owner_index: int)
+signal bomb_type_changed(player_index: int, bomb_id: StringName)
 signal enemy_defeated(enemy_id: StringName, position: Vector2, killer_index: int)
 signal boss_health_changed(boss_id: StringName, current: int, maximum: int)
 signal boss_defeated(boss_id: StringName)

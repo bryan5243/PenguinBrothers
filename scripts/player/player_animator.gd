@@ -32,6 +32,13 @@ const SWIM := &"swim"
 const ATTACK := &"attack"
 const FIRE_ATTACK := &"fire_attack"
 
+## Con algo en las manos, estas animaciones se sustituyen por `carry`.
+const CARRY_VARIANTS: Array[StringName] = [&"idle", &"walk", &"run", &"land"]
+## Estas interrumpen cualquier acción de una sola vez en curso.
+const PRIORITY: Array[StringName] = [&"hurt", &"death", &"climb", &"slide", &"victory"]
+## Duración máxima de una acción de una sola vez (por si la animación fuera en bucle).
+const ONESHOT_MAX_TIME := 0.6
+
 ## Respaldo cuando falta una animación.
 const FALLBACKS := {
 	&"run": &"walk", &"land": &"idle", &"crouch": &"idle", &"slide": &"crouch",
@@ -52,6 +59,19 @@ var _blink_time := 0.0
 var _squash := Vector2.ONE
 var _flash_time := 0.0
 var _facing := 1
+## Lleva algo en las manos: idle/walk/run/land se muestran como `carry`.
+var carrying := false:
+	set(value):
+		if value == carrying:
+			return
+		carrying = value
+		if _oneshot == &"" and _requested != &"":
+			play_animation(_requested)
+## Animación de acción de una sola vez (lanzar, colocar, recoger) que se superpone a la del
+## estado; al terminar vuelve a la última animación pedida por el estado.
+var _oneshot := &""
+var _oneshot_left := 0.0
+var _requested := &""
 ## Rectángulo visible (sin transparencia) de cada textura, para la depuración.
 var _used_rects := {}
 
@@ -120,12 +140,42 @@ func get_visual_rect() -> Rect2:
 
 
 func play_animation(anim: StringName, restart := false) -> void:
+	_requested = anim
+	if carrying and CARRY_VARIANTS.has(anim):
+		anim = CARRY
+	if _oneshot != &"":
+		if not PRIORITY.has(anim):
+			return
+		_oneshot = &""
 	var resolved := resolve(anim)
 	if resolved == &"":
 		return
 	speed_scale = 1.0
 	if restart or animation != resolved or not is_playing():
 		play(resolved)
+
+
+## Reproduce una acción corta (THROW, PLACE_BOMB, LIFT) por encima de la animación del estado.
+func play_oneshot(anim: StringName) -> void:
+	var resolved := resolve(anim)
+	if resolved == &"":
+		return
+	_oneshot = resolved
+	var fps := sprite_frames.get_animation_speed(resolved)
+	var count := sprite_frames.get_frame_count(resolved)
+	_oneshot_left = minf(ONESHOT_MAX_TIME, count / maxf(fps, 1.0) + 0.12)
+	speed_scale = 1.0
+	play(resolved)
+
+
+func is_playing_oneshot() -> bool:
+	return _oneshot != &""
+
+
+func _end_oneshot() -> void:
+	_oneshot = &""
+	if _requested != &"":
+		play_animation(_requested, true)
 
 
 ## Devuelve la animación disponible más cercana a `anim`, o vacío si no hay ninguna.
@@ -144,6 +194,8 @@ func resolve(anim: StringName) -> StringName:
 
 ## Ajusta la velocidad de la animación actual (p. ej. caminar según la velocidad real).
 func set_playback_speed(value: float) -> void:
+	if _oneshot != &"":
+		return
 	speed_scale = maxf(0.0, value)
 
 
@@ -172,6 +224,8 @@ func set_blinking(active: bool) -> void:
 
 func reset_visual() -> void:
 	rotation = 0.0
+	_oneshot = &""
+	carrying = false
 	_squash = Vector2.ONE
 	_flash_time = 0.0
 	_blinking = false
@@ -181,6 +235,10 @@ func reset_visual() -> void:
 
 
 func _process(delta: float) -> void:
+	if _oneshot != &"":
+		_oneshot_left -= delta
+		if _oneshot_left <= 0.0:
+			_end_oneshot()
 	_squash = _squash.lerp(Vector2.ONE, minf(1.0, delta * squash_recovery))
 	# Solo el efecto pasajero de estirar/aplastar; vuelve siempre a 1.
 	scale = _squash

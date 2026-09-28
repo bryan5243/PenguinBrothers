@@ -160,8 +160,34 @@ func _configure_input() -> void:
 	_setting("input/debug_overlay", {"deadzone": 0.5, "events": [debug_key]})
 
 
+## Tipos de bomba iniciales: id, nombre, textura, daño, radio, mecha, empuje, peso, rebote, tinte.
+const BOMBS := [
+	["blue", "Bomba azul", "res://assets/bombs/blue.png", 1, 72.0, 2.2, 380.0, 0.9, 0.4, Color.WHITE],
+	["green", "Bomba verde", "res://assets/bombs/green.png", 2, 112.0, 2.5, 460.0, 1.0, 0.35, Color(0.9, 1.0, 0.85)],
+	["black", "Bomba negra", "res://assets/bombs/black.png", 3, 152.0, 2.8, 560.0, 1.4, 0.25, Color(1.0, 0.8, 0.8)],
+]
+
+
 func _create_data() -> void:
+	var bomb_types: Array[BombData] = []
+	for b in BOMBS:
+		var data := BombData.new()
+		data.id = StringName(b[0])
+		data.display_name = b[1]
+		data.texture = load(b[2])
+		data.icon = data.texture
+		data.damage = b[3]
+		data.explosion_radius = b[4]
+		data.fuse_time = b[5]
+		data.knockback = b[6]
+		data.mass = b[7]
+		data.bounce = b[8]
+		data.explosion_tint = b[9]
+		var path := "res://data/bombs/%s_bomb.tres" % b[0]
+		_save(data, path)
+		bomb_types.append(load(path))
 	var cfg := PlayerConfig.new()
+	cfg.bomb_types = bomb_types
 	_save(cfg, "res://data/player/default_player_config.tres")
 	for i in WORLDS.size():
 		var w: Array = WORLDS[i]

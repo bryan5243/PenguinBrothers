@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="BombData" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/bombs/green.png" id="1_hnivs"]
+[ext_resource type="Script" path="res://scripts/core/data/bomb_data.gd" id="2_tcjdg"]
+
+[resource]
+script = ExtResource("2_tcjdg")
+id = &"green"
+display_name = "Bomba verde"
+damage = 2
+explosion_radius = 112.0
+knockback = 460.0
+explosion_tint = Color(0.9, 1, 0.85, 1)
+fuse_time = 2.5
+texture = ExtResource("1_hnivs")
+icon = ExtResource("1_hnivs")

@@ -49,13 +49,28 @@ func _initialize() -> void:
 			["Escalera: arriba / abajo", Vector2(1225, 330)],
 			["Vacío", Vector2(1540, 560)],
 			["Túnel: corre y agáchate para deslizarte", Vector2(1860, 420)],
-			["Meta de prueba", Vector2(2560, 560)]]:
+			["Meta de prueba", Vector2(2560, 560)],
+			["Bombas: Q lanzar · S+Q colocar · E recoger · R cambiar", Vector2(560, 500)]]:
 		var l := Label.new()
 		l.text = s[0]
 		l.position = s[1]
 		l.add_theme_font_size_override("font_size", 18)
 		l.add_theme_color_override("font_color", Color(0.1, 0.18, 0.3))
 		_add(l, level_root)
+
+	# Dianas para probar las explosiones (hasta que haya enemigos, Fase 8).
+	for x in [640.0, 760.0, 2450.0]:
+		var target := StaticBody2D.new()
+		target.name = "TestTarget%d" % int(x)
+		target.set_script(load("res://scripts/worlds/test_target.gd"))
+		target.position = Vector2(x, GROUND_TOP)
+		_add(target, level_root)
+
+	# Reserva de bombas y explosiones del nivel (en el origen).
+	var pool := Node2D.new()
+	pool.name = "BombPool"
+	pool.set_script(load("res://scripts/bombs/bomb_pool.gd"))
+	_add(pool, level_root)
 
 	# Jugadores: el spawner crea 1 o 2 según el modo de juego.
 	var spawner := Node2D.new()
@@ -91,7 +106,7 @@ func _initialize() -> void:
 	_add(label, hud)
 	var help := Label.new()
 	help.name = "HelpLabel"
-	help.text = "J1: A/D, Espacio/W, S · J2: flechas (↑ salta, ↓ agacharse) · Esc: salir"
+	help.text = "J1: A/D, Espacio/W, S, Q bomba, E recoger, R cambiar · J2: flechas, 0 bomba, 1 recoger, 2 cambiar · F1 depuración · Esc salir"
 	help.anchor_top = 1.0
 	help.anchor_bottom = 1.0
 	help.offset_left = 16.0

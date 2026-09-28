@@ -42,6 +42,27 @@ extends Resource
 @export var carry_speed_multiplier := 0.85
 @export var throw_force := Vector2(440.0, -380.0)
 
+@export_group("Bombas")
+## Tipos de bomba disponibles, en el orden de «cambiar bomba» (R / Y).
+@export var bomb_types: Array[BombData] = []
+## Máximo de bombas propias en juego a la vez.
+@export var max_active_bombs := 3
+## Dónde sostiene la bomba (x hacia donde mira). Coincide con las manos de `carry`.
+@export var bomb_hold_offset := Vector2(22.0, -30.0)
+## Distancia horizontal a los pies a la que se coloca una bomba (abajo + bomba).
+@export var bomb_place_distance := 26.0
+## Lanzamiento mirando hacia arriba (arriba + bomba).
+@export var throw_up_force := Vector2(150.0, -660.0)
+## Parte de la velocidad del jugador que hereda la bomba lanzada.
+@export_range(0.0, 1.0) var throw_inherit := 0.5
+## Velocidad al soltar suavemente (abajo + interactuar/bomba con una bomba en la mano).
+@export var drop_velocity := Vector2(40.0, -40.0)
+## Alcance para recoger una bomba con Interactuar.
+@export var pickup_range := 46.0
+## Patada al caminar contra una bomba libre en el suelo.
+@export var kick_speed := 460.0
+@export var kick_min_speed := 120.0
+
 @export_group("Cuerpo")
 @export var body_radius := 16.0
 @export var body_height := 60.0

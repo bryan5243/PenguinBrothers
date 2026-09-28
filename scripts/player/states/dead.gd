@@ -17,6 +17,7 @@ func enter(_message := {}) -> void:
 	player.collision_layer = 0
 	player.collision_mask = 0
 	player.set_head_platform(false)
+	player.bombs.drop_held()
 	player.velocity = Vector2(0.0, -player.config.jump_force * DEATH_JUMP_RATIO)
 	player.animator.set_blinking(false)
 	player.animator.play_animation(PlayerAnimator.DEATH, true)

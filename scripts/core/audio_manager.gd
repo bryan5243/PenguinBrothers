@@ -20,6 +20,8 @@ const SOUND_LIBRARY := {
 	"slide": "res://audio/sfx/slide.wav",
 	"bomb_place": "res://audio/sfx/bomb_place.wav",
 	"bomb_throw": "res://audio/sfx/bomb_throw.wav",
+	"bomb_kick": "res://audio/sfx/bomb_kick.wav",
+	"bomb_switch": "res://audio/sfx/bomb_switch.wav",
 	"explosion": "res://audio/sfx/explosion.wav",
 	"hit": "res://audio/sfx/hit.wav",
 	"hurt": "res://audio/sfx/hurt.wav",

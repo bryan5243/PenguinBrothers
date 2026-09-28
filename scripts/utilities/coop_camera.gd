@@ -16,14 +16,19 @@ extends Camera2D
 ## Distancia mínima al borde de la pantalla al retener a los jugadores.
 @export var screen_edge_padding := 36.0
 @export var keep_players_on_screen := true
+## Temblor al explotar una bomba (px máximos) y cuánto dura en segundos.
+@export var shake_strength := 7.0
+@export var shake_duration := 0.25
 
 var targets: Array[Node2D] = []
+var _shake := 0.0
 
 
 func _ready() -> void:
 	process_callback = Camera2D.CAMERA2D_PROCESS_PHYSICS
 	position_smoothing_enabled = true
 	make_current()
+	EventBus.bomb_exploded.connect(_on_bomb_exploded)
 	_update_targets()
 	if not targets.is_empty():
 		global_position = _center()
@@ -31,6 +36,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	_update_shake(delta)
 	_update_targets()
 	if targets.is_empty():
 		return
@@ -87,3 +93,16 @@ func _keep_on_screen() -> void:
 		elif p.global_position.x > right:
 			p.global_position.x = right
 			p.velocity.x = minf(p.velocity.x, 0.0)
+
+
+func _on_bomb_exploded(_pos: Vector2, radius: float, _owner: int) -> void:
+	_shake = maxf(_shake, shake_duration * clampf(radius / 120.0, 0.5, 1.5))
+
+
+func _update_shake(delta: float) -> void:
+	if _shake <= 0.0:
+		offset = Vector2.ZERO
+		return
+	_shake = maxf(0.0, _shake - delta)
+	var k := _shake / shake_duration
+	offset = Vector2(randf_range(-1.0, 1.0), randf_range(-1.0, 1.0)) * shake_strength * k

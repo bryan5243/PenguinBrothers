@@ -1,6 +1,7 @@
 extends Node2D
-## Nivel de prueba de los jugadores (Fases 2–3). Suelo, plataformas atravesables, escalera,
-## túnel bajo para deslizarse, escalón, un vacío mortal y un panel de depuración.
+## Nivel de prueba de los jugadores (Fases 2–4). Suelo, plataformas atravesables, escalera,
+## túnel bajo para deslizarse, escalón, un vacío mortal, dianas para las bombas y un panel
+## de depuración.
 ## Aparecen 1 o 2 pingüinos según el modo de juego. Esc/P/Start vuelve a la pantalla de arranque.
 ## F1 muestra la depuración visual del jugador (colisión, GroundPoint, centro, caja visual).
 
@@ -40,8 +41,11 @@ func _process(_delta: float) -> void:
 		var state: StringName = p.state_machine.current_state.name if p.state_machine.current_state else &"-"
 		var status := "eliminado" if GameManager.eliminated[p.player_index] else "%s · vida %d/%d · vidas %d" % [
 			state, p.health.current_health, p.health.max_health, GameManager.lives[p.player_index]]
-		lines.append("P%d %s: %s · vel (%d, %d)" % [p.player_index + 1, "azul" if p.character == 0 else "rosa",
-			status, p.velocity.x, p.velocity.y])
+		var bomb := p.bombs.current_type()
+		lines.append("P%d %s: %s · vel (%d, %d) · bomba %s (%d/%d en juego)%s" % [p.player_index + 1,
+			"azul" if p.character == 0 else "rosa", status, p.velocity.x, p.velocity.y,
+			bomb.display_name if bomb else "-", p.bombs.active_count(), p.config.max_active_bombs,
+			" · llevando bomba" if p.bombs.held_bomb else ""])
 	lines.append("Zoom de cámara: %.2f" % camera.zoom.x)
 	debug_label.text = "\n".join(lines)
 

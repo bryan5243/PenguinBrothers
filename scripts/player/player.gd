@@ -6,10 +6,12 @@ extends CharacterBody2D
 ##   VisualRoot/PlayerAnimator -> cómo se ve (separado de la lógica y de la colisión)
 ##   GroundPoint     -> punto de apoyo (pies) = origen del jugador; el sprite se alinea a él
 ##   HealthComponent -> vida, daño e invulnerabilidad
+##   PlayerBombs     -> bombas: lanzar, colocar, recoger, llevar, cambiar de tipo
 ## Aquí viven solo las utilidades compartidas por los estados (gravedad, control horizontal,
 ## temporizadores de salto, cuerpo agachado, escaleras). La lógica de cada acción está en su estado.
 ##
-## Orden por frame físico: leer entrada -> temporizadores -> estado actual -> move_and_slide.
+## Orden por frame físico: leer entrada -> temporizadores -> estado actual -> bombas ->
+## move_and_slide -> bomba sostenida sigue a las manos.
 
 signal facing_changed(direction: int)
 signal respawned
@@ -50,6 +52,7 @@ var _drop_timer := 0.0
 @onready var animator: PlayerAnimator = $VisualRoot/Animator
 @onready var ground_point: Marker2D = $GroundPoint
 @onready var health: HealthComponent = $Health
+@onready var bombs: PlayerBombs = $Bombs
 @onready var body_shape: CollisionShape2D = $CollisionShape2D
 @onready var ladder_detector: Area2D = $LadderDetector
 @onready var ceiling_check: ShapeCast2D = $CeilingCheck
@@ -74,6 +77,7 @@ func _ready() -> void:
 	health.invulnerability_changed.connect(animator.set_blinking)
 	animator.setup(character)
 	_apply_visual_scale()
+	bombs.setup(self)
 	add_collision_exception_with(head_platform)
 	# La plataforma de la cabeza se mueve a mano (top_level): un AnimatableBody2D sincronizado
 	# con la física solo sigue sus propios movimientos, y así el motor calcula su velocidad
@@ -88,8 +92,10 @@ func _physics_process(delta: float) -> void:
 	input.update()
 	_update_timers(delta)
 	state_machine.physics_update(delta)
+	bombs.handle_input()
 	move_and_slide()
 	head_platform.global_position = global_position
+	bombs.update_held()
 	if global_position.y > fall_death_y and not health.is_dead:
 		health.kill(null)
 
@@ -101,6 +107,8 @@ func apply_gravity(delta: float, multiplier := 1.0) -> void:
 
 ## Acelera o frena hacia `target_speed` (px/s, con signo). Actualiza la orientación.
 func apply_horizontal(delta: float, target_speed: float) -> void:
+	if carried_object:
+		target_speed *= config.carry_speed_multiplier
 	var on_floor := is_on_floor()
 	var rate: float
 	if is_zero_approx(target_speed):
@@ -241,8 +249,8 @@ func is_carrying() -> bool:
 	return carried_object != null and is_instance_valid(carried_object)
 
 
-func take_damage(amount: int, source: Node = null) -> void:
-	health.take_damage(amount, source)
+func take_damage(amount: int, source: Node = null) -> bool:
+	return health.take_damage(amount, source)
 
 
 ## Dónde reaparecer: junto a un compañero vivo y apoyado (cooperativo) o en el punto de inicio.
@@ -276,6 +284,7 @@ func respawn(at: Vector2 = get_respawn_position()) -> void:
 	collision_mask = 1 | (1 << (PLATFORM_LAYER - 1))
 	visible = true
 	set_head_platform(true)
+	bombs.drop_held()
 	animator.reset_visual()
 	state_machine.transition_to(&"Idle")
 	EventBus.player_respawned.emit(player_index)
@@ -292,9 +301,25 @@ func _on_damaged(amount: int, source: Node) -> void:
 		if not is_zero_approx(dx):
 			dir = signf(dx)
 	velocity = Vector2(dir * config.knockback.x, config.knockback.y)
+	bombs.drop_held()
 	animator.flash()
 	AudioManager.play_sfx("hurt")
 	state_machine.transition_to(&"Hurt")
+
+
+## Alcanzado por una explosión (lo llama Explosion). Las bombas empujan a los jugadores;
+## solo dañan si el tipo tiene `hurts_players`.
+func apply_explosion(center: Vector2, data: BombData, _owner_index: int, source: Node) -> void:
+	if not is_alive():
+		return
+	if data.hurts_players and take_damage(data.damage, source):
+		return
+	var dx := global_position.x - center.x
+	var dir := signf(dx) if not is_zero_approx(dx) else float(-facing)
+	velocity = Vector2(dir * data.knockback, -data.knockback * 0.6)
+	var state_name := state_machine.current_state.name if state_machine.current_state else &""
+	if state_name != &"Climb" and state_name != &"Hurt":
+		state_machine.transition_to(&"Fall")
 
 
 func _setup_tag() -> void:

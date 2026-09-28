@@ -7,6 +7,7 @@ var ladder: Ladder
 
 func enter(message := {}) -> void:
 	ladder = message.get("ladder")
+	player.bombs.drop_held()
 	player.set_low_profile(false)
 	player.set_platform_collision(false)
 	player.velocity = Vector2.ZERO
