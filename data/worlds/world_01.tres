@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="WorldData" format=3]
+
+[ext_resource type="Script" path="res://scripts/core/data/world_data.gd" id="1_p18wt"]
+
+[resource]
+script = ExtResource("1_p18wt")
+id = &"isla_palmera"
+display_name = "Isla Palmera"
+description = "Playa, palmeras, agua, puentes y zonas submarinas."
+enemy_ids = Array[StringName]([&"small_crab", &"seagull", &"hermit_crab", &"small_octopus"])
+boss_id = &"orca_ninja"
+music_key = "music_world_01"
+unlocked_by_default = true

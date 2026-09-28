@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="WorldData" format=3]
+
+[ext_resource type="Script" path="res://scripts/core/data/world_data.gd" id="1_pe67b"]
+
+[resource]
+script = ExtResource("1_pe67b")
+number = 8
+id = &"volcan_fuego"
+display_name = "Volcán de Fuego"
+description = "Ríos de lava, rocas ardientes y ceniza."
+enemy_ids = Array[StringName]([&"fire_lizard", &"lava_bat", &"living_rock", &"fire_elemental"])
+boss_id = &"fire_dragon"
+music_key = "music_world_08"

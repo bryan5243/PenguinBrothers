@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="WorldData" format=3]
+
+[ext_resource type="Script" path="res://scripts/core/data/world_data.gd" id="1_nau64"]
+
+[resource]
+script = ExtResource("1_nau64")
+number = 4
+id = &"mar_profundo"
+display_name = "Mar Profundo"
+description = "Ruinas submarinas, corales y corrientes."
+enemy_ids = Array[StringName]([&"pufferfish", &"jellyfish", &"electric_eel", &"squid"])
+boss_id = &"great_white_shark"
+music_key = "music_world_04"

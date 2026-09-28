@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="WorldData" format=3]
+
+[ext_resource type="Script" path="res://scripts/core/data/world_data.gd" id="1_3q8v3"]
+
+[resource]
+script = ExtResource("1_3q8v3")
+number = 2
+id = &"templo_oriental"
+display_name = "Templo Oriental"
+description = "Templos, faroles, tejados y jardines orientales."
+enemy_ids = Array[StringName]([&"rat_monk", &"bat", &"snake", &"tengu_warrior"])
+boss_id = &"royal_eagle"
+music_key = "music_world_02"

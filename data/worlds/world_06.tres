@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="WorldData" format=3]
+
+[ext_resource type="Script" path="res://scripts/core/data/world_data.gd" id="1_866vy"]
+
+[resource]
+script = ExtResource("1_866vy")
+number = 6
+id = &"base_robotica"
+display_name = "Base Robótica"
+description = "Fábrica, cintas transportadoras y láseres."
+enemy_ids = Array[StringName]([&"patrol_robot", &"flying_drone", &"tread_robot", &"laser_tower"])
+boss_id = &"robot_penguin"
+music_key = "music_world_06"
