@@ -1,0 +1,252 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/worlds/player_test_level.gd" id="1_enndw"]
+[ext_resource type="PackedScene" path="res://scenes/objects/Ladder.tscn" id="2_qmlde"]
+[ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="3_3hxgi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s4ly4"]
+size = Vector2(1500, 120)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wrg4h"]
+size = Vector2(1050, 120)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vhsvy"]
+size = Vector2(40, 1160)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xf5m1"]
+size = Vector2(40, 1160)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ox8ct"]
+size = Vector2(128, 60)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8dtwf"]
+size = Vector2(300, 122)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5unmj"]
+size = Vector2(192, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e4wfo"]
+size = Vector2(256, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_axqk7"]
+size = Vector2(160, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lwon7"]
+size = Vector2(260, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_62n3h"]
+size = Vector2(220, 16)
+
+[node name="PlayerTestLevel" type="Node2D" unique_id=2088957783]
+script = ExtResource("1_enndw")
+
+[node name="Background" type="CanvasLayer" parent="." unique_id=173787260]
+layer = -10
+
+[node name="Sky" type="ColorRect" parent="Background" unique_id=2007370560]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.52, 0.8, 0.96, 1)
+
+[node name="Sea" type="ColorRect" parent="Background" unique_id=1991660326]
+anchors_preset = -1
+anchor_top = 0.62
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.2, 0.55, 0.85, 1)
+
+[node name="Solid" type="StaticBody2D" parent="." unique_id=920331521]
+collision_mask = 0
+
+[node name="@CollisionShape2D@2" type="CollisionShape2D" parent="Solid" unique_id=1177495823]
+position = Vector2(750, 700)
+shape = SubResource("RectangleShape2D_s4ly4")
+
+[node name="@Polygon2D@3" type="Polygon2D" parent="Solid" unique_id=59797097]
+color = Color(0.87, 0.74, 0.5, 1)
+polygon = PackedVector2Array(0, 640, 1500, 640, 1500, 760, 0, 760)
+
+[node name="@Polygon2D@4" type="Polygon2D" parent="Solid" unique_id=1029234468]
+color = Color(0.36, 0.7, 0.3, 1)
+polygon = PackedVector2Array(0, 640, 1500, 640, 1500, 652, 0, 652)
+
+[node name="@CollisionShape2D@5" type="CollisionShape2D" parent="Solid" unique_id=972932616]
+position = Vector2(2175, 700)
+shape = SubResource("RectangleShape2D_wrg4h")
+
+[node name="@Polygon2D@6" type="Polygon2D" parent="Solid" unique_id=1304049020]
+color = Color(0.87, 0.74, 0.5, 1)
+polygon = PackedVector2Array(1650, 640, 2700, 640, 2700, 760, 1650, 760)
+
+[node name="@Polygon2D@7" type="Polygon2D" parent="Solid" unique_id=1544217766]
+color = Color(0.36, 0.7, 0.3, 1)
+polygon = PackedVector2Array(1650, 640, 2700, 640, 2700, 652, 1650, 652)
+
+[node name="@CollisionShape2D@8" type="CollisionShape2D" parent="Solid" unique_id=714123882]
+position = Vector2(-20, 180)
+shape = SubResource("RectangleShape2D_vhsvy")
+
+[node name="@Polygon2D@9" type="Polygon2D" parent="Solid" unique_id=1426950854]
+color = Color(0.56, 0.56, 0.62, 1)
+polygon = PackedVector2Array(-40, -400, 0, -400, 0, 760, -40, 760)
+
+[node name="@CollisionShape2D@10" type="CollisionShape2D" parent="Solid" unique_id=2014906723]
+position = Vector2(2720, 180)
+shape = SubResource("RectangleShape2D_xf5m1")
+
+[node name="@Polygon2D@11" type="Polygon2D" parent="Solid" unique_id=313081647]
+color = Color(0.56, 0.56, 0.62, 1)
+polygon = PackedVector2Array(2700, -400, 2740, -400, 2740, 760, 2700, 760)
+
+[node name="@CollisionShape2D@12" type="CollisionShape2D" parent="Solid" unique_id=921335112]
+position = Vector2(1064, 610)
+shape = SubResource("RectangleShape2D_ox8ct")
+
+[node name="@Polygon2D@13" type="Polygon2D" parent="Solid" unique_id=316175923]
+color = Color(0.87, 0.74, 0.5, 1)
+polygon = PackedVector2Array(1000, 580, 1128, 580, 1128, 640, 1000, 640)
+
+[node name="@Polygon2D@14" type="Polygon2D" parent="Solid" unique_id=403781003]
+color = Color(0.36, 0.7, 0.3, 1)
+polygon = PackedVector2Array(1000, 580, 1128, 580, 1128, 592, 1000, 592)
+
+[node name="@CollisionShape2D@15" type="CollisionShape2D" parent="Solid" unique_id=1499667170]
+position = Vector2(2050, 531)
+shape = SubResource("RectangleShape2D_8dtwf")
+
+[node name="@Polygon2D@16" type="Polygon2D" parent="Solid" unique_id=695529940]
+color = Color(0.56, 0.56, 0.62, 1)
+polygon = PackedVector2Array(1900, 470, 2200, 470, 2200, 592, 1900, 592)
+
+[node name="Platforms" type="StaticBody2D" parent="." unique_id=1079744180]
+collision_layer = 32
+collision_mask = 0
+
+[node name="@CollisionShape2D@17" type="CollisionShape2D" parent="Platforms" unique_id=121962018]
+position = Vector2(346, 548)
+shape = SubResource("RectangleShape2D_5unmj")
+one_way_collision = true
+
+[node name="@Polygon2D@18" type="Polygon2D" parent="Platforms" unique_id=226005323]
+color = Color(0.62, 0.42, 0.22, 1)
+polygon = PackedVector2Array(250, 540, 442, 540, 442, 556, 250, 556)
+
+[node name="@CollisionShape2D@19" type="CollisionShape2D" parent="Platforms" unique_id=558741280]
+position = Vector2(648, 448)
+shape = SubResource("RectangleShape2D_e4wfo")
+one_way_collision = true
+
+[node name="@Polygon2D@20" type="Polygon2D" parent="Platforms" unique_id=1600050088]
+color = Color(0.62, 0.42, 0.22, 1)
+polygon = PackedVector2Array(520, 440, 776, 440, 776, 456, 520, 456)
+
+[node name="@CollisionShape2D@21" type="CollisionShape2D" parent="Platforms" unique_id=1146231325]
+position = Vector2(920, 348)
+shape = SubResource("RectangleShape2D_axqk7")
+one_way_collision = true
+
+[node name="@Polygon2D@22" type="Polygon2D" parent="Platforms" unique_id=1710052393]
+color = Color(0.62, 0.42, 0.22, 1)
+polygon = PackedVector2Array(840, 340, 1000, 340, 1000, 356, 840, 356)
+
+[node name="@CollisionShape2D@23" type="CollisionShape2D" parent="Platforms" unique_id=1953247408]
+position = Vector2(1350, 408)
+shape = SubResource("RectangleShape2D_lwon7")
+one_way_collision = true
+
+[node name="@Polygon2D@24" type="Polygon2D" parent="Platforms" unique_id=506023334]
+color = Color(0.62, 0.42, 0.22, 1)
+polygon = PackedVector2Array(1220, 400, 1480, 400, 1480, 416, 1220, 416)
+
+[node name="@CollisionShape2D@25" type="CollisionShape2D" parent="Platforms" unique_id=1344165375]
+position = Vector2(2410, 528)
+shape = SubResource("RectangleShape2D_62n3h")
+one_way_collision = true
+
+[node name="@Polygon2D@26" type="Polygon2D" parent="Platforms" unique_id=2070303090]
+color = Color(0.62, 0.42, 0.22, 1)
+polygon = PackedVector2Array(2300, 520, 2520, 520, 2520, 536, 2300, 536)
+
+[node name="Ladder" parent="." unique_id=141511524 instance=ExtResource("2_qmlde")]
+position = Vector2(1300, 640)
+
+[node name="@Label@27" type="Label" parent="." unique_id=429243408]
+offset_left = 260.0
+offset_top = 470.0
+offset_right = 260.0
+offset_bottom = 470.0
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(0.1, 0.18, 0.3, 1)
+text = "Plataformas: abajo + saltar para bajar"
+
+[node name="@Label@28" type="Label" parent="." unique_id=901521447]
+offset_left = 1225.0
+offset_top = 330.0
+offset_right = 1225.0
+offset_bottom = 330.0
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(0.1, 0.18, 0.3, 1)
+text = "Escalera: arriba / abajo"
+
+[node name="@Label@29" type="Label" parent="." unique_id=1269605699]
+offset_left = 1540.0
+offset_top = 560.0
+offset_right = 1540.0
+offset_bottom = 560.0
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(0.1, 0.18, 0.3, 1)
+text = "Vacío"
+
+[node name="@Label@30" type="Label" parent="." unique_id=1990014584]
+offset_left = 1860.0
+offset_top = 420.0
+offset_right = 1860.0
+offset_bottom = 420.0
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(0.1, 0.18, 0.3, 1)
+text = "Túnel: corre y agáchate para deslizarte"
+
+[node name="@Label@31" type="Label" parent="." unique_id=1864621857]
+offset_left = 2560.0
+offset_top = 560.0
+offset_right = 2560.0
+offset_bottom = 560.0
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(0.1, 0.18, 0.3, 1)
+text = "Meta de prueba"
+
+[node name="Player" parent="." unique_id=750451036 instance=ExtResource("3_3hxgi")]
+position = Vector2(160, 640)
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=598241712]
+position = Vector2(0, -80)
+limit_left = -40
+limit_top = -200
+limit_right = 2740
+limit_bottom = 760
+position_smoothing_enabled = true
+position_smoothing_speed = 7.0
+
+[node name="DebugLayer" type="CanvasLayer" parent="." unique_id=2122716880]
+
+[node name="DebugLabel" type="Label" parent="DebugLayer" unique_id=1931825682]
+offset_left = 16.0
+offset_top = 12.0
+offset_right = 16.0
+offset_bottom = 12.0
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.05, 0.1, 0.2, 1)
+theme_override_constants/outline_size = 6
+
+[node name="HelpLabel" type="Label" parent="DebugLayer" unique_id=988132747]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -40.0
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_outline_color = Color(0.05, 0.1, 0.2, 1)
+theme_override_constants/outline_size = 6
+text = "Mover: A/D o flechas · Saltar: Espacio/W · Agacharse: S · Esc: salir"

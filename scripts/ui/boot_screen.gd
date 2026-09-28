@@ -1,7 +1,7 @@
 extends Control
-## Pantalla de arranque de la Fase 1.
-## Muestra el estado del proyecto y un probador de controles en vivo para ambos jugadores
-## (teclado, mandos y táctil), útil para verificar el Input Map en cada plataforma.
+## Pantalla de arranque de desarrollo.
+## Muestra el estado del proyecto, un probador de controles en vivo para ambos jugadores
+## (teclado, mandos y táctil) y el acceso a los niveles de prueba de cada fase.
 ## Se reemplazará por el menú principal en la Fase 10.
 
 const COMMAND_LABELS := {
@@ -12,6 +12,7 @@ const COMMAND_LABELS := {
 const DEVICE_NAMES := ["Teclado", "Mando", "Pantalla táctil"]
 const ACTIVE_COLOR := Color(1.0, 0.85, 0.3)
 const IDLE_COLOR := Color(0.55, 0.68, 0.82)
+const PLAYER_TEST_LEVEL := "res://scenes/worlds/test_level/PlayerTestLevel.tscn"
 
 var _command_labels: Array[Dictionary] = [{}, {}]
 var _device_label: Label
@@ -51,7 +52,7 @@ func _build_ui() -> void:
 	margin.add_child(root)
 
 	root.add_child(_label(ProjectSettings.get_setting("application/config/name"), 44, Color.WHITE))
-	root.add_child(_label("Fase 1 · Arquitectura base lista. El jugador llega en la Fase 2.", 22, IDLE_COLOR))
+	root.add_child(_label("Fase 2 · Pingüino azul jugable. Pruébalo en el nivel de prueba.", 22, IDLE_COLOR))
 
 	_device_label = _label("", 20, Color(0.8, 0.9, 1.0))
 	root.add_child(_device_label)
@@ -82,9 +83,19 @@ func _build_ui() -> void:
 	_mode_button.custom_minimum_size = Vector2(0, 52)
 	_mode_button.pressed.connect(_toggle_mode)
 	buttons.add_child(_mode_button)
+	var play_button := Button.new()
+	play_button.text = "  Probar pingüino azul (nivel de prueba)  "
+	play_button.custom_minimum_size = Vector2(0, 52)
+	play_button.pressed.connect(_open_player_test)
+	buttons.add_child(play_button)
 	root.add_child(_label("Los comandos se iluminan al pulsarlos. En modo individual el Jugador 1 acepta cualquier control.", 16, IDLE_COLOR))
 	_update_mode_button()
-	_mode_button.grab_focus.call_deferred()
+	play_button.grab_focus.call_deferred()
+
+
+func _open_player_test() -> void:
+	GameManager.start_new_game(GameManager.GameMode.SOLO)
+	GameManager.request_scene(PLAYER_TEST_LEVEL)
 
 
 func _toggle_mode() -> void:
