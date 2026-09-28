@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="StageData" format=3]
+
+[ext_resource type="Script" path="res://scripts/core/data/stage_data.gd" id="1_vfydh"]
+
+[resource]
+script = ExtResource("1_vfydh")
+id = &"world_01_stage_01"
+display_name = "Isla Palmera 1-1"
+screens = Array[String](["res://scenes/stages/world_01/World01_Stage01_A.tscn", "res://scenes/stages/world_01/World01_Stage01_B.tscn"])
+time_limits = Array[float]([90.0, 90.0])

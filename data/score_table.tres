@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="ScoreTable" format=3]
+
+[ext_resource type="Script" path="res://scripts/core/data/score_table.gd" id="1_bay2y"]
+
+[resource]
+script = ExtResource("1_bay2y")

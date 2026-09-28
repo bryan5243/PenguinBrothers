@@ -1,8 +1,13 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scripts/core/main.gd" id="1_main"]
+[ext_resource type="Script" path="res://scripts/ui/screen_transition.gd" id="2_transition"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_main")
 
 [node name="ScreenRoot" type="Node" parent="."]
+process_mode = 1
+
+[node name="Transition" type="CanvasLayer" parent="."]
+script = ExtResource("2_transition")

@@ -1,11 +1,14 @@
 extends Node
-## Estado global de la partida: modo de juego, mundo/nivel actual, puntuaciones y vidas.
-## No contiene lógica de nivel; los niveles leen y actualizan este estado.
+## Estado global de la partida: modo de juego (1 o 2 jugadores), mundo/fase actual, vidas,
+## continues y pausa. La puntuación vive en ScoreManager y el flujo de pantallas en
+## StageManager. No contiene lógica de nivel.
 
 enum GameMode { SOLO, COOP }
 
 const MAX_PLAYERS := 2
 const STARTING_LIVES := 3
+## Continues por partida (-1 = ilimitados, como con créditos infinitos).
+const MAX_CONTINUES := -1
 const MAIN_SCENE := "res://scenes/main/Main.tscn"
 const WORLD_DATA_PATH := "res://data/worlds/world_%02d.tres"
 const WORLD_COUNT := 10
@@ -13,23 +16,41 @@ const WORLD_COUNT := 10
 var game_mode: GameMode = GameMode.SOLO
 var current_world := 1
 var current_level := 1
-var scores: Array[int] = [0, 0]
 var lives: Array[int] = [STARTING_LIVES, STARTING_LIVES]
 var eliminated: Array[bool] = [false, false]
 var is_paused := false
+var continues_used := 0
 
 
 func start_new_game(mode: GameMode, world := 1, level := 1) -> void:
 	game_mode = mode
 	current_world = world
 	current_level = level
+	continues_used = 0
+	ScoreManager.reset()
+	_reset_lives()
+	InputManager.set_coop(mode == GameMode.COOP)
+
+
+## CONTINUE tras GAME OVER: vidas completas y puntuación a cero (estilo arcade).
+func continue_game() -> bool:
+	if MAX_CONTINUES >= 0 and continues_used >= MAX_CONTINUES:
+		return false
+	continues_used += 1
+	ScoreManager.reset()
+	_reset_lives()
+	return true
+
+
+func can_continue() -> bool:
+	return MAX_CONTINUES < 0 or continues_used < MAX_CONTINUES
+
+
+func _reset_lives() -> void:
 	for i in MAX_PLAYERS:
-		scores[i] = 0
 		lives[i] = STARTING_LIVES
 		eliminated[i] = false
-		EventBus.score_changed.emit(i, 0)
 		EventBus.lives_changed.emit(i, lives[i])
-	InputManager.set_coop(mode == GameMode.COOP)
 
 
 func player_count() -> int:
@@ -40,18 +61,13 @@ func is_coop() -> bool:
 	return game_mode == GameMode.COOP
 
 
+## Atajo de compatibilidad: la puntuación la gestiona ScoreManager.
 func add_score(player_index: int, amount: int) -> void:
-	if not _valid_player(player_index):
-		return
-	scores[player_index] += amount
-	EventBus.score_changed.emit(player_index, scores[player_index])
+	ScoreManager.add_points(player_index, amount)
 
 
 func total_score() -> int:
-	var total := 0
-	for s in scores:
-		total += s
-	return total
+	return ScoreManager.total()
 
 
 func change_lives(player_index: int, delta: int) -> int:
@@ -94,8 +110,8 @@ func get_world_data(world_number: int) -> WorldData:
 	return load(path) as WorldData
 
 
-func request_scene(scene_path: String) -> void:
-	EventBus.scene_change_requested.emit(scene_path)
+func request_scene(scene_path: String, transition: StringName = &"fade") -> void:
+	EventBus.scene_change_requested.emit(scene_path, transition)
 
 
 func _valid_player(player_index: int) -> bool:

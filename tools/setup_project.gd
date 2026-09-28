@@ -38,7 +38,9 @@ const AUTOLOADS := [
 	["SaveManager", "res://scripts/core/save_manager.gd"],
 	["AudioManager", "res://scripts/core/audio_manager.gd"],
 	["InputManager", "res://scripts/core/input_manager.gd"],
+	["ScoreManager", "res://scripts/core/score_manager.gd"],
 	["GameManager", "res://scripts/core/game_manager.gd"],
+	["StageManager", "res://scripts/core/stage_manager.gd"],
 ]
 
 const LAYERS := ["world", "players", "enemies", "bombs", "objects", "platforms", "hazards", "pickups"]
@@ -82,17 +84,18 @@ func _setting(key: String, value: Variant) -> void:
 
 func _configure_project() -> void:
 	_setting("application/config/name", "Penguin Brothers – Edición Asiática")
-	_setting("application/config/description", "Plataformas 2D cooperativo con dos pingüinos, bombas, poderes y 10 mundos.")
+	_setting("application/config/description", "Arcade de pantalla fija para 1 o 2 jugadores: pingüinos, bombas, enemigos, llave y puerta.")
 	_setting("application/config/version", "0.1.0")
 	_setting("application/run/main_scene", "res://scenes/main/Main.tscn")
 	_setting("application/config/icon", "res://icon.svg")
 	_setting("application/config/features", PackedStringArray(["4.7", "GL Compatibility"]))
 
-	# Resolución lógica 1280x720 que se adapta a cualquier proporción (16:9, 16:10, móvil, ultrawide).
-	_setting("display/window/size/viewport_width", 1280)
+	# Arcade 4:3: resolución lógica 960x720 (= 640x480 x1,5). Escala exacta a 1280x960 y
+	# 1920x1440; en pantallas 16:9 se añaden barras laterales sin deformar el área jugable.
+	_setting("display/window/size/viewport_width", 960)
 	_setting("display/window/size/viewport_height", 720)
 	_setting("display/window/stretch/mode", "canvas_items")
-	_setting("display/window/stretch/aspect", "expand")
+	_setting("display/window/stretch/aspect", "keep")
 	_setting("display/window/handheld/orientation", 4)  # horizontal con sensor
 	_setting("display/window/energy_saving/keep_screen_on", true)
 
@@ -112,6 +115,10 @@ func _configure_project() -> void:
 	for i in LAYERS.size():
 		_setting("layer_names/2d_physics/layer_%d" % (i + 1), LAYERS[i])
 
+	# Se borran y se vuelven a añadir para que el orden sea exactamente el de AUTOLOADS.
+	for a in AUTOLOADS:
+		if ProjectSettings.has_setting("autoload/" + a[0]):
+			ProjectSettings.clear("autoload/" + a[0])
 	for a in AUTOLOADS:
 		_setting("autoload/" + a[0], "*" + a[1])
 
@@ -158,6 +165,11 @@ func _configure_input() -> void:
 	debug_key.device = -1
 	debug_key.physical_keycode = KEY_F1
 	_setting("input/debug_overlay", {"deadzone": 0.5, "events": [debug_key]})
+	# Solo desarrollo: pasar a la siguiente pantalla de la fase.
+	var next_key := InputEventKey.new()
+	next_key.device = -1
+	next_key.physical_keycode = KEY_F2
+	_setting("input/debug_next_screen", {"deadzone": 0.5, "events": [next_key]})
 
 
 ## Tipos de bomba iniciales: id, nombre, textura, daño, radio, mecha, empuje, peso, rebote, tinte.
@@ -183,12 +195,24 @@ func _create_data() -> void:
 		data.mass = b[7]
 		data.bounce = b[8]
 		data.explosion_tint = b[9]
+		# Arcade: las bombas no distinguen entre jugador, enemigo u objeto.
+		data.hurts_players = true
 		var path := "res://data/bombs/%s_bomb.tres" % b[0]
 		_save(data, path)
 		bomb_types.append(load(path))
 	var cfg := PlayerConfig.new()
 	cfg.bomb_types = bomb_types
 	_save(cfg, "res://data/player/default_player_config.tres")
+	_save(ScoreTable.new(), "res://data/score_table.tres")
+	var stage := StageData.new()
+	stage.id = &"world_01_stage_01"
+	stage.world = 1
+	stage.stage = 1
+	stage.display_name = "Isla Palmera 1-1"
+	stage.screens = ["res://scenes/stages/world_01/World01_Stage01_A.tscn",
+		"res://scenes/stages/world_01/World01_Stage01_B.tscn"] as Array[String]
+	stage.time_limits = [90.0, 90.0] as Array[float]
+	_save(stage, "res://data/stages/world_01_stage_01.tres")
 	for i in WORLDS.size():
 		var w: Array = WORLDS[i]
 		var data := WorldData.new()

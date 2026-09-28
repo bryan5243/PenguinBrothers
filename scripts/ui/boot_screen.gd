@@ -1,8 +1,7 @@
 extends Control
-## Pantalla de arranque de desarrollo.
-## Muestra el estado del proyecto, un probador de controles en vivo para ambos jugadores
-## (teclado, mandos y táctil) y el acceso a los niveles de prueba de cada fase.
-## Se reemplazará por el menú principal en la Fase 10.
+## Pantalla CONTROLES (desde el título): probador de controles en vivo para ambos jugadores
+## (teclado, mandos y táctil), asignación de mandos y acceso a las herramientas de prueba
+## (laboratorio de movimiento con cámara que sigue: legado, NO es el formato del juego).
 
 const COMMAND_LABELS := {
 	&"move_left": "Izquierda", &"move_right": "Derecha", &"up": "Arriba",
@@ -13,6 +12,8 @@ const DEVICE_NAMES := ["Teclado", "Mando", "Pantalla táctil"]
 const ACTIVE_COLOR := Color(1.0, 0.85, 0.3)
 const IDLE_COLOR := Color(0.55, 0.68, 0.82)
 const PLAYER_TEST_LEVEL := "res://scenes/worlds/test_level/PlayerTestLevel.tscn"
+const TITLE_SCREEN := "res://scenes/ui/TitleScreen.tscn"
+const ANIMATION_TEST := "res://scenes/player/BluePenguinAnimationTest.tscn"
 
 var _command_labels: Array[Dictionary] = [{}, {}]
 var _device_label: Label
@@ -52,7 +53,7 @@ func _build_ui() -> void:
 	margin.add_child(root)
 
 	root.add_child(_label(ProjectSettings.get_setting("application/config/name"), 44, Color.WHITE))
-	root.add_child(_label("Fase 3 · Pingüino azul y rosa jugables, solos o en cooperativo.", 22, IDLE_COLOR))
+	root.add_child(_label("CONTROLES · Pulsa cualquier control para verlo iluminado. Esc / Start: volver.", 20, IDLE_COLOR))
 
 	_device_label = _label("", 20, Color(0.8, 0.9, 1.0))
 	root.add_child(_device_label)
@@ -76,26 +77,38 @@ func _build_ui() -> void:
 			_command_labels[p][cmd] = l
 		columns.add_child(col)
 
-	var buttons := HBoxContainer.new()
-	buttons.add_theme_constant_override("separation", 16)
+	var buttons := GridContainer.new()
+	buttons.columns = 3
+	buttons.add_theme_constant_override("h_separation", 12)
+	buttons.add_theme_constant_override("v_separation", 10)
 	root.add_child(buttons)
+	var back_button := Button.new()
+	back_button.text = "  Volver al título  "
+	back_button.custom_minimum_size = Vector2(0, 48)
+	back_button.pressed.connect(func() -> void: GameManager.request_scene(TITLE_SCREEN))
+	buttons.add_child(back_button)
 	_mode_button = Button.new()
-	_mode_button.custom_minimum_size = Vector2(0, 52)
+	_mode_button.custom_minimum_size = Vector2(0, 48)
 	_mode_button.pressed.connect(_toggle_mode)
 	buttons.add_child(_mode_button)
 	var play_button := Button.new()
-	play_button.text = "  Probar en solitario  "
-	play_button.custom_minimum_size = Vector2(0, 52)
+	play_button.text = "  Laboratorio 1J (legado)  "
+	play_button.custom_minimum_size = Vector2(0, 48)
 	play_button.pressed.connect(_open_player_test.bind(GameManager.GameMode.SOLO))
 	buttons.add_child(play_button)
 	var coop_button := Button.new()
-	coop_button.text = "  Probar cooperativo (2 jugadores)  "
-	coop_button.custom_minimum_size = Vector2(0, 52)
+	coop_button.text = "  Laboratorio 2J (legado)  "
+	coop_button.custom_minimum_size = Vector2(0, 48)
 	coop_button.pressed.connect(_open_player_test.bind(GameManager.GameMode.COOP))
 	buttons.add_child(coop_button)
+	var anim_button := Button.new()
+	anim_button.text = "  Animaciones del azul  "
+	anim_button.custom_minimum_size = Vector2(0, 48)
+	anim_button.pressed.connect(func() -> void: GameManager.request_scene(ANIMATION_TEST))
+	buttons.add_child(anim_button)
 	root.add_child(_label("Los comandos se iluminan al pulsarlos. En modo individual el Jugador 1 acepta cualquier control.", 16, IDLE_COLOR))
 	_update_mode_button()
-	play_button.grab_focus.call_deferred()
+	back_button.grab_focus.call_deferred()
 
 
 func _open_player_test(mode: GameManager.GameMode) -> void:
@@ -139,3 +152,9 @@ func _label(text: String, size: int, color: Color, wrap := true) -> Label:
 	l.add_theme_font_size_override("font_size", size)
 	l.add_theme_color_override("font_color", color)
 	return l
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed(InputManager.PAUSE_ACTION):
+		get_viewport().set_input_as_handled()
+		GameManager.request_scene(TITLE_SCREEN)
