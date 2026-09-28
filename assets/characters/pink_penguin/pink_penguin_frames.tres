@@ -1,0 +1,121 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/characters/pink_penguin/frames/climb_1.png" id="1_8ov5n"]
+[ext_resource type="Texture2D" path="res://assets/characters/pink_penguin/frames/climb_2.png" id="2_qgx4i"]
+[ext_resource type="Texture2D" path="res://assets/characters/pink_penguin/frames/climb_3.png" id="3_txe0h"]
+[ext_resource type="Texture2D" path="res://assets/characters/pink_penguin/frames/climb_4.png" id="4_w42ju"]
+[ext_resource type="Texture2D" path="res://assets/characters/pink_penguin/frames/crouch_1.png" id="5_capj7"]
+[ext_resource type="Texture2D" path="res://assets/characters/pink_penguin/frames/fall_1.png" id="6_8ask3"]
+[ext_resource type="Texture2D" path="res://assets/characters/pink_penguin/frames/idle_1.png" id="7_xg1pm"]
+[ext_resource type="Texture2D" path="res://assets/characters/pink_penguin/frames/jump_1.png" id="8_ep0dn"]
+[ext_resource type="Texture2D" path="res://assets/characters/pink_penguin/frames/jump_2.png" id="9_xn887"]
+[ext_resource type="Texture2D" path="res://assets/characters/pink_penguin/frames/land_1.png" id="10_atvqk"]
+[ext_resource type="Texture2D" path="res://assets/characters/pink_penguin/frames/run_1.png" id="11_br4hw"]
+[ext_resource type="Texture2D" path="res://assets/characters/pink_penguin/frames/run_2.png" id="12_dtxpu"]
+[ext_resource type="Texture2D" path="res://assets/characters/pink_penguin/frames/slide_1.png" id="13_dq37w"]
+[ext_resource type="Texture2D" path="res://assets/characters/pink_penguin/frames/slide_2.png" id="14_5xxip"]
+[ext_resource type="Texture2D" path="res://assets/characters/pink_penguin/frames/walk_1.png" id="15_nmgxr"]
+[ext_resource type="Texture2D" path="res://assets/characters/pink_penguin/frames/walk_2.png" id="16_ll7ci"]
+[ext_resource type="Texture2D" path="res://assets/characters/pink_penguin/frames/walk_3.png" id="17_fyeev"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_8ov5n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_qgx4i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_txe0h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_w42ju")
+}],
+"loop": 1,
+"name": &"climb",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_capj7")
+}],
+"loop": 0,
+"name": &"crouch",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_8ask3")
+}],
+"loop": 0,
+"name": &"fall",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_xg1pm")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_ep0dn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_xn887")
+}],
+"loop": 0,
+"name": &"jump",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_atvqk")
+}],
+"loop": 0,
+"name": &"land",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_br4hw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_dtxpu")
+}],
+"loop": 1,
+"name": &"run",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_dq37w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_5xxip")
+}],
+"loop": 0,
+"name": &"slide",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("15_nmgxr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_ll7ci")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_fyeev")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_ll7ci")
+}],
+"loop": 1,
+"name": &"walk",
+"speed": 10.0
+}]

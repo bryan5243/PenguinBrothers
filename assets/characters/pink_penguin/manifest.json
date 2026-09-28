@@ -1,8 +1,8 @@
 {
-  "character": "blue_penguin",
+  "character": "pink_penguin",
   "canvas": [
     108,
-    85
+    82
   ],
   "source": "assets/references/characters/penguins_blue_pink_animations.png",
   "animations": {

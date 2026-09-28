@@ -111,19 +111,21 @@ def remove_dust(rgb, mask):
 def remove_snow(rgb, mask):
     """Quita el rastro de nieve bajo el deslizamiento.
 
-    En cada columna se descarta el blanco que queda por debajo del píxel de color
-    (cuerpo, patas, pico) más bajo: eso es suelo nevado, no pingüino.
+    En cada columna se recorre desde el píxel más bajo hacia arriba quitando el tramo
+    blanco continuo: la nieve toca el suelo, mientras que el vientre y la mejilla quedan
+    separados de ella por el color del cuerpo o por el contorno oscuro de la cara.
     """
     _, s, v = hsv(rgb)
-    colored = body_colors(rgb) & mask
-    whiteish = (s < 90) & (v > 120)
+    whiteish = (s < 70) & (v > 100)
     out = mask.copy()
-    rows = np.arange(mask.shape[0])
     for x in range(mask.shape[1]):
-        col = np.nonzero(colored[:, x])[0]
-        limit = col.max() if len(col) else -1
-        below = rows > limit
-        out[below & whiteish[:, x], x] = False
+        col = np.nonzero(out[:, x])[0]
+        if len(col) == 0:
+            continue
+        y = col.max()
+        while y >= 0 and out[y, x] and whiteish[y, x]:
+            out[y, x] = False
+            y -= 1
     out = cv2.morphologyEx(out.astype(np.uint8), cv2.MORPH_OPEN, np.ones((5, 5), np.uint8)) > 0
     return keep_largest(out)
 
