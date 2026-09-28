@@ -1,21 +1,27 @@
 extends Node2D
-## Nivel de prueba del jugador (Fase 2). Suelo, plataformas atravesables, escalera,
+## Nivel de prueba de los jugadores (Fases 2–3). Suelo, plataformas atravesables, escalera,
 ## túnel bajo para deslizarse, escalón, un vacío mortal y un panel de depuración.
-## Esc/P/Start vuelve a la pantalla de arranque.
+## Aparecen 1 o 2 pingüinos según el modo de juego. Esc/P/Start vuelve a la pantalla de arranque.
 
 const BOOT_SCREEN := "res://scenes/ui/BootScreen.tscn"
 const GAME_OVER_RESTART_DELAY := 2.0
 
 @export var fall_death_y := 900.0
 
-@onready var player: Player = $Player
+var players: Array[Player] = []
+## Jugador 1 (atajo usado por las pruebas y el panel).
+var player: Player
+
+@onready var spawner: PlayerSpawner = $PlayerSpawner
+@onready var camera: CoopCamera = $CoopCamera
 @onready var debug_label: Label = $DebugLayer/DebugLabel
 
 
 func _ready() -> void:
-	if GameManager.lives[0] <= 0:
-		GameManager.start_new_game(GameManager.GameMode.SOLO)
-	player.fall_death_y = fall_death_y
+	players = spawner.players
+	player = players[0]
+	for p in players:
+		p.fall_death_y = fall_death_y
 	EventBus.game_over.connect(_on_game_over)
 
 
@@ -26,16 +32,21 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _process(_delta: float) -> void:
-	var state: StringName = player.state_machine.current_state.name if player.state_machine.current_state else &"-"
-	debug_label.text = "Estado: %s   Velocidad: (%d, %d)   Suelo: %s\nVida: %d/%d   Vidas: %d   Animación: %s" % [
-		state, player.velocity.x, player.velocity.y, "sí" if player.is_on_floor() else "no",
-		player.health.current_health, player.health.max_health, GameManager.lives[player.player_index],
-		player.animator.animation,
-	]
+	var lines: Array[String] = []
+	for p in players:
+		var state: StringName = p.state_machine.current_state.name if p.state_machine.current_state else &"-"
+		var status := "eliminado" if GameManager.eliminated[p.player_index] else "%s · vida %d/%d · vidas %d" % [
+			state, p.health.current_health, p.health.max_health, GameManager.lives[p.player_index]]
+		lines.append("P%d %s: %s · vel (%d, %d)" % [p.player_index + 1, "azul" if p.character == 0 else "rosa",
+			status, p.velocity.x, p.velocity.y])
+	lines.append("Zoom de cámara: %.2f" % camera.zoom.x)
+	debug_label.text = "\n".join(lines)
 
 
 func _on_game_over() -> void:
 	debug_label.text = "Fin de la partida · reiniciando..."
 	await get_tree().create_timer(GAME_OVER_RESTART_DELAY).timeout
-	GameManager.start_new_game(GameManager.GameMode.SOLO)
+	if not is_inside_tree():
+		return
+	GameManager.start_new_game(GameManager.game_mode)
 	GameManager.request_scene(scene_file_path)

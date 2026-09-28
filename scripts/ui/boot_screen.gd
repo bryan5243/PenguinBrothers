@@ -23,7 +23,7 @@ func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	_build_ui()
 	EventBus.input_device_changed.connect(func(_d: int) -> void: _refresh_status())
-	Input.joy_connection_changed.connect(func(_id: int, _c: bool) -> void: _refresh_status())
+	Input.joy_connection_changed.connect(func(_id: int, _c: bool) -> void: _refresh_status.call_deferred())
 	_refresh_status()
 
 
@@ -52,7 +52,7 @@ func _build_ui() -> void:
 	margin.add_child(root)
 
 	root.add_child(_label(ProjectSettings.get_setting("application/config/name"), 44, Color.WHITE))
-	root.add_child(_label("Fase 2 · Pingüino azul jugable. Pruébalo en el nivel de prueba.", 22, IDLE_COLOR))
+	root.add_child(_label("Fase 3 · Pingüino azul y rosa jugables, solos o en cooperativo.", 22, IDLE_COLOR))
 
 	_device_label = _label("", 20, Color(0.8, 0.9, 1.0))
 	root.add_child(_device_label)
@@ -84,23 +84,29 @@ func _build_ui() -> void:
 	_mode_button.pressed.connect(_toggle_mode)
 	buttons.add_child(_mode_button)
 	var play_button := Button.new()
-	play_button.text = "  Probar pingüino azul (nivel de prueba)  "
+	play_button.text = "  Probar en solitario  "
 	play_button.custom_minimum_size = Vector2(0, 52)
-	play_button.pressed.connect(_open_player_test)
+	play_button.pressed.connect(_open_player_test.bind(GameManager.GameMode.SOLO))
 	buttons.add_child(play_button)
+	var coop_button := Button.new()
+	coop_button.text = "  Probar cooperativo (2 jugadores)  "
+	coop_button.custom_minimum_size = Vector2(0, 52)
+	coop_button.pressed.connect(_open_player_test.bind(GameManager.GameMode.COOP))
+	buttons.add_child(coop_button)
 	root.add_child(_label("Los comandos se iluminan al pulsarlos. En modo individual el Jugador 1 acepta cualquier control.", 16, IDLE_COLOR))
 	_update_mode_button()
 	play_button.grab_focus.call_deferred()
 
 
-func _open_player_test() -> void:
-	GameManager.start_new_game(GameManager.GameMode.SOLO)
+func _open_player_test(mode: GameManager.GameMode) -> void:
+	GameManager.start_new_game(mode)
 	GameManager.request_scene(PLAYER_TEST_LEVEL)
 
 
 func _toggle_mode() -> void:
 	InputManager.set_coop(not InputManager.coop)
 	_update_mode_button()
+	_refresh_status()
 
 
 func _update_mode_button() -> void:
@@ -117,6 +123,12 @@ func _refresh_status() -> void:
 		(" (" + ", ".join(pad_names) + ")") if not pad_names.is_empty() else "",
 		"sí" if InputManager.is_touch_device() else "no",
 	]
+	if not pads.is_empty():
+		var who: Array[String] = []
+		for i in 2:
+			var dev := InputManager.gamepad_for_player(i)
+			who.append("J%d: %s" % [i + 1, "teclado" if dev == InputManager.NO_GAMEPAD else "mando %d" % dev])
+		_device_label.text += "\nMandos asignados · " + "  ·  ".join(who)
 
 
 func _label(text: String, size: int, color: Color, wrap := true) -> Label:

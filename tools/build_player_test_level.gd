@@ -57,20 +57,26 @@ func _initialize() -> void:
 		l.add_theme_color_override("font_color", Color(0.1, 0.18, 0.3))
 		_add(l, level_root)
 
-	var player := (load("res://scenes/player/Player.tscn") as PackedScene).instantiate(PackedScene.GEN_EDIT_STATE_INSTANCE)
-	player.name = "Player"
-	player.position = Vector2(160, GROUND_TOP)
-	_add(player, level_root)
+	# Jugadores: el spawner crea 1 o 2 según el modo de juego.
+	var spawner := Node2D.new()
+	spawner.name = "PlayerSpawner"
+	spawner.set_script(load("res://scripts/worlds/player_spawner.gd"))
+	_add(spawner, level_root)
+	for m in [["P1", Vector2(160, GROUND_TOP)], ["P2", Vector2(230, GROUND_TOP)]]:
+		var marker := Marker2D.new()
+		marker.name = m[0]
+		marker.position = m[1]
+		_add(marker, spawner)
+	# La cámara va después del spawner: se actualiza tras mover a los jugadores.
 	var cam := Camera2D.new()
-	cam.name = "Camera2D"
-	cam.position = Vector2(0, -80)
+	cam.name = "CoopCamera"
+	cam.set_script(load("res://scripts/utilities/coop_camera.gd"))
 	cam.limit_left = -40
 	cam.limit_right = int(LEVEL_WIDTH) + 40
 	cam.limit_top = -200
 	cam.limit_bottom = int(LEVEL_BOTTOM)
-	cam.position_smoothing_enabled = true
 	cam.position_smoothing_speed = 7.0
-	_add(cam, player)
+	_add(cam, level_root)
 
 	var hud := CanvasLayer.new()
 	hud.name = "DebugLayer"
@@ -85,7 +91,7 @@ func _initialize() -> void:
 	_add(label, hud)
 	var help := Label.new()
 	help.name = "HelpLabel"
-	help.text = "Mover: A/D o flechas · Saltar: Espacio/W · Agacharse: S · Esc: salir"
+	help.text = "J1: A/D, Espacio/W, S · J2: flechas (↑ salta, ↓ agacharse) · Esc: salir"
 	help.anchor_top = 1.0
 	help.anchor_bottom = 1.0
 	help.offset_left = 16.0
