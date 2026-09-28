@@ -40,7 +40,7 @@ func _ready() -> void:
 
 
 ## Bomba lista para usar (configurada con `data`, todavía guardada: llama a arm_at()).
-func acquire_bomb(data: BombData, owner_index: int) -> Bomb:
+func acquire_bomb(data: BombData, owner_index: int, level := 1, radius_mult := 1.0) -> Bomb:
 	var bomb: Bomb = null
 	for b in _bombs:
 		if b.state == Bomb.State.POOLED:
@@ -48,7 +48,7 @@ func acquire_bomb(data: BombData, owner_index: int) -> Bomb:
 			break
 	if bomb == null:
 		bomb = _new_bomb()
-	bomb.setup(data, owner_index)
+	bomb.setup(data, owner_index, level, radius_mult)
 	return bomb
 
 

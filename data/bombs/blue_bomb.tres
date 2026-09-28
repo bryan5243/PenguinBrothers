@@ -1,16 +1,19 @@
 [gd_resource type="Resource" script_class="BombData" format=3]
 
-[ext_resource type="Texture2D" path="res://assets/bombs/blue.png" id="1_h5a71"]
-[ext_resource type="Script" path="res://scripts/core/data/bomb_data.gd" id="2_uptu4"]
+[ext_resource type="SpriteFrames" path="res://assets/bombs/blue/blue_frames.tres" id="1_uptu4"]
+[ext_resource type="Texture2D" path="res://assets/bombs/blue/fuse_1.png" id="2_ybgjy"]
+[ext_resource type="Script" path="res://scripts/core/data/bomb_data.gd" id="3_hgy7w"]
 
 [resource]
-script = ExtResource("2_uptu4")
+script = ExtResource("3_hgy7w")
 id = &"blue"
-display_name = "Bomba azul"
-explosion_radius = 72.0
-knockback = 380.0
-fuse_time = 2.2
-mass = 0.9
-bounce = 0.4
-texture = ExtResource("1_h5a71")
-icon = ExtResource("1_h5a71")
+display_name = "Bomba azul (pequeña)"
+explosion_radius = 60.0
+knockback = 360.0
+fuse_time = 1.8
+body_radius = 11.0
+bounce = 0.45
+frames = ExtResource("1_uptu4")
+texture = ExtResource("2_ybgjy")
+icon = ExtResource("2_ybgjy")
+area_color = Color(0.35, 0.7, 1, 1)

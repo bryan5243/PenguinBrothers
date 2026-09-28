@@ -1,7 +1,7 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/bombs/bomb.gd" id="1_bomb"]
-[ext_resource type="Texture2D" path="res://assets/bombs/normal.png" id="2_tex"]
+[ext_resource type="SpriteFrames" path="res://assets/bombs/black/black_frames.tres" id="2_frames"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_body"]
 radius = 12.0
@@ -9,40 +9,19 @@ radius = 12.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_kick"]
 radius = 18.0
 
-[sub_resource type="Gradient" id="Gradient_spark"]
-colors = PackedColorArray(1, 0.95, 0.5, 1, 1, 0.4, 0.1, 0)
-
-[node name="Bomb" type="RigidBody2D"]
+[node name="Bomb" type="CharacterBody2D"]
 collision_layer = 8
 collision_mask = 41
-mass = 1.0
-gravity_scale = 1.8
-can_sleep = false
-lock_rotation = false
-freeze_mode = 1
+floor_snap_length = 2.0
 script = ExtResource("1_bomb")
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_tex")
+sprite_frames = ExtResource("2_frames")
+animation = &"fuse"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_body")
-
-[node name="Sparks" type="CPUParticles2D" parent="."]
-position = Vector2(7, -17)
-emitting = false
-amount = 10
-lifetime = 0.35
-local_coords = false
-direction = Vector2(0.3, -1)
-spread = 60.0
-gravity = Vector2(0, 200)
-initial_velocity_min = 25.0
-initial_velocity_max = 70.0
-scale_amount_min = 1.5
-scale_amount_max = 3.0
-color_ramp = SubResource("Gradient_spark")
 
 [node name="KickArea" type="Area2D" parent="."]
 collision_layer = 0

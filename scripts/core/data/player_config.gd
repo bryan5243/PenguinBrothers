@@ -51,6 +51,11 @@ extends Resource
 @export var bomb_types: Array[BombData] = []
 ## Máximo de bombas propias en juego a la vez.
 @export var max_active_bombs := 3
+## Niveles de poder de bomba (BOMB LEVEL 1–4): multiplicador del alcance de cada nivel.
+## El nivel 4 es el «poder especial» (más daño y rompe objetos duros, ver BombData).
+@export var bomb_power_radius: Array[float] = [1.0, 1.35, 1.7, 2.0]
+## Al perder una vida se pierde el poder de bomba acumulado (arcade).
+@export var reset_bomb_power_on_death := true
 ## Dónde sostiene la bomba (x hacia donde mira). Coincide con las manos de `carry`.
 @export var bomb_hold_offset := Vector2(22.0, -30.0)
 ## Distancia horizontal a los pies a la que se coloca una bomba (abajo + bomba).

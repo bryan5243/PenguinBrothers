@@ -18,6 +18,8 @@ var _time_label: Label
 var _combo_labels: Array[Label] = []
 var _pause_label: Label
 var _warning := false
+## Nivel de poder de bomba de cada jugador (se muestra junto a las vidas).
+var _bomb_levels: Array[int] = [1, 1]
 var _blink := 0.0
 
 
@@ -34,11 +36,16 @@ func _ready() -> void:
 	EventBus.points_awarded.connect(_on_points)
 	EventBus.pause_changed.connect(func(p: bool) -> void: _pause_label.visible = p)
 	EventBus.player_eliminated.connect(func(i: int) -> void: _on_lives(i, 0))
+	EventBus.bomb_level_changed.connect(_on_bomb_level)
 	refresh()
 
 
 ## Vuelve a leer todo del estado global (al entrar en una pantalla).
 func refresh() -> void:
+	for p in get_tree().get_nodes_in_group(&"players"):
+		var player := p as Player
+		if player and player.player_index < 2 and player.bombs.player != null:
+			_bomb_levels[player.player_index] = player.bombs.power_level
 	for i in 2:
 		var playing := i < GameManager.player_count()
 		_score_labels[i].text = "%06d" % ScoreManager.scores[i] if playing else "------"
@@ -108,7 +115,18 @@ func _on_lives(i: int, lives: int) -> void:
 	elif GameManager.eliminated[i]:
 		_lives_labels[i].text = "GAME OVER"
 	else:
-		_lives_labels[i].text = "VIDAS x%d" % lives
+		_lives_labels[i].text = "VIDAS x%d · BOMBA Lv%d" % [lives, _bomb_levels[i]]
+
+
+func get_lives_text(player_index: int) -> String:
+	return _lives_labels[player_index].text
+
+
+func _on_bomb_level(i: int, level: int) -> void:
+	if i < 2:
+		_bomb_levels[i] = level
+		_on_lives(i, GameManager.lives[i])
+
 
 
 func _on_time(seconds: int) -> void:

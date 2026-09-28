@@ -1,27 +1,37 @@
 class_name PlayerBombs
 extends Node
-## Bombas de un jugador: tipo equipado, munición, límite de bombas en juego, lanzar,
-## colocar, recoger/llevar/soltar. Player lo llama cada frame físico:
+## Bombas y objetos en las manos de un jugador: tipo de bomba equipado, munición, nivel de
+## poder (BOMB LEVEL 1–4), límite de bombas en juego, lanzar, colocar, recoger / llevar /
+## soltar cualquier CarryableBody (bombas y barriles). Player lo llama cada frame físico:
 ##   handle_input() después del estado actual y update_held() después de move_and_slide().
 ## Las patadas las detecta la propia bomba (Bomb._check_kicks) al caminar contra ella.
 ##
 ## Controles (comandos de PlayerInput):
 ##   bomb             -> lanzar una bomba nueva (arriba + bomba: lanzamiento alto)
 ##   abajo + bomb     -> colocarla en el suelo delante de los pies
-##   interact         -> recoger la bomba más cercana / lanzar la que lleva
-##   abajo + interact -> soltar suavemente la que lleva (también abajo + bomb)
+##   interact         -> recoger la bomba o el barril más cercano / lanzar lo que lleva
+##   abajo + interact -> soltar suavemente lo que lleva (también abajo + bomb)
 ##   switch_bomb      -> siguiente tipo de bomba con munición
 
 signal bomb_type_changed(data: BombData)
+signal power_level_changed(level: int)
 
 ## Estados desde los que se pueden usar bombas.
 const ACTION_STATES: Array[StringName] = [&"Idle", &"Move", &"Jump", &"Fall", &"Land", &"Crouch"]
+const MAX_LEVEL := 4
 
 var player: Player
 var current_index := 0
 ## Munición por id de tipo (-1 = infinita).
 var ammo := {}
-var held_bomb: Bomb = null
+## Nivel de poder de las bombas (1–4).
+var power_level := 1
+## Lo que lleva en las manos (bomba o barril), o null.
+var held_object: CarryableBody = null
+## Atajo: la bomba que lleva, si lo que lleva es una bomba.
+var held_bomb: Bomb:
+	get:
+		return held_object as Bomb
 var pool: BombPool
 
 
@@ -31,6 +41,7 @@ func setup(owner_player: Player) -> void:
 	for data in player.config.bomb_types:
 		ammo[data.id] = data.ammo
 	current_index = 0
+	power_level = 1
 
 
 func current_type() -> BombData:
@@ -55,13 +66,43 @@ func can_act() -> bool:
 		and ACTION_STATES.has(player.state_machine.current_state.name)
 
 
+# ------------------------------------------------------------------ nivel de poder
+func radius_multiplier() -> float:
+	var table := player.config.bomb_power_radius
+	if table.is_empty():
+		return 1.0
+	return table[clampi(power_level - 1, 0, table.size() - 1)]
+
+
+func set_power_level(level: int) -> void:
+	var clamped := clampi(level, 1, MAX_LEVEL)
+	if clamped == power_level:
+		return
+	power_level = clamped
+	power_level_changed.emit(power_level)
+	EventBus.bomb_level_changed.emit(player.player_index, power_level)
+
+
+## Sube un nivel (power-up). Devuelve false si ya estaba al máximo.
+func level_up() -> bool:
+	if power_level >= MAX_LEVEL:
+		return false
+	set_power_level(power_level + 1)
+	return true
+
+
+func reset_power() -> void:
+	set_power_level(1)
+
+
+# ------------------------------------------------------------------ entrada
 func handle_input() -> void:
 	var input := player.input
 	if input.switch_bomb_pressed:
 		switch_type()
 	if not can_act():
 		return
-	if held_bomb:
+	if held_object:
 		if input.bomb_pressed or input.interact_pressed:
 			if input.crouch_held:
 				drop_held()
@@ -77,14 +118,14 @@ func handle_input() -> void:
 			throw_new_bomb(input.up_held)
 
 
-## Mantiene la bomba sostenida en las manos del jugador.
+## Mantiene lo que lleva en las manos del jugador.
 func update_held() -> void:
-	if held_bomb == null:
+	if held_object == null:
 		return
-	if held_bomb.state != Bomb.State.HELD or held_bomb.holder != self:
+	if not is_instance_valid(held_object) or held_object.holder != self:
 		_clear_held()
 		return
-	held_bomb.global_position = hold_position()
+	held_object.global_position = hold_position()
 
 
 func hold_position() -> Vector2:
@@ -133,22 +174,23 @@ func place_bomb() -> Bomb:
 	return bomb
 
 
-## Recoge la bomba libre más cercana (propia o del compañero).
-func try_pick_up() -> Bomb:
-	var best: Bomb = null
+## Recoge el objeto libre más cercano: bomba (propia o del compañero) o barril.
+func try_pick_up() -> CarryableBody:
+	var best: CarryableBody = null
 	var best_d := player.config.pickup_range
 	var center := player.global_position + Vector2(0.0, -player.config.body_height * 0.4)
-	for b in get_pool().active_bombs():
-		if not b.is_free():
+	for node in get_tree().get_nodes_in_group(CarryableBody.GROUP):
+		var c := node as CarryableBody
+		if c == null or not c.can_be_picked_up():
 			continue
-		var d := b.global_position.distance_to(center)
+		var d := c.global_position.distance_to(center)
 		if d <= best_d:
-			best = b
+			best = c
 			best_d = d
 	if best == null:
 		return null
 	best.hold(self)
-	held_bomb = best
+	held_object = best
 	player.carried_object = best
 	player.animator.carrying = true
 	player.animator.play_oneshot(PlayerAnimator.LIFT)
@@ -158,28 +200,30 @@ func try_pick_up() -> Bomb:
 
 
 func throw_held(high := false) -> void:
-	if held_bomb == null:
+	if held_object == null:
 		return
-	var bomb := held_bomb
+	var obj := held_object
 	_clear_held()
-	bomb.release(_throw_velocity(high or player.input.up_held))
+	obj.release(_throw_velocity(high or player.input.up_held))
+	if obj.has_method(&"on_thrown"):
+		obj.on_thrown(player.player_index)
 	player.animator.play_oneshot(PlayerAnimator.THROW)
 	AudioManager.play_sfx("bomb_throw")
 
 
-## Suelta la bomba sin lanzarla (abajo + interactuar, o al recibir daño / subir escalera).
+## Suelta lo que lleva sin lanzarlo (abajo + interactuar, o al recibir daño / subir escalera).
 func drop_held() -> void:
-	if held_bomb == null:
+	if held_object == null:
 		return
-	var bomb := held_bomb
+	var obj := held_object
 	_clear_held()
 	var v := player.config.drop_velocity
-	bomb.release(Vector2(v.x * player.facing + player.velocity.x * 0.5, v.y))
+	obj.release(Vector2(v.x * player.facing + player.velocity.x * 0.5, v.y))
 
 
-## La bomba explotó en las manos (Bomb avisa al que la sostiene).
-func on_held_bomb_exploded(bomb: Bomb) -> void:
-	if bomb == held_bomb:
+## Lo que llevaba explotó o se rompió en las manos.
+func on_held_object_gone(obj: Node) -> void:
+	if obj == held_object:
 		_clear_held()
 
 
@@ -191,7 +235,7 @@ func _spawn(pos: Vector2, velocity := Vector2.ZERO) -> Bomb:
 	var p := get_pool()
 	if p.count_active(player.player_index) >= player.config.max_active_bombs:
 		return null
-	var bomb := p.acquire_bomb(data, player.player_index)
+	var bomb := p.acquire_bomb(data, player.player_index, power_level, radius_multiplier())
 	bomb.arm_at(pos, velocity)
 	if int(ammo[data.id]) > 0:
 		ammo[data.id] = int(ammo[data.id]) - 1
@@ -207,6 +251,6 @@ func _throw_velocity(high: bool) -> Vector2:
 
 
 func _clear_held() -> void:
-	held_bomb = null
+	held_object = null
 	player.carried_object = null
 	player.animator.carrying = false

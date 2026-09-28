@@ -343,16 +343,16 @@ func _push_partner(delta: float) -> void:
 		partner.move_and_collide(Vector2(dir * config.push_speed * delta, 0.0))
 
 
-## Alcanzado por una explosión (lo llama Explosion). Las bombas empujan a los jugadores;
-## solo dañan si el tipo tiene `hurts_players`.
-func apply_explosion(center: Vector2, data: BombData, _owner_index: int, source: Node) -> void:
+## Alcanzado por una explosión (lo llama Explosion). Arcade: la bomba no distingue entre
+## jugadores, enemigos u objetos; daña (si el tipo tiene `hurts_players`) y empuja.
+func apply_explosion(info: ExplosionInfo) -> void:
 	if not is_alive():
 		return
-	if data.hurts_players and take_damage(data.damage, source):
+	if info.hurts_players and take_damage(info.damage, info.source):
 		return
-	var dx := global_position.x - center.x
+	var dx := global_position.x - info.center.x
 	var dir := signf(dx) if not is_zero_approx(dx) else float(-facing)
-	velocity = Vector2(dir * data.knockback, -data.knockback * 0.6)
+	velocity = Vector2(dir * info.knockback, -info.knockback * 0.6)
 	var state_name := state_machine.current_state.name if state_machine.current_state else &""
 	if state_name != &"Climb" and state_name != &"Hurt":
 		state_machine.transition_to(&"Fall")
@@ -366,4 +366,6 @@ func _setup_tag() -> void:
 
 func _on_died() -> void:
 	EventBus.player_died.emit(player_index)
+	if config.reset_bomb_power_on_death:
+		bombs.reset_power()
 	state_machine.transition_to(&"Dead")

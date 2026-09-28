@@ -172,11 +172,13 @@ func _configure_input() -> void:
 	_setting("input/debug_next_screen", {"deadzone": 0.5, "events": [next_key]})
 
 
-## Tipos de bomba iniciales: id, nombre, textura, daño, radio, mecha, empuje, peso, rebote, tinte.
+## Tipos de bomba iniciales (hoja blue_penguin_moves_and_bombs.png: normal, pequeña, grande).
+## id, nombre, carpeta de sprites, daño, radio, mecha, empuje, radio del cuerpo, rebote, color del área.
+## El primero es el que se lleva equipado al empezar.
 const BOMBS := [
-	["blue", "Bomba azul", "res://assets/bombs/blue.png", 1, 72.0, 2.2, 380.0, 0.9, 0.4, Color.WHITE],
-	["green", "Bomba verde", "res://assets/bombs/green.png", 2, 112.0, 2.5, 460.0, 1.0, 0.35, Color(0.9, 1.0, 0.85)],
-	["black", "Bomba negra", "res://assets/bombs/black.png", 3, 152.0, 2.8, 560.0, 1.4, 0.25, Color(1.0, 0.8, 0.8)],
+	["black", "Bomba normal", "black", 2, 80.0, 2.4, 440.0, 13.0, 0.35, Color(1.0, 0.6, 0.2)],
+	["blue", "Bomba azul (pequeña)", "blue", 1, 60.0, 1.8, 360.0, 11.0, 0.45, Color(0.35, 0.7, 1.0)],
+	["green", "Bomba verde (grande)", "green", 3, 104.0, 2.8, 520.0, 15.0, 0.25, Color(0.4, 1.0, 0.45)],
 ]
 
 
@@ -186,15 +188,18 @@ func _create_data() -> void:
 		var data := BombData.new()
 		data.id = StringName(b[0])
 		data.display_name = b[1]
-		data.texture = load(b[2])
+		var folder := "res://assets/bombs/%s/" % b[2]
+		data.frames = load(folder + "%s_frames.tres" % b[2])
+		data.texture = load(folder + "fuse_1.png")
 		data.icon = data.texture
 		data.damage = b[3]
 		data.explosion_radius = b[4]
 		data.fuse_time = b[5]
 		data.knockback = b[6]
-		data.mass = b[7]
+		data.body_radius = b[7]
 		data.bounce = b[8]
-		data.explosion_tint = b[9]
+		data.area_color = b[9]
+		data.explosion_texture_diameter = float(data.frames.get_meta(&"explosion_diameter", 152.0))
 		# Arcade: las bombas no distinguen entre jugador, enemigo u objeto.
 		data.hurts_players = true
 		var path := "res://data/bombs/%s_bomb.tres" % b[0]

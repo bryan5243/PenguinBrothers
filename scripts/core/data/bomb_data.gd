@@ -11,6 +11,11 @@ extends Resource
 @export var damage := 1
 @export var explosion_radius := 96.0
 @export var knockback := 420.0
+## Poder de destrucción base: los objetos con `hardness` mayor no se rompen (ver Destructible).
+@export var break_power := 1
+## Nivel de poder 4 («poder especial»): daño y poder de destrucción extra.
+@export var special_damage_bonus := 1
+@export var special_break_bonus := 1
 ## Daña también a los jugadores, compañero incluido (arcade: la explosión no distingue).
 ## Desactivado, la explosión solo empuja a los jugadores.
 @export var hurts_players := true
@@ -27,22 +32,32 @@ extends Resource
 ## Últimos segundos de mecha en los que la bomba parpadea como aviso.
 @export var fuse_warning_time := 0.8
 
-@export_group("Física")
+@export_group("Física arcade")
 ## Radio de la esfera (colisión). El sprite se escala a este radio.
 @export var body_radius := 12.0
-@export var mass := 1.0
+## Física controlada (ver CarryableBody): gravedad, botes limitados y frenado fijos.
 @export var gravity_scale := 1.8
-## Rebote al chocar (0 = no rebota, 1 = rebote completo).
+## Fracción de velocidad vertical que conserva al botar (0 = no bota).
 @export_range(0.0, 1.0) var bounce := 0.35
-@export_range(0.0, 1.0) var friction := 0.7
-## Frenado lineal (rodar sin fin se ve raro).
-@export var linear_damp := 0.4
+@export var max_bounces := 2
+@export var min_bounce_speed := 160.0
+## Frenado al rodar por el suelo (px/s²).
+@export var ground_friction := 900.0
+## Fracción de velocidad horizontal al rebotar en una pared.
+@export_range(0.0, 1.0) var wall_bounce := 0.4
 
 @export_group("Aspecto")
+## Animaciones «fuse» (mecha encendida) y «explode» (explosión). Ver extract_bombs.py.
+@export var frames: SpriteFrames
+## Imagen fija de respaldo (y para el HUD) si no hay `frames`.
 @export var texture: Texture2D
-## Diámetro de la esfera dentro de `texture` (px). Ver tools/sprites/extract_bombs.py.
+## Diámetro de la esfera dentro de los fotogramas de la mecha (px).
 @export var texture_sphere_diameter := 48.0
+## Diámetro visible de la explosión dentro de sus fotogramas (px): se escala al radio.
+@export var explosion_texture_diameter := 152.0
 @export var icon: Texture2D
+## Color del área de la explosión (círculo que marca el alcance real).
+@export var area_color := Color(1.0, 0.6, 0.2)
 
 @export_group("Munición")
 ## Cantidad inicial de munición (-1 = infinita).

@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="PlayerConfig" format=3]
 
 [ext_resource type="Script" path="res://scripts/core/data/bomb_data.gd" id="1_wo3bp"]
-[ext_resource type="Resource" path="res://data/bombs/blue_bomb.tres" id="2_4d7xs"]
-[ext_resource type="Resource" path="res://data/bombs/green_bomb.tres" id="3_m663h"]
-[ext_resource type="Resource" path="res://data/bombs/black_bomb.tres" id="4_7h2hb"]
+[ext_resource type="Resource" path="res://data/bombs/black_bomb.tres" id="2_4d7xs"]
+[ext_resource type="Resource" path="res://data/bombs/blue_bomb.tres" id="3_m663h"]
+[ext_resource type="Resource" path="res://data/bombs/green_bomb.tres" id="4_7h2hb"]
 [ext_resource type="Script" path="res://scripts/core/data/player_config.gd" id="5_ocxx2"]
 
 [resource]
