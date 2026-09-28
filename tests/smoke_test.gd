@@ -134,6 +134,10 @@ func _run() -> void:
 	var coop: RefCounted = load("res://tests/coop_test.gd").new()
 	await coop.run(self)
 
+	print("== Bombas")
+	var bombs: RefCounted = load("res://tests/bomb_test.gd").new()
+	await bombs.run(self)
+
 	print("== Escena Main")
 	check(ProjectSettings.get_setting("application/run/main_scene") == "res://scenes/main/Main.tscn", "Main es la escena principal")
 	var main := (load("res://scenes/main/Main.tscn") as PackedScene).instantiate()
