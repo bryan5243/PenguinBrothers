@@ -61,20 +61,31 @@ hacer commit y explicar qué se hizo, qué archivos cambiaron y cuál es el sigu
 - Etiquetas P1/P2 y botón «Probar cooperativo» en la pantalla de arranque.
 - Pruebas: 117 comprobaciones (25 nuevas de cooperativo).
 
+### Corrección: normalización del Pingüino Azul (tras la Fase 3)
+
+- Nuevo diseño del azul desde `blue_penguin_full_animations.png` con
+  `tools/sprites/extract_character_sheet.py`: 18 animaciones en un lienzo común, pies en la base,
+  sin objetos ni efectos incrustados; originales en `source/`, normalizados en `processed/`.
+- Jugador con `VisualRoot` (escala global única: `visual_height` + `visual_scale`), `GroundPoint`,
+  colisión por estado (`slide_height` propio) y superposición de depuración (F1).
+- Escena de validación `scenes/player/BluePenguinAnimationTest.tscn`.
+- Pruebas: 140 comprobaciones (21 nuevas de normalización).
+
 ## Fase 4 – Sistema de bombas (siguiente)
 
 1. Clase base `Bomb` (RigidBody2D) configurada por `BombData`: mecha, radio, daño, empuje, rebote.
 2. Tipos iniciales como datos: azul (baja/pequeña), verde (media/mayor), negra (alta/grande).
 3. Colocar (abajo + bomba) y lanzar (bomba); patear bombas; cargar y lanzar con Interactuar.
 4. Explosión: daño en área a enemigos y objetos, empuje a jugadores y bombas, reacción en cadena.
-5. Pooling de bombas y efectos; extracción de los sprites de bombas y de las poses `place_bomb`,
-   `lift`, `carry`, `throw` de la hoja de referencia.
+5. Pooling de bombas y efectos; extracción de los sprites de bombas (las poses `place_bomb`,
+   `lift`, `carry`, `throw` del azul ya están extraídas).
 6. Cambiar tipo de bomba (R / Y) y límite de bombas por jugador.
 
 ## Pendientes conocidos
 
 - **Audio**: no hay archivos todavía; `AudioManager` ya tiene las claves registradas.
-- **Animaciones sin arte**: `hurt`, `death` y `victory` no están en la hoja de los pingüinos
-  (se usan respaldos). Conviene generar esos fotogramas.
+- **Pingüino rosa**: sigue con el diseño anterior (9 animaciones; `hurt`, `death`, `victory`,
+  `lift`, `carry`, `throw`, `place_bomb` usan respaldos). Falta una hoja completa como la del azul.
+- **Nadar** (azul): el agua de la hoja está fundida con el dibujo; hace falta arte sin fondo.
 - **Mundos 7–10**: sin hoja de escenario; solo conceptos de enemigos.
 - **iOS**: la exportación final requiere una Mac con Xcode.

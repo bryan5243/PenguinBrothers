@@ -8,7 +8,6 @@ func enter(_message := {}) -> void:
 	_timer = player.config.hurt_duration
 	player.set_low_profile(false)
 	player.animator.play_animation(PlayerAnimator.HURT, true)
-	player.animator.squash(Vector2(1.15, 0.85))
 
 
 func physics_update(delta: float) -> void:

@@ -7,10 +7,9 @@ var _timer := 0.0
 
 func enter(_message := {}) -> void:
 	_timer = player.config.slide_duration
-	player.set_low_profile(true)
+	player.set_low_profile(true, player.config.slide_height)
 	player.velocity.x = player.facing * maxf(player.config.slide_speed, absf(player.velocity.x))
 	player.animator.play_animation(PlayerAnimator.SLIDE, true)
-	player.animator.squash(Vector2(1.15, 0.88))
 	AudioManager.play_sfx("slide")
 
 

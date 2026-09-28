@@ -46,9 +46,19 @@ extends Resource
 @export var body_radius := 16.0
 @export var body_height := 60.0
 @export var crouch_height := 38.0
+## Altura de la colisión al deslizarse (cuerpo tumbado; mínimo 2 * body_radius).
+@export var slide_height := 32.0
 ## Altura extra de la plataforma de la cabeza sobre la colisión, para que el compañero
 ## quede apoyado sobre el dibujo (penacho incluido) y no hundido en él.
 @export var head_platform_offset := 12.0
+
+@export_group("Visual")
+## PLAYER_HEIGHT: altura lógica en pantalla (px) del fotograma de referencia (idle).
+## Cada SpriteFrames guarda la altura de su fotograma de referencia; la escala visual es
+## visual_height / reference_height * visual_scale, igual para TODAS las animaciones.
+@export var visual_height := 74.0
+## PLAYER_VISUAL_SCALE: único multiplicador global del tamaño visual (no afecta a la física).
+@export var visual_scale := 1.0
 
 @export_group("Vida")
 @export var max_health := 3

@@ -45,7 +45,25 @@ func _build(base: String, folder: String, manifest_path: String) -> bool:
 				push_error("Falta el fotograma %s (¿ejecutaste --import?)" % base.path_join(rel))
 				return false
 			frames.add_frame(anim_name, tex)
+	# Datos de normalización: todos los fotogramas comparten lienzo (pies en el borde
+	# inferior, centro del cuerpo en el centro). La altura de referencia es la del dibujo
+	# visible del primer fotograma de idle; PlayerAnimator la usa para la escala global.
+	var first := frames.get_frame_texture(&"idle", 0)
+	var canvas := Vector2i(first.get_width(), first.get_height())
+	var reference_height := int(manifest.get("reference_height", 0))
+	if reference_height <= 0:
+		reference_height = first.get_image().get_used_rect().size.y
+	for anim_name in frames.get_animation_names():
+		for i in frames.get_frame_count(anim_name):
+			var t := frames.get_frame_texture(anim_name, i)
+			if Vector2i(t.get_width(), t.get_height()) != canvas:
+				push_error("%s/%s[%d]: el lienzo %dx%d no coincide con %s" % [folder, anim_name, i,
+					t.get_width(), t.get_height(), canvas])
+				return false
+	frames.set_meta(&"canvas_size", canvas)
+	frames.set_meta(&"reference_height", reference_height)
 	var out := base.path_join("%s_frames.tres" % folder)
 	var err := ResourceSaver.save(frames, out)
-	print("  %s: %d animaciones -> %s (%s)" % [folder, animations.size(), out, error_string(err)])
+	print("  %s: %d animaciones, lienzo %s, altura de referencia %d -> %s (%s)" % [folder,
+		animations.size(), canvas, reference_height, out, error_string(err)])
 	return err == OK

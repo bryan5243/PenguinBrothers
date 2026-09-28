@@ -1,10 +1,10 @@
 extends PlayerState
-## Muerte estilo arcade: salta, gira y cae fuera de la pantalla atravesando el escenario.
+## Muerte estilo arcade: salta y cae fuera de la pantalla atravesando el escenario, con la
+## animación `death`. La lógica de muerte no depende de la colisión (se desactiva al entrar).
 ## Tras `respawn_delay` descuenta una vida y reaparece (junto al compañero en cooperativo);
 ## sin vidas queda eliminado y GameManager termina la partida si no queda nadie.
 
 const DEATH_JUMP_RATIO := 0.8
-const SPIN_SPEED := 9.0
 
 var _timer := 0.0
 var _finished := false
@@ -26,13 +26,11 @@ func enter(_message := {}) -> void:
 
 func exit() -> void:
 	player.input.enabled = true
-	player.animator.rotation = 0.0
 
 
 func physics_update(delta: float) -> void:
 	player.apply_gravity(delta)
 	player.velocity.x = 0.0
-	player.animator.rotation += SPIN_SPEED * delta * player.facing
 	_timer -= delta
 	if _timer > 0.0 or _finished:
 		return

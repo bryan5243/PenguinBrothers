@@ -2,6 +2,7 @@ extends Node2D
 ## Nivel de prueba de los jugadores (Fases 2–3). Suelo, plataformas atravesables, escalera,
 ## túnel bajo para deslizarse, escalón, un vacío mortal y un panel de depuración.
 ## Aparecen 1 o 2 pingüinos según el modo de juego. Esc/P/Start vuelve a la pantalla de arranque.
+## F1 muestra la depuración visual del jugador (colisión, GroundPoint, centro, caja visual).
 
 const BOOT_SCREEN := "res://scenes/ui/BootScreen.tscn"
 const GAME_OVER_RESTART_DELAY := 2.0
@@ -26,7 +27,9 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed(InputManager.PAUSE_ACTION):
+	if event.is_action_pressed(InputManager.DEBUG_OVERLAY_ACTION):
+		PlayerDebugOverlay.toggle()
+	elif event.is_action_pressed(InputManager.PAUSE_ACTION):
 		get_viewport().set_input_as_handled()
 		GameManager.request_scene(BOOT_SCREEN)
 

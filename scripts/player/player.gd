@@ -3,7 +3,8 @@ extends CharacterBody2D
 ## Pingüino jugable. Coordina sus componentes:
 ##   PlayerInput     -> qué quiere hacer el jugador este frame
 ##   StateMachine    -> qué hace (Idle, Move, Jump, Fall, Land, Crouch, Slide, Climb, Hurt, Dead)
-##   PlayerAnimator  -> cómo se ve (separado de la lógica)
+##   VisualRoot/PlayerAnimator -> cómo se ve (separado de la lógica y de la colisión)
+##   GroundPoint     -> punto de apoyo (pies) = origen del jugador; el sprite se alinea a él
 ##   HealthComponent -> vida, daño e invulnerabilidad
 ## Aquí viven solo las utilidades compartidas por los estados (gravedad, control horizontal,
 ## temporizadores de salto, cuerpo agachado, escaleras). La lógica de cada acción está en su estado.
@@ -44,7 +45,10 @@ var _jump_buffer_timer := 0.0
 var _drop_timer := 0.0
 
 @onready var state_machine: StateMachine = $StateMachine
-@onready var animator: PlayerAnimator = $Animator
+## Raíz visual: lleva la escala global única del personaje (PlayerConfig.visual_*).
+@onready var visual_root: Node2D = $VisualRoot
+@onready var animator: PlayerAnimator = $VisualRoot/Animator
+@onready var ground_point: Marker2D = $GroundPoint
 @onready var health: HealthComponent = $Health
 @onready var body_shape: CollisionShape2D = $CollisionShape2D
 @onready var ladder_detector: Area2D = $LadderDetector
@@ -69,6 +73,7 @@ func _ready() -> void:
 	health.died.connect(_on_died)
 	health.invulnerability_changed.connect(animator.set_blinking)
 	animator.setup(character)
+	_apply_visual_scale()
 	add_collision_exception_with(head_platform)
 	# La plataforma de la cabeza se mueve a mano (top_level): un AnimatableBody2D sincronizado
 	# con la física solo sigue sus propios movimientos, y así el motor calcula su velocidad
@@ -166,6 +171,13 @@ func set_platform_collision(enabled: bool) -> void:
 
 
 # ---------------------------------------------------------------- cuerpo agachado
+## Escala visual constante para todas las animaciones. La colisión no depende de ella.
+func _apply_visual_scale() -> void:
+	var s := animator.get_base_scale(config.visual_height, config.visual_scale)
+	visual_root.scale = Vector2(s, s)
+	visual_root.position = ground_point.position
+
+
 func _setup_body() -> void:
 	var capsule := CapsuleShape2D.new()
 	capsule.radius = config.body_radius
@@ -181,10 +193,14 @@ func _setup_body() -> void:
 
 
 ## Reduce la altura del cuerpo al agacharse o deslizarse.
-func set_low_profile(low: bool) -> void:
+## Cambia la forma física según el ESTADO (agachado / deslizándose), nunca según el
+## tamaño del fotograma. `height` < 0 usa config.crouch_height.
+func set_low_profile(low: bool, height := -1.0) -> void:
 	is_low = low
 	var capsule := body_shape.shape as CapsuleShape2D
-	var h := config.crouch_height if low else config.body_height
+	var h := config.body_height
+	if low:
+		h = config.crouch_height if height < 0.0 else height
 	capsule.height = maxf(h, config.body_radius * 2.0)
 	body_shape.position = Vector2(0.0, -h * 0.5)
 	if head_shape:

@@ -153,6 +153,12 @@ func _configure_input() -> void:
 	pause_events.append(start)
 	_setting("input/pause", {"deadzone": 0.5, "events": pause_events})
 
+	# Solo depuración: muestra colisión, GroundPoint, centro y caja visual del jugador.
+	var debug_key := InputEventKey.new()
+	debug_key.device = -1
+	debug_key.physical_keycode = KEY_F1
+	_setting("input/debug_overlay", {"deadzone": 0.5, "events": [debug_key]})
+
 
 func _create_data() -> void:
 	var cfg := PlayerConfig.new()

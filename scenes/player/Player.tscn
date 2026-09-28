@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3]
+[gd_scene load_steps=23 format=3]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_player"]
 [ext_resource type="Resource" path="res://data/player/default_player_config.tres" id="2_config"]
@@ -17,6 +17,7 @@
 [ext_resource type="Script" path="res://scripts/player/states/climb.gd" id="14_climb"]
 [ext_resource type="Script" path="res://scripts/player/states/hurt.gd" id="15_hurt"]
 [ext_resource type="Script" path="res://scripts/player/states/dead.gd" id="16_dead"]
+[ext_resource type="Script" path="res://scripts/player/player_debug_overlay.gd" id="18_debug"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
 radius = 16.0
@@ -43,12 +44,17 @@ config = ExtResource("2_config")
 position = Vector2(0, -30)
 shape = SubResource("CapsuleShape2D_body")
 
-[node name="Animator" type="AnimatedSprite2D" parent="."]
+[node name="VisualRoot" type="Node2D" parent="."]
+
+[node name="Animator" type="AnimatedSprite2D" parent="VisualRoot"]
 sprite_frames = ExtResource("6_blue")
 animation = &"idle"
 script = ExtResource("3_anim")
 blue_penguin_frames = ExtResource("6_blue")
 pink_penguin_frames = ExtResource("17_pink")
+
+[node name="GroundPoint" type="Marker2D" parent="."]
+gizmo_extents = 14.0
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("4_fsm")
@@ -123,3 +129,10 @@ theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 15
 text = "P1"
 horizontal_alignment = 1
+
+[node name="DebugOverlay" type="Node2D" parent="." node_paths=PackedStringArray("body_shape", "ground_point", "visual_root", "animator")]
+script = ExtResource("18_debug")
+body_shape = NodePath("../CollisionShape2D")
+ground_point = NodePath("../GroundPoint")
+visual_root = NodePath("../VisualRoot")
+animator = NodePath("../VisualRoot/Animator")

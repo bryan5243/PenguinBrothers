@@ -1,82 +1,606 @@
 {
   "character": "blue_penguin",
+  "source": "assets/references/characters/blue_penguin_full_animations.png",
   "canvas": [
-    108,
-    85
+    154,
+    111
   ],
-  "source": "assets/references/characters/penguins_blue_pink_animations.png",
+  "anchor": "pies en el borde inferior, centro del cuerpo en la mitad horizontal",
+  "reference_frame": "idle_1",
+  "reference_height": 98,
   "animations": {
     "idle": {
       "frames": [
-        "frames/idle_1.png"
+        "processed/idle_1.png",
+        "processed/idle_2.png",
+        "processed/idle_1.png",
+        "processed/idle_2.png"
       ],
-      "fps": 1,
+      "fps": 3,
       "loop": true
     },
     "walk": {
       "frames": [
-        "frames/walk_1.png",
-        "frames/walk_2.png",
-        "frames/walk_3.png",
-        "frames/walk_2.png"
+        "processed/walk_1.png",
+        "processed/walk_2.png",
+        "processed/walk_3.png",
+        "processed/walk_2.png"
       ],
       "fps": 10,
       "loop": true
     },
     "run": {
       "frames": [
-        "frames/run_1.png",
-        "frames/run_2.png"
+        "processed/run_1.png",
+        "processed/run_2.png",
+        "processed/run_3.png",
+        "processed/run_4.png"
       ],
-      "fps": 10,
+      "fps": 12,
       "loop": true
     },
     "jump": {
       "frames": [
-        "frames/jump_1.png",
-        "frames/jump_2.png"
+        "processed/jump_1.png",
+        "processed/jump_2.png",
+        "processed/jump_3.png"
       ],
-      "fps": 6,
+      "fps": 10,
       "loop": false
     },
     "fall": {
       "frames": [
-        "frames/fall_1.png"
+        "processed/fall_1.png"
       ],
       "fps": 1,
       "loop": false
     },
     "land": {
       "frames": [
-        "frames/land_1.png"
+        "processed/land_1.png",
+        "processed/land_2.png",
+        "processed/land_3.png"
       ],
-      "fps": 1,
+      "fps": 24,
       "loop": false
     },
     "crouch": {
       "frames": [
-        "frames/crouch_1.png"
+        "processed/crouch_1.png",
+        "processed/crouch_2.png"
       ],
-      "fps": 1,
+      "fps": 12,
       "loop": false
     },
     "slide": {
       "frames": [
-        "frames/slide_1.png",
-        "frames/slide_2.png"
+        "processed/slide_1.png",
+        "processed/slide_2.png",
+        "processed/slide_3.png"
       ],
-      "fps": 5,
+      "fps": 8,
       "loop": false
     },
     "climb": {
       "frames": [
-        "frames/climb_1.png",
-        "frames/climb_2.png",
-        "frames/climb_3.png",
-        "frames/climb_4.png"
+        "processed/climb_1.png",
+        "processed/climb_2.png",
+        "processed/climb_3.png",
+        "processed/climb_4.png"
       ],
       "fps": 8,
       "loop": true
+    },
+    "lift": {
+      "frames": [
+        "processed/lift_1.png",
+        "processed/lift_2.png"
+      ],
+      "fps": 8,
+      "loop": false
+    },
+    "carry": {
+      "frames": [
+        "processed/carry_1.png",
+        "processed/carry_2.png"
+      ],
+      "fps": 6,
+      "loop": true
+    },
+    "throw": {
+      "frames": [
+        "processed/throw_1.png",
+        "processed/throw_2.png"
+      ],
+      "fps": 10,
+      "loop": false
+    },
+    "place_bomb": {
+      "frames": [
+        "processed/place_bomb_1.png",
+        "processed/place_bomb_2.png",
+        "processed/place_bomb_3.png"
+      ],
+      "fps": 10,
+      "loop": false
+    },
+    "hurt": {
+      "frames": [
+        "processed/hurt_1.png",
+        "processed/hurt_2.png",
+        "processed/hurt_3.png",
+        "processed/hurt_4.png"
+      ],
+      "fps": 10,
+      "loop": true
+    },
+    "death": {
+      "frames": [
+        "processed/death_1.png",
+        "processed/death_2.png",
+        "processed/death_3.png"
+      ],
+      "fps": 5,
+      "loop": false
+    },
+    "victory": {
+      "frames": [
+        "processed/victory_1.png",
+        "processed/victory_2.png",
+        "processed/victory_3.png",
+        "processed/victory_4.png"
+      ],
+      "fps": 6,
+      "loop": true
+    },
+    "attack": {
+      "frames": [
+        "processed/attack_1.png",
+        "processed/attack_2.png",
+        "processed/attack_3.png",
+        "processed/attack_4.png"
+      ],
+      "fps": 12,
+      "loop": false
+    },
+    "fire_attack": {
+      "frames": [
+        "processed/fire_attack_1.png"
+      ],
+      "fps": 1,
+      "loop": false
     }
+  },
+  "frames": {
+    "idle_1": {
+      "visible": [
+        47,
+        13,
+        114,
+        111
+      ]
+    },
+    "idle_2": {
+      "visible": [
+        52,
+        14,
+        113,
+        111
+      ]
+    },
+    "idle_3": {
+      "visible": [
+        53,
+        12,
+        115,
+        111
+      ]
+    },
+    "idle_4": {
+      "visible": [
+        52,
+        16,
+        111,
+        111
+      ]
+    },
+    "walk_1": {
+      "visible": [
+        51,
+        14,
+        112,
+        111
+      ]
+    },
+    "walk_2": {
+      "visible": [
+        50,
+        14,
+        110,
+        111
+      ]
+    },
+    "walk_3": {
+      "visible": [
+        51,
+        14,
+        113,
+        111
+      ]
+    },
+    "run_1": {
+      "visible": [
+        48,
+        11,
+        114,
+        111
+      ]
+    },
+    "run_2": {
+      "visible": [
+        45,
+        15,
+        115,
+        111
+      ]
+    },
+    "run_3": {
+      "visible": [
+        48,
+        13,
+        114,
+        111
+      ]
+    },
+    "run_4": {
+      "visible": [
+        45,
+        18,
+        114,
+        111
+      ]
+    },
+    "jump_1": {
+      "visible": [
+        53,
+        28,
+        110,
+        111
+      ]
+    },
+    "jump_2": {
+      "visible": [
+        54,
+        24,
+        112,
+        111
+      ]
+    },
+    "jump_3": {
+      "visible": [
+        47,
+        23,
+        113,
+        111
+      ]
+    },
+    "fall_1": {
+      "visible": [
+        48,
+        14,
+        111,
+        111
+      ]
+    },
+    "fall_2": {
+      "visible": [
+        52,
+        21,
+        106,
+        111
+      ]
+    },
+    "land_1": {
+      "visible": [
+        45,
+        20,
+        110,
+        111
+      ]
+    },
+    "land_2": {
+      "visible": [
+        43,
+        34,
+        107,
+        111
+      ]
+    },
+    "land_3": {
+      "visible": [
+        46,
+        38,
+        111,
+        111
+      ]
+    },
+    "crouch_1": {
+      "visible": [
+        51,
+        42,
+        106,
+        111
+      ]
+    },
+    "crouch_2": {
+      "visible": [
+        50,
+        42,
+        108,
+        111
+      ]
+    },
+    "slide_1": {
+      "visible": [
+        33,
+        43,
+        124,
+        111
+      ]
+    },
+    "slide_2": {
+      "visible": [
+        26,
+        44,
+        122,
+        111
+      ]
+    },
+    "slide_3": {
+      "visible": [
+        29,
+        53,
+        126,
+        111
+      ]
+    },
+    "climb_1": {
+      "visible": [
+        55,
+        32,
+        104,
+        111
+      ]
+    },
+    "climb_2": {
+      "visible": [
+        52,
+        20,
+        102,
+        111
+      ]
+    },
+    "climb_3": {
+      "visible": [
+        54,
+        19,
+        102,
+        111
+      ]
+    },
+    "climb_4": {
+      "visible": [
+        50,
+        24,
+        106,
+        111
+      ]
+    },
+    "lift_1": {
+      "visible": [
+        41,
+        21,
+        120,
+        111
+      ]
+    },
+    "lift_2": {
+      "visible": [
+        41,
+        13,
+        114,
+        111
+      ]
+    },
+    "carry_1": {
+      "visible": [
+        46,
+        17,
+        115,
+        111
+      ]
+    },
+    "carry_2": {
+      "visible": [
+        52,
+        11,
+        116,
+        111
+      ]
+    },
+    "throw_1": {
+      "visible": [
+        30,
+        30,
+        126,
+        111
+      ]
+    },
+    "throw_2": {
+      "visible": [
+        38,
+        34,
+        114,
+        111
+      ]
+    },
+    "place_bomb_1": {
+      "visible": [
+        41,
+        22,
+        115,
+        111
+      ]
+    },
+    "place_bomb_2": {
+      "visible": [
+        44,
+        21,
+        112,
+        111
+      ]
+    },
+    "place_bomb_3": {
+      "visible": [
+        47,
+        21,
+        111,
+        111
+      ]
+    },
+    "attack_1": {
+      "visible": [
+        42,
+        12,
+        118,
+        111
+      ]
+    },
+    "attack_2": {
+      "visible": [
+        48,
+        15,
+        125,
+        111
+      ]
+    },
+    "attack_3": {
+      "visible": [
+        46,
+        11,
+        115,
+        111
+      ]
+    },
+    "attack_4": {
+      "visible": [
+        46,
+        18,
+        112,
+        111
+      ]
+    },
+    "fire_attack_1": {
+      "visible": [
+        43,
+        13,
+        120,
+        111
+      ]
+    },
+    "hurt_1": {
+      "visible": [
+        37,
+        17,
+        119,
+        111
+      ]
+    },
+    "hurt_2": {
+      "visible": [
+        43,
+        12,
+        120,
+        111
+      ]
+    },
+    "hurt_3": {
+      "visible": [
+        51,
+        14,
+        125,
+        111
+      ]
+    },
+    "hurt_4": {
+      "visible": [
+        54,
+        10,
+        116,
+        111
+      ]
+    },
+    "death_1": {
+      "visible": [
+        29,
+        42,
+        136,
+        111
+      ]
+    },
+    "death_2": {
+      "visible": [
+        24,
+        37,
+        131,
+        111
+      ]
+    },
+    "death_3": {
+      "visible": [
+        40,
+        43,
+        152,
+        111
+      ]
+    },
+    "victory_1": {
+      "visible": [
+        34,
+        4,
+        117,
+        111
+      ]
+    },
+    "victory_2": {
+      "visible": [
+        22,
+        3,
+        118,
+        111
+      ]
+    },
+    "victory_3": {
+      "visible": [
+        39,
+        2,
+        128,
+        111
+      ]
+    },
+    "victory_4": {
+      "visible": [
+        36,
+        3,
+        128,
+        111
+      ]
+    }
+  },
+  "skipped": {
+    "swim": "el agua y las burbujas están fundidas con el personaje; hace falta arte sin fondo",
+    "fire_attack_2": "las llamas envuelven al personaje",
+    "bomb_wait / explosion_reaction": "poses de apoyo; no las usa ningún estado todavía",
+    "specials": "auras de poder fundidas con el personaje (fase de poderes)"
   }
 }

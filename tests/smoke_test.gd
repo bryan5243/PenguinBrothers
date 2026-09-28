@@ -38,6 +38,7 @@ func _run() -> void:
 			check(InputMap.has_action(action) and not InputMap.action_get_events(action).is_empty(),
 				"acción %s con eventos" % action)
 	check(InputMap.has_action("pause"), "acción pause")
+	check(InputMap.has_action("debug_overlay"), "acción debug_overlay")
 
 	print("== Escenas")
 	for path in _find_scenes("res://scenes"):
@@ -120,6 +121,10 @@ func _run() -> void:
 	player.facing = -1
 	check(player.animator.flip_h, "orientación del sprite")
 	player.queue_free()
+
+	print("== Sprites normalizados")
+	var sprites: RefCounted = load("res://tests/sprite_normalization_test.gd").new()
+	await sprites.run(self)
 
 	print("== Movimiento del jugador")
 	var movement: RefCounted = load("res://tests/player_movement_test.gd").new()

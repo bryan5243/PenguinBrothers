@@ -6,7 +6,6 @@ extends PlayerState
 func enter(_message := {}) -> void:
 	player.set_low_profile(true)
 	player.animator.play_animation(PlayerAnimator.CROUCH)
-	player.animator.squash(Vector2(1.08, 0.92))
 
 
 func physics_update(delta: float) -> void:

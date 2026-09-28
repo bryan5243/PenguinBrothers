@@ -6,6 +6,7 @@ los fotogramas que sí usa el juego (en `assets/characters/`, `assets/enemies/`,
 
 | Archivo | Contenido | Se usará en |
 |---|---|---|
+| `characters/blue_penguin_full_animations.png` | Pingüino azul (casco de aviador): todas las animaciones, especiales, direcciones, iconos y referencias de colisión. Con transparencia | Fuente actual del azul (`tools/sprites/extract_character_sheet.py`) |
 | `characters/penguins_blue_pink_animations.png` | Pingüino azul y rosa: idle, caminar, correr, saltar, caer, aterrizar, agacharse, deslizarse, escalera, levantar/soltar barril, colocar bomba, expresiones, vista trasera, paleta | Fases 2–3 |
 | `characters/general_sheet_characters_enemies_bombs_items.png` | Hoja general: personajes, bombas de colores, frutas, objetos, plataformas | Fases 4–5 |
 | `enemies/world_01_small_crab.png` | Cangrejo pequeño: idle, caminar, correr, ataque, daño, muerte, efectos | Fase 8 |

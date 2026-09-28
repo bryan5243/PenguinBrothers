@@ -119,3 +119,5 @@ animations = [{
 "name": &"walk",
 "speed": 10.0
 }]
+metadata/canvas_size = Vector2i(108, 82)
+metadata/reference_height = 80

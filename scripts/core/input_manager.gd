@@ -17,6 +17,8 @@ const COMMANDS: Array[StringName] = [
 	&"jump", &"interact", &"bomb", &"switch_bomb",
 ]
 const PAUSE_ACTION := &"pause"
+## Acción de depuración (F1): superposición de colisión y anclas del jugador.
+const DEBUG_OVERLAY_ACTION := &"debug_overlay"
 const PLAYER_PREFIXES: Array[String] = ["p1_", "p2_"]
 ## Dispositivo que nunca coincide con un mando real (jugador sin mando asignado).
 const NO_GAMEPAD := 999

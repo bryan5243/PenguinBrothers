@@ -28,7 +28,9 @@ ALPHA_THRESHOLD = 110
 
 # Desplazamiento vertical de cada fila de la hoja respecto al pingüino azul.
 CHARACTERS = {
-    "blue": {"folder": "blue_penguin", "dy_top": 0, "dy_ladder": 0},
+    # El azul ahora sale de blue_penguin_full_animations.png (extract_character_sheet.py);
+    # esta versión antigua queda archivada en blue_penguin/legacy/ (Godot la ignora).
+    "blue": {"folder": "blue_penguin/legacy", "dy_top": 0, "dy_ladder": 0},
     "pink": {"folder": "pink_penguin", "dy_top": 150, "dy_ladder": 140},
 }
 
