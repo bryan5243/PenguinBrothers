@@ -1,6 +1,6 @@
 # Penguin Brothers – Edición Asiática
 
-Videojuego 2D de plataformas *side-scrolling*, cooperativo local para dos jugadores,
+Videojuego arcade 2D de **pantalla fija** para 1 o 2 jugadores (cooperativo local),
 desarrollado en **Godot 4.7** con **GDScript**. Dos pingüinos (azul y rosa) recorren
 10 mundos usando bombas, barriles y poderes elementales.
 
@@ -9,14 +9,15 @@ Controles: teclado, mando y pantalla táctil.
 
 ## Estado
 
-**Fase 4 – Sistema de bombas: completada.** Ver [docs/ROADMAP.md](docs/ROADMAP.md).
+**Reconstrucción arcade de pantalla fija – Fases 1 y 2 completadas** (arquitectura y dos jugadores).
+Ver [docs/ROADMAP.md](docs/ROADMAP.md).
 
-Al ejecutar el proyecto se abre una pantalla de arranque con un probador de controles en vivo
-y los botones **«Probar en solitario»** y **«Probar cooperativo»**, que abren un nivel de prueba
-para caminar, correr, saltar, agacharse, deslizarse, trepar escaleras, bajar de plataformas y,
-en cooperativo, subirse encima del compañero. También se pueden lanzar, colocar, recoger,
-patear y encadenar bombas (azul, verde y negra) contra las dianas del nivel. F1 muestra la
-depuración visual del jugador.
+Al ejecutar el proyecto aparece el título arcade (**PULSA START** → 1 PLAYER / 2 PLAYERS /
+OPCIONES / CONTROLES / SALIR). 1 PLAYER o 2 PLAYERS abre la pantalla A del Mundo 1-1: una arena fija
+de 960×720 (4:3) con el pingüino azul y el rosa, marcador (SCORE 1/2, vidas, TIME), pisos de
+plataformas y bombas. Pausa con Esc/Start. En desarrollo: F1 muestra la depuración del jugador y
+F2 salta a la pantalla siguiente. Enemigos, barriles, plataformas giratorias, llave y puerta llegan
+en las fases 3–9.
 
 ## Cómo abrirlo
 

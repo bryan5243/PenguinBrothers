@@ -4,7 +4,11 @@ Lee esto antes de modificar el proyecto.
 
 ## Reglas principales
 
-- Motor: **Godot 4.7**, lenguaje **GDScript**. Juego **2D side-scrolling** (nunca 3D). Sin pixel art salvo que se pida.
+- Motor: **Godot 4.7**, lenguaje **GDScript**. Juego **2D arcade de PANTALLA FIJA** (nunca 3D).
+  Sin pixel art salvo que se pida.
+- **Nada de scroll**: cada pantalla es una `Arena` cerrada de 960×720 (4:3) que se ve completa, con
+  `ArcadeCamera` fija. Entre pantallas, transición (fundido/destello/cortina). No añadas cámaras que
+  sigan al jugador, niveles largos ni scroll horizontal. `CoopCamera` y `PlayerTestLevel` son legado.
 - Trabaja **por fases** (ver `docs/ROADMAP.md`). No avances a la siguiente fase sin explicar el resultado de la actual.
 - Rama de trabajo: `develop` (o una rama por funcionalidad). No hagas commits directos a `main`.
 - Commits pequeños y claros: `feat: ...`, `fix: ...`, `docs: ...`, `chore: ...`, `test: ...`.
@@ -13,7 +17,8 @@ Lee esto antes de modificar el proyecto.
 
 ## Antes de terminar una tarea
 
-1. `godot --headless --path . --import` sin errores.
+1. `godot --headless --path . --import` sin errores (tras añadir una clase global nueva, importa
+   antes de ejecutar las herramientas `-s`).
 2. `godot --headless --path . res://tests/SmokeTest.tscn` termina con código 0.
 3. Revisa rutas, nodos, señales y escenas afectadas.
 4. Actualiza la documentación de `docs/` si cambió el diseño.
@@ -22,7 +27,10 @@ Lee esto antes de modificar el proyecto.
 
 - **Autoloads** (`scripts/core/`): `EventBus` (señales globales), `SaveManager` (JSON),
   `AudioManager` (música/efectos por clave), `InputManager` (abstracción de controles),
-  `GameManager` (modo, mundo, puntuación, vidas). Orden definido en `tools/setup_project.gd`.
+  `ScoreManager` (puntuación, combos), `GameManager` (modo, mundo, vidas, continues, pausa),
+  `StageManager` (pantallas A→B, tiempo, GAME OVER, victoria). Orden en `tools/setup_project.gd`.
+- **Fases y pantallas**: `StageData` en `data/stages/`; cada pantalla es una escena `Arena`
+  (`scripts/arena/`) generada por `tools/build_arenas.gd` en `scenes/stages/world_XX/`.
 - **Entrada**: el gameplay nunca lee teclas. Usa `PlayerInput` / `InputManager` con comandos
   (`move_left`, `move_right`, `up`, `crouch`, `jump`, `interact`, `bomb`, `switch_bomb`).
   Las acciones del Input Map son `p1_<comando>` y `p2_<comando>`, más `pause`.
@@ -38,8 +46,10 @@ Lee esto antes de modificar el proyecto.
 - **Visual del jugador**: `VisualRoot` (escala global única) → `Animator`; `GroundPoint` en los pies.
   Todos los fotogramas de un personaje comparten lienzo (pies abajo, cuerpo centrado); no escales
   por animación ni cambies la colisión según el dibujo.
-- **Jugadores en un nivel**: usa `PlayerSpawner` (crea 1 o 2 según el modo) y `CoopCamera`
-  (colócala después del spawner en el árbol). No instancies `Player.tscn` a mano en los niveles.
+- **Jugadores en una pantalla**: usa `PlayerSpawner` (crea 1 o 2 según el modo); la `Arena` activa
+  el choque entre jugadores y la reaparición arcade. No instancies `Player.tscn` a mano.
+- **Enemigos**: dentro del nodo `Enemies` (`EnemyManager`), en el grupo `enemies` y con la señal
+  `defeated`; así la pantalla sabe cuándo quedó limpia.
 - **Animación**: separada de la lógica (`PlayerAnimator`). Nombres estándar: `idle, walk, run, jump,
   fall, land, crouch, slide, climb, lift, carry, throw, place_bomb, hurt, death, victory`
   (enemigos: `idle, walk, attack, hurt, death, special`).

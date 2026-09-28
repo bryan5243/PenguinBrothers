@@ -3,23 +3,66 @@
 Cada fase termina con: ejecutar/revisar el proyecto, corregir errores, documentar,
 hacer commit y explicar qué se hizo, qué archivos cambiaron y cuál es el siguiente paso.
 
+## Plan actual: reconstrucción arcade de pantalla fija
+
+Desde la versión 0.2 el juego es un **arcade de pantalla fija** (tipo Penguin Brothers de Subsino):
+arenas cerradas que se ven completas, 1 o 2 jugadores, bombas, enemigos, barriles, plataformas
+giratorias, llave y puerta, fases cortas con tiempo límite y puntuación. **Nada de scroll ni cámara
+que siga al jugador.** Referencia de diseño: `docs/GAME_DESIGN.md`.
+
 | Fase | Contenido | Estado |
 |---|---|---|
-| 1 | Arquitectura base | ✅ Completada |
-| 2 | Jugador 1 (pingüino azul): movimiento, estados, animaciones | ✅ Completada |
-| 3 | Jugador 2 (pingüino rosa) y cooperativo local | ✅ Completada |
-| 4 | Sistema de bombas (azul, verde, negra) con pooling | Siguiente |
-| 5 | Objetos interactivos (barriles, cajas, plataformas, puertas, escaleras) y power-ups | Pendiente |
-| 6 | HUD | Pendiente |
-| 7 | Mundo 1 – Isla Palmera: nivel jugable, cámara, checkpoints, meta | Pendiente |
-| 8 | Enemigos del Mundo 1 | Pendiente |
-| 9 | Jefe Orca Ninja | Pendiente |
-| 10 | Menú principal, pausa y guardado integrados | Pendiente |
-| 11 | Controles móviles | Pendiente |
-| 12 | Mundo 2 – Templo Oriental | Pendiente |
-| 13 | Mundos 3–10 | Pendiente |
-| 14 | Optimización | Pendiente |
-| 15 | Exportación multiplataforma | Pendiente |
+| 1 | Arquitectura arcade (4:3, StageManager, ScoreManager, Arena, cámara fija, HUD, título, GAME OVER/CONTINUE, victoria) | ✅ Completada |
+| 2 | Player 1 y Player 2 en la arena (movimiento arcade, bloqueo/empuje, fuego amigo, reaparición) | ✅ Completada |
+| 3 | Bombas arcade (física controlada, área visible, niveles de poder 1–4) | Siguiente |
+| 4 | Barriles y destrucción del escenario (`Barrel.tscn`, destructibles con drop_table) | Pendiente |
+| 5 | Enemigos (base con IDLE/PATROL/CHASE/ATTACK/HURT/DEAD, `EnemySpawner`) | Pendiente |
+| 6 | Plataformas giratorias (`RotatingPlatform.tscn`, giro de 180°) | Pendiente |
+| 7 | Llave y puerta (`KeyItem.tscn`, `ExitDoor.tscn`) | Pendiente |
+| 8 | Pantalla 1 (World01_Stage01_A completa) | Pendiente |
+| 9 | Pantalla 2 (World01_Stage01_B completa) | Pendiente |
+| 10 | Puntuación (combos, puntos flotantes, bonificaciones, récord) | Pendiente |
+| 11 | Mundo 1 – Isla Palmera (resto de fases) | Pendiente |
+| 12 | Jefe Orca Ninja (arena fija, varias fases) | Pendiente |
+
+### Fase 1 (arcade) – Arquitectura (completada)
+
+- Resolución lógica **960×720 (4:3)** = 640×480 ×1,5; escala exacta a 1280×960 y 1920×1440.
+  `stretch/aspect = keep`: en 16:9 aparecen barras laterales y el área jugable no se deforma.
+  (Opción 16:9 con paneles decorativos: pendiente para más adelante.)
+- Autoloads nuevos: `ScoreManager` (SCORE 1/2, combos, bonificaciones; valores en
+  `data/score_table.tres`) y `StageManager` (pantallas A→B, tiempo límite, aviso, TIME 00 = pantalla
+  perdida, GAME OVER, CONTINUE, fase completada). `GameManager` delega la puntuación y gestiona continues.
+- `StageData` (`data/stages/world_01_stage_01.tres`): pantallas, tiempos y siguiente fase.
+- `Arena` (una pantalla fija): `ArcadeCamera` fija, `EnemyManager` (enemigos restantes → `cleared`),
+  `BombPool`, `PlayerSpawner`, `ArcadeHUD` (1P/2P SCORE, vidas, TIME, combo, puntos flotantes, pausa).
+- Pantallas `World01_Stage01_A` y `_B` generadas por `tools/build_arenas.gd` (geometría provisional).
+- `Main` con transiciones arcade (fundido, destello, cortina) y pantallas: título (PULSA START →
+  1 PLAYER / 2 PLAYERS / OPCIONES / CONTROLES / SALIR), GAME OVER con CONTINUE y fase completada.
+- Sonidos preparados por clave: explosión, bomba, salto, golpe, enemigo derrotado, barril, power-up,
+  llave, puerta, transición, aviso de tiempo, muerte, victoria, jefe.
+
+### Fase 2 (arcade) – Player 1 y Player 2 (completada)
+
+- P1 pingüino azul, P2 pingüino rosa; 1 PLAYER o 2 PLAYERS desde el título; controles independientes.
+- Movimiento arcade: velocidad constante (correr/deslizar desactivados con `run_enabled`), respuesta
+  inmediata (aceleración y frenado casi instantáneos), salto de ~132 px (un piso de la arena).
+- Los pingüinos se bloquean, se empujan despacio y pueden subirse uno encima del otro.
+- Fuego amigo: las bombas dañan a cualquiera (`BombData.hurts_players`, activo por defecto).
+- Reaparición arcade en el punto de inicio con invulnerabilidad.
+- Pruebas: 224 comprobaciones (45 nuevas de arquitectura arcade y dos jugadores).
+
+## Historial: etapa 1 (formato plataformas con scroll, sustituido)
+
+Se conserva todo lo construido; el nivel largo con cámara que sigue queda como «laboratorio de
+movimiento» (Controles → Laboratorio) y no es el formato del juego.
+
+| Fase | Contenido | Estado |
+|---|---|---|
+| 1 | Arquitectura base | ✅ |
+| 2 | Jugador 1: movimiento, estados, animaciones | ✅ |
+| 3 | Jugador 2 y cooperativo local | ✅ |
+| 4 | Sistema de bombas con pooling | ✅ (se adapta en la fase arcade 3) |
 
 ## Fase 1 – Arquitectura base (completada)
 
@@ -90,7 +133,7 @@ hacer commit y explicar qué se hizo, qué archivos cambiaron y cuál es el sigu
 - Nivel de prueba con dianas (`TestTarget`) para comprobar daño y radio.
 - Pruebas: 173 comprobaciones (31 nuevas de bombas).
 
-## Fase 5 – Objetos interactivos (siguiente)
+## (Sustituido) Fase 5 – Objetos interactivos — ver el plan arcade, fases 4 y 6
 
 1. Clase base de objeto cargable (reutiliza recoger/llevar/lanzar de `PlayerBombs` generalizado
    a `carried_object`): barriles y cajas.
@@ -109,3 +152,7 @@ hacer commit y explicar qué se hizo, qué archivos cambiaron y cuál es el sigu
 - **Nadar** (azul): el agua de la hoja está fundida con el dibujo; hace falta arte sin fondo.
 - **Mundos 7–10**: sin hoja de escenario; solo conceptos de enemigos.
 - **iOS**: la exportación final requiere una Mac con Xcode.
+- **Opción 16:9** (paneles decorativos a los lados en vez de barras negras): prevista, no hecha.
+- **Arte de las arenas**: la geometría de las pantallas es provisional (colores planos) hasta la
+  fase del Mundo 1; los tiles saldrán de `worlds_01_to_06_sceneries.png`.
+- **Correr/deslizarse**: siguen en el código (`run_enabled`) pero desactivados en el ajuste arcade.

@@ -32,16 +32,18 @@ Se configuran en `tools/setup_project.gd`.
 Acciones del Input Map: `p1_move_left`, `p1_move_right`, `p1_up`, `p1_crouch`, `p1_jump`,
 `p1_interact`, `p1_bomb`, `p1_switch_bomb` (igual con `p2_`) y `pause`.
 
-## Movimiento del jugador (Fase 2 · implementado)
+## Movimiento del jugador (ajuste arcade)
 
-Parámetros en `PlayerConfig` (`data/player/default_player_config.tres` usa los valores por defecto):
+Parámetros en `PlayerConfig` (`data/player/default_player_config.tres` usa los valores por defecto).
+Ajuste arcade: velocidad constante, respuesta inmediata al joystick y salto de un piso de la arena.
 
 | Parámetro | Valor | Descripción |
 |---|---|---|
-| `move_speed` / `run_speed` | 240 / 340 | Caminar; correr tras `run_delay` (0,55 s) de movimiento continuo |
-| `acceleration` / `air_acceleration` | 2200 / 1400 | Aceleración en suelo / aire |
-| `friction` / `air_friction` | 2600 / 600 | Frenado en suelo / aire (girar usa el mayor valor: giros ágiles) |
-| `jump_force` / `gravity` / `max_fall_speed` | 640 / 1750 / 950 | Salto completo ≈ 122 px |
+| `move_speed` | 240 | Velocidad arcade constante |
+| `run_enabled` / `run_speed` / `run_delay` | **false** / 340 / 0,55 s | Correr (y deslizarse) desactivados en el arcade |
+| `acceleration` / `air_acceleration` | 6000 / 3600 | Casi instantáneo: velocidad máxima en ~3 frames |
+| `friction` / `air_friction` | 6000 / 2400 | Frena al instante al soltar |
+| `jump_force` / `gravity` / `max_fall_speed` | 680 / 1750 / 950 | Salto completo ≈ 132 px (los pisos de la arena están a 112 px) |
 | `jump_cut_speed` | 400 | Salto variable: al soltar pronto ≈ 42 px |
 | `coyote_time` / `jump_buffer_time` | 0,10 / 0,12 s | Tolerancias de salto |
 | `land_duration` / `land_min_fall_speed` | 0,08 s / 380 | Aterrizaje tras caída fuerte (no bloquea el control) |
@@ -50,7 +52,8 @@ Parámetros en `PlayerConfig` (`data/player/default_player_config.tres` usa los 
 | `crawl_speed` | 110 | Gatear agachado bajo un techo bajo |
 | `climb_speed` | 180 | Escaleras |
 | `drop_through_time` | 0,25 s | Tiempo que se ignoran las plataformas al bajar |
-| `body_radius` / `body_height` / `crouch_height` | 16 / 60 / 38 | Cápsula de colisión de pie y agachado |
+| `body_radius` / `body_height` / `crouch_height` / `slide_height` | 16 / 60 / 38 / 32 | Cápsula de colisión de pie, agachado y deslizándose |
+| `push_speed` | 110 | Velocidad al empujar al compañero |
 | `max_health` / `invulnerability_time` | 3 / 1,6 s | Vida por vida; parpadeo tras recibir daño |
 | `knockback` / `hurt_duration` | (300, −420) / 0,45 s | Empuje y tiempo sin control al recibir daño |
 | `fall_death_y` / `respawn_delay` | 1400 / 1,5 s | Caída al vacío (el nivel puede cambiar la altura) y espera antes de reaparecer |
@@ -76,15 +79,29 @@ Idle ⇄ Move ──(abajo corriendo)──> Slide ──> Crouch / Idle
 - Muerte: salto y giro arcade; tras `respawn_delay` se descuenta una vida en `GameManager` y
   reaparece en `spawn_position` (los checkpoints la actualizarán en la Fase 7). Sin vidas: `EventBus.game_over`.
 
-### Nivel de prueba
+### Laboratorio de movimiento (legado)
 
-`scenes/worlds/test_level/PlayerTestLevel.tscn` (pantalla de arranque: «Probar en solitario» o
-«Probar cooperativo»). Incluye plataformas, escalón, escalera, túnel bajo, vacío y panel de
+`scenes/worlds/test_level/PlayerTestLevel.tscn` (Título → CONTROLES → «Laboratorio 1J/2J»). Es un
+nivel largo con cámara que sigue: **no es el formato del juego**, solo sirve para probar mecánicas. Incluye plataformas, escalón, escalera, túnel bajo, vacío y panel de
 depuración (estado, vida, vidas y velocidad de cada jugador, zoom de cámara). Se genera con
 `tools/build_player_test_level.gd`; su geometría usa placeholders de color hasta tener los
 tiles del Mundo 1 (Fase 7).
 
-## Cooperativo local (Fase 3 · implementado)
+## Dos jugadores en la arena (arcade, Fase 2)
+
+- **1 PLAYER / 2 PLAYERS** desde el título. P1 = pingüino azul (teclado izquierdo / mando 1),
+  P2 = pingüino rosa (flechas / mando 2). Ambos son jugadores reales, con controles independientes.
+- **Arena cerrada**: paredes, techo y suelo; nadie sale de la pantalla y la cámara no se mueve.
+- **Se bloquean y se empujan**: la `Arena` activa `players_collide`; al caminar contra el compañero
+  se le empuja a `push_speed`. Siguen pudiendo subirse uno encima del otro (`HeadPlatform`).
+- **Fuego amigo**: las explosiones afectan a todos (`BombData.hurts_players = true`).
+- **Reaparición arcade**: en el propio punto de inicio (`respawn_near_partner = false` en la arena),
+  con invulnerabilidad. Sin vidas: eliminado; sin nadie: GAME OVER → CONTINUE.
+- **Tiempo**: cada pantalla tiene TIME (90 s en la 1-1); con poco tiempo parpadea en rojo; a cero,
+  todos pierden una vida y la pantalla se repite.
+- **Pausa**: Esc / P / Start; en pausa, Bomba vuelve al título.
+
+## Cooperativo local (etapa 1 · laboratorio de movimiento)
 
 - **Aparición**: `PlayerSpawner` (`scripts/worlds/player_spawner.gd`) crea 1 o 2 jugadores según
   `GameManager.game_mode`, en sus marcadores `P1` y `P2`. J1 = pingüino azul, J2 = pingüino rosa.
@@ -96,12 +113,12 @@ tiles del Mundo 1 (Fase 7).
 - **Pararse sobre el compañero**: cada pingüino tiene una plataforma atravesable sobre la cabeza
   (`HeadPlatform`, capa 6, `head_platform_offset` = 12 px sobre la colisión). El de arriba es
   transportado si el de abajo camina o salta, y baja con abajo + saltar. Útil para llegar más alto.
-- **Los jugadores no chocan entre sí** de lado: pueden cruzarse libremente.
-- **Vidas por jugador**: al morir, cada uno reaparece **junto a su compañero** si está vivo y en el
+- En el laboratorio **los jugadores no chocan entre sí** de lado (en la arena sí).
+- **Vidas por jugador**: en el laboratorio cada uno reaparece **junto a su compañero** si está vivo y en el
   suelo (si no, en el punto de inicio). Sin vidas queda **eliminado** (`EventBus.player_eliminated`);
   la partida termina (`EventBus.game_over`) solo cuando no queda ningún jugador activo.
 - Preparado para después: revivir al compañero, compartir objetos, ataques combinados,
-  puntuación individual y de equipo (`GameManager.scores` ya es por jugador).
+  puntuación individual y de equipo (`ScoreManager.scores` es por jugador).
 
 ## Animaciones
 
@@ -293,6 +310,6 @@ General: mundo, nivel, tiempo y botón de pausa. Adaptado a móvil.
 
 ## Cámara
 
-`CoopCamera` (Fase 3) ya sigue a los jugadores, respeta límites, suaviza y encuadra a ambos
-en cooperativo. En la Fase 7 se ajustará a los niveles reales del Mundo 1 (límites por nivel,
-zonas de cámara si hacen falta).
+`ArcadeCamera` (`scripts/arena/arcade_camera.gd`): **fija**, encuadra la arena completa (960×720) y
+solo tiembla un poco con las explosiones. No sigue a nadie. `CoopCamera` queda solo para el
+laboratorio de movimiento (legado).
