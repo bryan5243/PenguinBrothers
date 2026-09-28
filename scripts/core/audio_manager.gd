@@ -17,6 +17,7 @@ const SOUND_LIBRARY := {
 	# Efectos
 	"jump": "res://audio/sfx/jump.wav",
 	"land": "res://audio/sfx/land.wav",
+	"slide": "res://audio/sfx/slide.wav",
 	"bomb_place": "res://audio/sfx/bomb_place.wav",
 	"bomb_throw": "res://audio/sfx/bomb_throw.wav",
 	"explosion": "res://audio/sfx/explosion.wav",

@@ -47,6 +47,19 @@ func take_damage(amount: int, source: Node = null) -> bool:
 	return true
 
 
+## Muerte inmediata (caída al vacío, aplastamiento), ignora la invulnerabilidad.
+func kill(source: Node = null) -> void:
+	if is_dead:
+		return
+	var amount := current_health
+	current_health = 0
+	is_dead = true
+	_invulnerable_timer = 0.0
+	damaged.emit(amount, source)
+	health_changed.emit(current_health, max_health)
+	died.emit()
+
+
 func heal(amount: int) -> void:
 	if is_dead or amount <= 0:
 		return

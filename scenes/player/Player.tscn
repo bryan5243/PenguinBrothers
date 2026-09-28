@@ -1,14 +1,32 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=20 format=3]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_player"]
 [ext_resource type="Resource" path="res://data/player/default_player_config.tres" id="2_config"]
 [ext_resource type="Script" path="res://scripts/player/player_animator.gd" id="3_anim"]
 [ext_resource type="Script" path="res://scripts/utilities/state_machine.gd" id="4_fsm"]
 [ext_resource type="Script" path="res://scripts/utilities/health_component.gd" id="5_health"]
+[ext_resource type="SpriteFrames" path="res://assets/characters/blue_penguin/blue_penguin_frames.tres" id="6_blue"]
+[ext_resource type="Script" path="res://scripts/player/states/idle.gd" id="7_idle"]
+[ext_resource type="Script" path="res://scripts/player/states/move.gd" id="8_move"]
+[ext_resource type="Script" path="res://scripts/player/states/jump.gd" id="9_jump"]
+[ext_resource type="Script" path="res://scripts/player/states/fall.gd" id="10_fall"]
+[ext_resource type="Script" path="res://scripts/player/states/land.gd" id="11_land"]
+[ext_resource type="Script" path="res://scripts/player/states/crouch.gd" id="12_crouch"]
+[ext_resource type="Script" path="res://scripts/player/states/slide.gd" id="13_slide"]
+[ext_resource type="Script" path="res://scripts/player/states/climb.gd" id="14_climb"]
+[ext_resource type="Script" path="res://scripts/player/states/hurt.gd" id="15_hurt"]
+[ext_resource type="Script" path="res://scripts/player/states/dead.gd" id="16_dead"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
-radius = 17.0
-height = 58.0
+radius = 16.0
+height = 60.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ladder"]
+size = Vector2(18, 44)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ceiling"]
+radius = 14.0
+height = 56.0
 
 [node name="Player" type="CharacterBody2D" groups=["players"]]
 collision_layer = 2
@@ -18,14 +36,64 @@ script = ExtResource("1_player")
 config = ExtResource("2_config")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -29)
+position = Vector2(0, -30)
 shape = SubResource("CapsuleShape2D_body")
 
 [node name="Animator" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("6_blue")
+animation = &"idle"
 script = ExtResource("3_anim")
+blue_penguin_frames = ExtResource("6_blue")
 
-[node name="StateMachine" type="Node" parent="."]
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("4_fsm")
+initial_state = NodePath("Idle")
+auto_process = false
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("7_idle")
+
+[node name="Move" type="Node" parent="StateMachine"]
+script = ExtResource("8_move")
+
+[node name="Jump" type="Node" parent="StateMachine"]
+script = ExtResource("9_jump")
+
+[node name="Fall" type="Node" parent="StateMachine"]
+script = ExtResource("10_fall")
+
+[node name="Land" type="Node" parent="StateMachine"]
+script = ExtResource("11_land")
+
+[node name="Crouch" type="Node" parent="StateMachine"]
+script = ExtResource("12_crouch")
+
+[node name="Slide" type="Node" parent="StateMachine"]
+script = ExtResource("13_slide")
+
+[node name="Climb" type="Node" parent="StateMachine"]
+script = ExtResource("14_climb")
+
+[node name="Hurt" type="Node" parent="StateMachine"]
+script = ExtResource("15_hurt")
+
+[node name="Dead" type="Node" parent="StateMachine"]
+script = ExtResource("16_dead")
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("5_health")
+
+[node name="LadderDetector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 16
+monitorable = false
+
+[node name="Shape" type="CollisionShape2D" parent="LadderDetector"]
+position = Vector2(0, -18)
+shape = SubResource("RectangleShape2D_ladder")
+
+[node name="CeilingCheck" type="ShapeCast2D" parent="."]
+position = Vector2(0, -31)
+shape = SubResource("CapsuleShape2D_ceiling")
+target_position = Vector2(0, 0)
+collision_mask = 1
