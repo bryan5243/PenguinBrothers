@@ -12,6 +12,8 @@ signal player_damaged(player_index: int, amount: int, current_health: int)
 signal player_died(player_index: int)
 signal player_respawned(player_index: int)
 signal lives_changed(player_index: int, lives: int)
+## Un jugador se quedó sin vidas (en cooperativo el otro puede seguir).
+signal player_eliminated(player_index: int)
 signal score_changed(player_index: int, score: int)
 signal power_up_collected(player_index: int, power_up_id: StringName)
 

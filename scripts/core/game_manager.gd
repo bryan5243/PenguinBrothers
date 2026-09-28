@@ -15,6 +15,7 @@ var current_world := 1
 var current_level := 1
 var scores: Array[int] = [0, 0]
 var lives: Array[int] = [STARTING_LIVES, STARTING_LIVES]
+var eliminated: Array[bool] = [false, false]
 var is_paused := false
 
 
@@ -25,6 +26,7 @@ func start_new_game(mode: GameMode, world := 1, level := 1) -> void:
 	for i in MAX_PLAYERS:
 		scores[i] = 0
 		lives[i] = STARTING_LIVES
+		eliminated[i] = false
 		EventBus.score_changed.emit(i, 0)
 		EventBus.lives_changed.emit(i, lives[i])
 	InputManager.set_coop(mode == GameMode.COOP)
@@ -58,6 +60,23 @@ func change_lives(player_index: int, delta: int) -> int:
 	lives[player_index] = maxi(0, lives[player_index] + delta)
 	EventBus.lives_changed.emit(player_index, lives[player_index])
 	return lives[player_index]
+
+
+## ¿El jugador participa en la partida y aún tiene vidas?
+func is_player_active(player_index: int) -> bool:
+	return _valid_player(player_index) and player_index < player_count() and not eliminated[player_index]
+
+
+## Un jugador se quedó sin vidas. La partida termina cuando no queda ninguno activo.
+func eliminate_player(player_index: int) -> void:
+	if not _valid_player(player_index) or eliminated[player_index]:
+		return
+	eliminated[player_index] = true
+	EventBus.player_eliminated.emit(player_index)
+	for i in player_count():
+		if not eliminated[i]:
+			return
+	EventBus.game_over.emit()
 
 
 func set_paused(paused: bool) -> void:
