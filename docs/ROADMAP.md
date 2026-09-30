@@ -160,8 +160,7 @@ que siga al jugador.** Referencia de diseño: `docs/GAME_DESIGN.md`.
 
 - **Plataformas giratorias: boca abajo.** Además de subir (arriba), al girar hacia **abajo** los
   de encima dan la vuelta con la plataforma y quedan **pegados boca abajo** a su parte de abajo
-  `stick_time` (2 s) sin poder moverse; luego la plataforma se endereza y los suelta, que caen al
-  piso de abajo. Herido o muerto se suelta antes. `Player.stick_to()` / `release_stuck()` /
+  `hang_time`; ver «Ajustes tras la Fase 8» para el comportamiento actual (desplazarse, volver arriba). `Player.stick_to()` / `release_stuck()` /
   `is_stuck()`; ajustes `stick_time`, `revert_time`, `stick_offset`, `stick_spread` en
   `RotatingPlatformData`.
 - **Test de recorrido** (`tests/level_test.gd`): con el salto y la velocidad reales del pingüino
@@ -173,6 +172,22 @@ que siga al jugador.** Referencia de diseño: `docs/GAME_DESIGN.md`.
 - Nueva referencia `assets/references/worlds/world_01_terrain_sprites.png` (terreno de acantilado,
   puentes, escaleras, cascadas y agua), aún sin extraer.
 - Pruebas: 374 comprobaciones (16 nuevas de recorrido + las de «pegado»).
+
+### Ajustes tras la Fase 8: colgarse y deslizarse
+
+- **Plataforma giratoria, colgado con físicas:** abajo = el pingüino da la vuelta con el disco y
+  cuelga boca abajo (no se teletransporta); colgado se desplaza por debajo con inercia y balanceo
+  (`hang_speed`, `hang_accel`, `hang_sway`), puede volver arriba (Arriba / Saltar: la plataforma
+  gira de vuelta y lo deja encima) o soltarse (Abajo); si no hace nada, cae a los `hang_time` (3 s)
+  tras parpadear. Se puede girar cuando se quiera (`cooldown` 0,3 s). `Player.stick_to()` ahora
+  delega la pose en `RotatingPlatform.drive_rider()`.
+- **Deslizamiento más natural:** arranque suave, frenado fijo + proporcional (~90 px, 0,4 s) en vez
+  de velocidad constante con frenado lineal (`slide_*` en `PlayerConfig`).
+- **Deslizamiento inmune y empujón:** sin daño de enemigos (contacto, pinza, picado, tinta) mientras
+  dura; empuja sin daño a los que toca (`Enemy.shove()`, `slide_shove_*`). Las explosiones siguen
+  dañando. `Player.is_sliding()` / `is_enemy_source()`; los proyectiles enemigos van al grupo
+  `enemy_attacks`.
+- Pruebas: 399 comprobaciones (`tests/slide_test.gd` nuevo y las de plataforma giratoria ampliadas).
 
 ## Historial: etapa 1 (formato plataformas con scroll, sustituido)
 

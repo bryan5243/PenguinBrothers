@@ -375,16 +375,31 @@ laboratorio de movimiento (legado).
 | Acción | Control |
 |---|---|
 | Subir al piso de arriba | Estar sobre la plataforma y pulsar **Arriba** |
-| Quedar pegado boca abajo y caer al piso de abajo | Estar sobre la plataforma quieto y pulsar **Abajo** |
+| Colgarse boca abajo debajo del disco | Estar sobre la plataforma quieto y pulsar **Abajo** |
+| Desplazarse colgado | **Izquierda / Derecha** (más lento que andar, con inercia) |
+| Volver a quedar encima | **Arriba** o **Saltar** estando colgado |
+| Soltarse y caer | **Abajo** estando colgado (o esperar ~3 s: parpadea los últimos 0,9 s y cae) |
 
-- Los dos jugadores pueden ir encima y salen juntos. Las bombas y barriles en reposo encima salen
-  despedidos. Los enemigos no la activan.
-- **Arriba** lanza al piso de arriba. **Abajo** da la vuelta a los de encima con la plataforma: quedan
-  **pegados boca abajo** ~2 s (no se mueven ni saltan; un golpe los suelta), la plataforma se endereza
-  y caen al piso de abajo. Con enemigos cerca es un riesgo.
-- Gira ~0,4 s (con un temblor previo de 0,15 s) y espera 0,6 s antes de poder usarse otra vez.
-- Las que están en el suelo solo suben. Ajustes en `data/platforms/rotating_platform.tres`; la
-  altura de lanzamiento de cada una se elige en `tools/build_arenas.gd` (`rotators`).
+- Se puede girar cuando se quiera (solo hay una espera de 0,3 s entre giros).
+- Al girar hacia abajo el pingüino da la vuelta con el disco (se ve cómo pasa de encima a debajo) y
+  cuelga con la cabeza abajo; balancea un poco al moverse y no se sale del borde del disco. Al
+  volver arriba, la plataforma gira de vuelta y lo deja encima con un saltito. Si no hace nada,
+  se suelta y cae derecho al piso de abajo. Herido o muerto colgado, se suelta.
+- Con dos colgados, cualquiera que pida volver endereza la plataforma para los dos; soltarse es
+  individual.
+- Las bombas y barriles en reposo encima salen despedidos (arriba) o caen (abajo). Los enemigos no
+  la activan. Ajustes: `data/platforms/rotating_platform.tres`; la altura de lanzamiento de cada
+  una se elige en `tools/build_arenas.gd` (`rotators`).
+
+## Deslizamiento
+
+- Se hace **agachándose (Abajo) mientras se camina**. Arranca con un impulso suave (380 px/s),
+  resbala ~90 px y se apaga poco a poco (frenado fijo + proporcional; dura ~0,4 s).
+- **Inmune a los enemigos**: mientras se desliza no le hacen daño su contacto, su pinza, el picado
+  de la gaviota ni la tinta (que pasa de largo). Las explosiones y otras trampas sí dañan.
+- **Empuja a los enemigos**: los que toca de frente se apartan (salen a ~85 % de su velocidad) sin
+  recibir daño y frenan un poco al pingüino. Fuera del deslizamiento todo vuelve a ser normal.
+- Ajustes en `PlayerConfig` (`slide_*`).
 
 ## Llave y puerta
 
