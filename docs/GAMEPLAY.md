@@ -382,3 +382,12 @@ laboratorio de movimiento (legado).
 - Gira ~0,4 s (con un temblor previo de 0,15 s) y espera 0,6 s antes de poder usarse otra vez.
 - Las que están en el suelo solo suben. Ajustes en `data/platforms/rotating_platform.tres`; la
   altura de lanzamiento de cada una se elige en `tools/build_arenas.gd` (`rotators`).
+
+## Llave y puerta
+
+1. **Pantalla A:** al derrotar a todos los enemigos aparece la llave (cae desde arriba). Cualquier
+   jugador la recoge al tocarla y le da puntos; un instante después se pasa a la pantalla B.
+2. **Pantalla B:** el portador lleva la llave flotando sobre la cabeza. La puerta (arriba a la
+   izquierda) se abre cuando el portador llega a ella; entonces se completa la fase.
+3. Si el portador muere, la llave cae donde murió y el compañero (o él mismo al reaparecer) puede
+   recogerla. Si se acaba el tiempo, la pantalla se repite y la llave vuelve a su portador.

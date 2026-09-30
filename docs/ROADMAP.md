@@ -18,8 +18,8 @@ que siga al jugador.** Referencia de diseño: `docs/GAME_DESIGN.md`.
 | 4 | Barriles y destrucción del escenario (`Barrel.tscn`, destructibles con drop_table) | ✅ Completada |
 | 5 | Enemigos (base con IDLE/PATROL/CHASE/ATTACK/HURT/DEAD, `EnemySpawner`) | ✅ Completada |
 | 6 | Plataformas giratorias (`RotatingPlatform.tscn`, giro de 180°) | ✅ Completada |
-| 7 | Llave y puerta (`KeyItem.tscn`, `ExitDoor.tscn`) | Siguiente |
-| 8 | Pantalla 1 (World01_Stage01_A completa) | Pendiente |
+| 7 | Llave y puerta (`KeyItem.tscn`, `ExitDoor.tscn`) | ✅ Completada |
+| 8 | Pantalla 1 (World01_Stage01_A completa) | Siguiente |
 | 9 | Pantalla 2 (World01_Stage01_B completa) | Pendiente |
 | 10 | Puntuación (combos, puntos flotantes, bonificaciones, récord) | Pendiente |
 | 11 | Mundo 1 – Isla Palmera (resto de fases) | Pendiente |
@@ -137,6 +137,24 @@ que siga al jugador.** Referencia de diseño: `docs/GAME_DESIGN.md`.
   y la B mueve los puntos de inicio para dejar sitio.
 - Clave de sonido `platform_flip` registrada (sin archivo de audio todavía).
 - Pruebas: 326 comprobaciones (23 nuevas, `tests/rotating_platform_test.gd`).
+
+### Fase 7 – Llave y puerta
+
+- `KeyItem` (`scripts/objects/key_item.gd`, `scenes/items/KeyItem.tscn`): al limpiar la pantalla A
+  (`EnemyManager.cleared`) la `Arena` la hace aparecer en `key_position` y cae hasta el suelo o
+  plataforma; se recoge al tocarla (puntos `ScoreTable.key`), flota sobre la cabeza del portador
+  y, si este muere, cae donde murió y cualquiera puede cogerla (espera de 1 s). El portador se
+  guarda en `StageManager.carry_over` (`key`, `key_owner`), así pasa de la A a la B y sobrevive a
+  repetir la pantalla por el tiempo.
+- Pantalla A: 0,9 s después de recoger la llave se pasa a la B (`StageManager.next_screen()`);
+  si el portador muere en ese margen, no hay transición.
+- `ExitDoor` (`scripts/objects/exit_door.gd`, `scenes/objects/ExitDoor.tscn`): cerrada hasta que
+  el portador de la llave llega a ella; entonces se abre (portal azul), gasta la llave y 0,8 s
+  después completa la pantalla B, y con ella la fase (bonificación de tiempo y de fase).
+  Sin llave no hace nada (se sacude si alguien pulsa arriba delante).
+- `ObjectiveData` (`data/items/objective.tres`): tamaños, tiempos y alcance de llave y puerta.
+- `tools/build_arenas.gd`: `key_position` (A) y `door` (B, arriba a la izquierda).
+- Pruebas: 351 comprobaciones (25 nuevas, `tests/objective_test.gd`).
 
 ## Historial: etapa 1 (formato plataformas con scroll, sustituido)
 

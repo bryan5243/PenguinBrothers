@@ -50,7 +50,8 @@ Las pantallas de la 1-1 usan las piezas de `world_01_tileset_isla_palmera.png`, 
 | Andamios | `post_rope.png` | Postes automáticos bajo los extremos de las plataformas |
 | Caja, barril, bloque de piedra | `crate.png`, `barrel.png`, `stone_blocks.png` | Objetos de la Fase 4 |
 | Decoración | palmeras, arbustos, flores, castillo de arena, bandera, cartel... | Capa trasera (`Decor`) y delantera (`FrontDecor`), sin colisión |
-| Reservadas | `key.png`, `door.png`, `door_portal.png`, `ladder.png`, `spike_fence.png`... | Llave y puerta (F7), escaleras y peligros |
+| Llave y puerta | `key.png`, `door.png` (cerrada), `door_portal.png` (abierta) | `KeyItem` y `ExitDoor` (F7) |
+| Reservadas | `ladder.png`, `spike_fence.png`... | Escaleras y peligros |
 
 La colisión nunca depende del dibujo: las arenas siguen siendo rectángulos exactos definidos en
 `tools/build_arenas.gd` (plataformas, bloques, decoración por pantalla en `decor` / `front_decor`).
