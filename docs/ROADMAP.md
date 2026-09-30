@@ -111,6 +111,15 @@ que siga al jugador.** Referencia de diseño: `docs/GAME_DESIGN.md`.
   fotogramas de `world_01_background_frames.png`.
 - Pruebas: 300 comprobaciones.
 
+### Barril al instante, fondo FHD y deslizarse
+
+- Lanzar/soltar el barril: el pingüino deja de dibujarlo en el mismo fotograma en que el barril
+  real sale (antes se veían los dos unos instantes).
+- Fondo del Mundo 1 con los 10 fotogramas FHD (`world_01_background_fhd/`), a 960×672 sin
+  re-escalar en juego; la máscara del mar sale del movimiento real entre fotogramas.
+- Deslizarse activado en el arcade: abajo mientras se camina (no requiere correr).
+- Pruebas: 303 comprobaciones.
+
 ## Historial: etapa 1 (formato plataformas con scroll, sustituido)
 
 Se conserva todo lo construido; el nivel largo con cámara que sigue queda como «laboratorio de
@@ -214,8 +223,8 @@ movimiento» (Controles → Laboratorio) y no es el formato del juego.
 - **Opción 16:9** (paneles decorativos a los lados en vez de barras negras): prevista, no hecha.
 - **Arte de las arenas**: la geometría de las pantallas es provisional (colores planos) hasta la
   fase del Mundo 1; los tiles saldrán de `worlds_01_to_06_sceneries.png`.
-- **Fondo animado**: los 30 fotogramas de referencia no forman un bucle continuo (cambian el
-  encuadre), así que solo se anima la franja del mar con fundidos. Para animar nubes, palmeras u
-  olas enteras haría falta una secuencia en bucle o capas separadas.
+- **Fondo animado**: los 10 fotogramas FHD están alineados pero generados por separado, así que
+  solo se anima el mar (fuera de él «hervirían»). Nubes, gaviotas o palmeras en movimiento
+  necesitarían capas separadas.
 - **Pingüino rosa**: sin hoja de llevar barril; usa el barril visible como respaldo.
-- **Correr/deslizarse**: siguen en el código (`run_enabled`) pero desactivados en el ajuste arcade.
+- **Correr**: sigue en el código (`run_enabled`) pero desactivado en el ajuste arcade.

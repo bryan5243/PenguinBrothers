@@ -18,7 +18,8 @@ los fotogramas que sí usa el juego (en `assets/characters/`, `assets/enemies/`,
 | `enemies/world_01_enemies_animations.png` | Los 4 enemigos del Mundo 1 (versión anterior, resumen) | Fase 8 |
 | `enemies/worlds_01_to_10_enemies_concepts.png` | Conceptos de enemigos de los 10 mundos | Fases 12–13 |
 | `bosses/worlds_01_to_06_bosses.png` | Jefes de los mundos 1–6 (Orca Ninja, Águila Real, Leopardo, Tiburón, Oso Polar, Pingüino Robótico) con ataques | Fases 9, 12–13 |
-| `worlds/world_01_background_frames.png` | Mundo 1: 30 fotogramas del fondo de isla y mar | Fondo animado (`tools/sprites/extract_background_frames.py`) |
+| `worlds/world_01_background_fhd/frame_01..10.png` | Mundo 1: 10 fotogramas FHD (1672×941) de la playa con el mar en movimiento | Fondo animado actual (`tools/sprites/extract_background_frames.py`) |
+| `worlds/world_01_background_frames.png` | Mundo 1: 30 fotogramas pequeños del fondo (no forman una secuencia continua) | Histórico: primera versión del fondo animado |
 | `worlds/world_01_tileset_isla_palmera.png` | Mundo 1: fondo de isla, tablones, suelo, columnas, barriles/cajas, plataformas giratorias, decoración, obstáculos, escaleras, llave, puertas y efectos | Arenas del Mundo 1 (`tools/sprites/extract_tileset.py`) |
 | `worlds/worlds_01_to_06_sceneries.png` | Escenarios, tiles, fondos y decoración de los mundos 1–6 | Fases 7, 12–13 |
 | `worlds/world_01_level_1_1_mockup.png` | Maqueta del nivel 1-1 "Playa Tropical" con HUD | Fases 6–7 |

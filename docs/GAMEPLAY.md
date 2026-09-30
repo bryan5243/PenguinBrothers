@@ -40,7 +40,7 @@ Ajuste arcade: velocidad constante, respuesta inmediata al joystick y salto de u
 | Parámetro | Valor | Descripción |
 |---|---|---|
 | `move_speed` | 240 | Velocidad arcade constante |
-| `run_enabled` / `run_speed` / `run_delay` | **false** / 340 / 0,55 s | Correr (y deslizarse) desactivados en el arcade |
+| `run_enabled` / `run_speed` / `run_delay` | **false** / 340 / 0,55 s | Correr desactivado en el arcade (deslizarse no depende de correr) |
 | `acceleration` / `air_acceleration` | 6000 / 3600 | Casi instantáneo: velocidad máxima en ~3 frames |
 | `friction` / `air_friction` | 6000 / 2400 | Frena al instante al soltar |
 | `jump_force` / `gravity` / `max_fall_speed` | 680 / 1750 / 950 | Salto completo ≈ 132 px (los pisos de la arena están a 112 px) |
@@ -48,7 +48,8 @@ Ajuste arcade: velocidad constante, respuesta inmediata al joystick y salto de u
 | `coyote_time` / `jump_buffer_time` | 0,10 / 0,12 s | Tolerancias de salto |
 | `land_duration` / `land_min_fall_speed` | 0,08 s / 380 | Aterrizaje tras caída fuerte (no bloquea el control) |
 | `slide_speed` / `slide_duration` / `slide_friction` | 520 / 0,5 s / 700 | Deslizamiento sobre el vientre |
-| `slide_trigger_ratio` | 0,85 | Agacharse a ≥ 85 % de `run_speed` inicia el deslizamiento |
+| `slide_enabled` | true | Agacharse caminando (dirección pulsada, manos libres) inicia el deslizamiento |
+| `slide_trigger_ratio` | 0,85 | Velocidad mínima: 85 % de `move_speed` (o de `run_speed` si se corre) |
 | `crawl_speed` | 110 | Gatear agachado bajo un techo bajo |
 | `climb_speed` | 180 | Escaleras |
 | `drop_through_time` | 0,25 s | Tiempo que se ignoran las plataformas al bajar |
@@ -61,7 +62,7 @@ Ajuste arcade: velocidad constante, respuesta inmediata al joystick y salto de u
 ### Estados (`scripts/player/states/`)
 
 ```
-Idle ⇄ Move ──(abajo corriendo)──> Slide ──> Crouch / Idle
+Idle ⇄ Move ──(abajo caminando)──> Slide ──> Crouch / Idle
   │      │                          (bajo techo: sigue agachado y gatea)
   │      └──(abajo)──> Crouch ──(abajo+saltar en plataforma)──> Fall
   ├──(saltar)──> Jump ──(v ≥ 0)──> Fall ──(suelo)──> Land / Idle / Move
@@ -297,7 +298,8 @@ enemigo o recibir su ataque quita vida; bombas y barriles lanzados los derrotan 
   Si el personaje tiene animaciones `carry_<estilo>_<anim>` (`idle, walk, run, jump, land, crouch,
   lift, throw, drop`), `PlayerAnimator` las usa (con respaldo a `walk`/`idle` si falta alguna) y
   el objeto oculta su sprite (`set_art_visible(false)`) porque ya va dibujado en el fotograma; al
-  lanzarlo o soltarlo vuelve a verse. Sin esas animaciones se usa `carry` con el objeto visible.
+  lanzarlo o soltarlo vuelve a verse en el mismo fotograma: `carry_barrel_throw`/`drop` solo usan
+  poses con las manos ya vacías, para que no se vean dos barriles. Sin esas animaciones se usa `carry` con el objeto visible.
 - Límite de bombas propias en juego: `max_active_bombs` (3). Munición por tipo: `BombData.ammo`
   (-1 = infinita).
 

@@ -57,11 +57,12 @@ La colisión nunca depende del dibujo: las arenas siguen siendo rectángulos exa
 
 ## Fondo animado
 
-`python3 tools/sprites/extract_background_frames.py` corta la cuadrícula de
-`assets/references/worlds/world_01_background_frames.png` (30 fotogramas) en
-`assets/worlds/world_01/backdrop/`: `base.png` (fotograma de referencia), `frame_XX.png`,
-`sea_mask.png` (zona del mar con borde suavizado) y `manifest.json`. `tools/build_arenas.gd` crea
-`Background/Backdrop` con `scripts/arena/animated_backdrop.gd`: el cielo/degradado de arriba, la
-base cubriendo la pantalla y, encima, solo la franja del mar fundiendo entre fotogramas
-(`frame_time`). Los fotogramas de la hoja no son un bucle continuo (el encuadre varía), por eso no
-se reproducen enteros.
+`python3 tools/sprites/extract_background_frames.py` toma los 10 fotogramas FHD de
+`assets/references/worlds/world_01_background_fhd/` (1672×941, misma cámara) y los deja en
+`assets/worlds/world_01/backdrop/` a 960×672 (cubren la arena bajo el marcador, centrados):
+`base.png` (fotograma 1), `frame_NN.png`, `sea_mask.png` y `manifest.json`. La máscara se calcula
+con la desviación entre fotogramas dentro de la franja del mar (olas, espuma y orilla), suavizada.
+`tools/build_arenas.gd` crea `Background/Backdrop` con `scripts/arena/animated_backdrop.gd`: la
+base quieta y, encima, solo el mar fundiendo un fotograma con el siguiente (`frame_time`). Los
+fotogramas están alineados pero generados por separado: reproducidos enteros, el cielo y la
+vegetación temblarían, por eso solo se funde el mar.
