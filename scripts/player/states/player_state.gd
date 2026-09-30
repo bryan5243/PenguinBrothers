@@ -26,8 +26,7 @@ func check_ground_transitions() -> bool:
 			transition_to(&"Jump")
 			return true
 	if player.input.crouch_held:
-		var slide_speed := player.config.run_speed * player.config.slide_trigger_ratio
-		transition_to(&"Slide" if absf(player.velocity.x) >= slide_speed else &"Crouch")
+		transition_to(&"Slide" if player.can_slide() else &"Crouch")
 		return true
 	return false
 

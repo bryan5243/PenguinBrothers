@@ -243,6 +243,17 @@ func can_stand_up() -> bool:
 	return not ceiling_check.is_colliding()
 
 
+## ¿Agacharse ahora se convierte en deslizamiento? Hay que ir andando (con la dirección
+## pulsada), en el suelo y con las manos libres.
+func can_slide() -> bool:
+	if not config.slide_enabled or is_carrying() or not is_on_floor():
+		return false
+	if absf(input.move_axis) < 0.2 or signf(input.move_axis) != signf(velocity.x):
+		return false
+	var base := config.run_speed if config.run_enabled else config.move_speed
+	return absf(velocity.x) >= base * config.slide_trigger_ratio
+
+
 # ---------------------------------------------------------------- escaleras
 func get_overlapping_ladder() -> Ladder:
 	for area in ladder_detector.get_overlapping_areas():

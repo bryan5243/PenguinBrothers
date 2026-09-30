@@ -6,8 +6,8 @@ extends Resource
 
 @export_group("Movimiento")
 @export var move_speed := 240.0
-## Arcade: velocidad constante y respuesta inmediata al joystick. Correr (y el
-## deslizamiento, que sale de correr) queda desactivado salvo que se active aquí.
+## Arcade: velocidad constante y respuesta inmediata al joystick. Correr queda desactivado
+## salvo que se active aquí (el deslizamiento no depende de correr: ver `slide_enabled`).
 @export var run_enabled := false
 @export var run_speed := 340.0
 ## Segundos de movimiento continuo en el suelo antes de pasar a correr.
@@ -33,10 +33,13 @@ extends Resource
 @export var land_min_fall_speed := 380.0
 
 @export_group("Acciones")
+## Deslizarse: agacharse mientras se camina (o corre) lanza al pingüino sobre el vientre.
+@export var slide_enabled := true
 @export var slide_speed := 520.0
 @export var slide_duration := 0.5
 @export var slide_friction := 700.0
-## Velocidad mínima (fracción de run_speed) para que agacharse se convierta en deslizamiento.
+## Velocidad mínima para deslizarse, como fracción de la velocidad de marcha (`run_speed` si
+## correr está activado, si no `move_speed`).
 @export_range(0.0, 1.0) var slide_trigger_ratio := 0.85
 ## Velocidad al gatear agachado bajo un techo bajo (sin espacio para levantarse).
 @export var crawl_speed := 110.0
