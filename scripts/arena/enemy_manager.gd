@@ -6,9 +6,14 @@ extends Node2D
 ##
 ## Contrato de un enemigo: estar en el grupo "enemies" y emitir `defeated` al morir (o
 ## simplemente salir del árbol).
+##
+## Oleadas: los EnemySpawner de la pantalla se registran con register_spawners(); primero
+## actúan los de la oleada más baja y, cuando han soltado todos sus enemigos y no queda
+## ninguno vivo, empieza la siguiente.
 
 signal cleared
 signal enemy_count_changed(remaining: int)
+signal wave_started(wave: int)
 
 const GROUP := &"enemies"
 
@@ -18,6 +23,8 @@ var is_cleared := false
 var _alive: Array[Node] = []
 ## Se ha registrado al menos un enemigo (una pantalla vacía no se «limpia» sola).
 var _had_enemies := false
+var current_wave := 0
+var spawners: Array[EnemySpawner] = []
 
 
 func _ready() -> void:
@@ -36,6 +43,22 @@ func register_enemy(enemy: Node) -> void:
 		enemy.connect(&"defeated", _on_enemy_gone.bind(enemy), CONNECT_ONE_SHOT)
 	enemy.tree_exiting.connect(_on_enemy_gone.bind(enemy), CONNECT_ONE_SHOT)
 	enemy_count_changed.emit(remaining())
+
+
+## Reserva los enemigos de todos los spawners (la pantalla no se limpia hasta derrotarlos a
+## todos) y arranca la primera oleada.
+func register_spawners(list: Array[EnemySpawner]) -> void:
+	for sp in list:
+		if spawners.has(sp):
+			continue
+		spawners.append(sp)
+		sp.manager = self
+		add_pending(maxi(0, sp.count - sp.spawned))
+	_advance_wave()
+
+
+func alive_count() -> int:
+	return _alive.size()
 
 
 func add_pending(count: int) -> void:
@@ -65,7 +88,31 @@ func _on_enemy_gone(...args: Array) -> void:
 		return
 	_alive.erase(target)
 	enemy_count_changed.emit(remaining())
+	_advance_wave()
 	_check_cleared()
+
+
+func _physics_process(_delta: float) -> void:
+	if not spawners.is_empty():
+		_advance_wave()
+
+
+## Pasa a la siguiente oleada cuando la actual ya soltó a todos y no queda nadie vivo.
+func _advance_wave() -> void:
+	var next := -1
+	for sp in spawners:
+		if not is_instance_valid(sp) or sp.is_finished():
+			continue
+		if sp.wave <= current_wave:
+			return   # la oleada actual aún tiene enemigos por salir
+		next = sp.wave if next < 0 else mini(next, sp.wave)
+	if next < 0 or not _alive.is_empty():
+		return
+	current_wave = next
+	for sp in spawners:
+		if is_instance_valid(sp) and sp.wave == current_wave:
+			sp.activate()
+	wave_started.emit(current_wave)
 
 
 func _check_cleared() -> void:

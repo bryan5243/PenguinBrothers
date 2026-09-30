@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3]
+
+[ext_resource type="Resource" path="res://data/drops/enemy_drops.tres" id="1_8eyst"]
+[ext_resource type="Texture2D" path="res://assets/enemies/small_octopus/ink.png" id="2_yeb4v"]
+[ext_resource type="Script" path="res://scripts/core/data/enemy_data.gd" id="3_vp258"]
+[ext_resource type="SpriteFrames" path="res://assets/enemies/small_octopus/small_octopus_frames.tres" id="4_l34sy"]
+
+[resource]
+script = ExtResource("3_vp258")
+id = &"small_octopus"
+display_name = "Pulpo pequeño"
+behavior = 3
+detection_range = 520.0
+attack_cooldown = 2.4
+attack_duration = 0.6
+attack_hit_time = 0.35
+score = 150
+drop_table = ExtResource("1_8eyst")
+speed = 45.0
+chase_speed = 45.0
+projectile_texture = ExtResource("2_yeb4v")
+projectile_range = 480.0
+sprite_frames = ExtResource("4_l34sy")
+visual_height = 42.0
+body_size = Vector2(34, 32)
+death_color = Color(1, 0.45, 0.55, 1)

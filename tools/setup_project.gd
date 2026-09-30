@@ -203,7 +203,30 @@ const DROPS := [
 	["crate_drops", [["cherry", 3.0], ["banana", 2.0], ["orange", 1.5], ["apple", 1.0]], 0.6],
 	["barrel_drops", [["cherry", 2.0], ["apple", 1.5], ["watermelon", 1.0], ["fire", 2.0],
 		["boots", 1.0], ["armor", 1.0], ["one_up", 0.3]], 0.9],
+	["enemy_drops", [["cherry", 3.0], ["banana", 2.0], ["orange", 1.5], ["fire", 1.0],
+		["boots", 0.5], ["armor", 0.5]], 0.35],
 ]
+
+## Enemigos del Mundo 1. Cada fila: campos de EnemyData que difieren del valor por defecto.
+const ENEMIES := {
+	"small_crab": {"display_name": "Cangrejo pequeño", "behavior": EnemyData.Behavior.WALKER,
+		"health": 1, "speed": 70.0, "chase_speed": 125.0, "jump_force": 640.0, "attack_range": 44.0,
+		"detection_range": 320.0, "score": 100, "visual_height": 40.0, "body_size": Vector2(40, 28),
+		"death_color": Color(0.95, 0.3, 0.25)},
+	"hermit_crab": {"display_name": "Cangrejo ermitaño", "behavior": EnemyData.Behavior.SHELL,
+		"health": 2, "speed": 55.0, "chase_speed": 95.0, "attack_range": 46.0, "score": 200,
+		"visual_height": 48.0, "body_size": Vector2(44, 34), "shell_armor": 1,
+		"death_color": Color(0.75, 0.65, 0.3)},
+	"seagull": {"display_name": "Gaviota", "behavior": EnemyData.Behavior.FLYER, "flying": true,
+		"health": 1, "speed": 110.0, "attack_cooldown": 2.5, "detection_range": 700.0, "score": 150,
+		"visual_height": 46.0, "body_size": Vector2(44, 30), "sprite_on_ground": false,
+		"knockback_taken": 0.6, "death_color": Color(0.95, 0.95, 1.0)},
+	"small_octopus": {"display_name": "Pulpo pequeño", "behavior": EnemyData.Behavior.SWIMMER,
+		"health": 1, "speed": 45.0, "chase_speed": 45.0, "detection_range": 520.0,
+		"attack_cooldown": 2.4, "attack_duration": 0.6, "attack_hit_time": 0.35,
+		"projectile_speed": 260.0, "projectile_range": 480.0, "score": 150, "visual_height": 42.0,
+		"body_size": Vector2(34, 32), "death_color": Color(1.0, 0.45, 0.55)},
+}
 
 
 func _create_items() -> void:
@@ -257,6 +280,17 @@ func _create_items() -> void:
 	barrel.size = Vector2(44, 40)
 	barrel.drop_table = tables["barrel_drops"]
 	_save(barrel, "res://data/destructibles/barrel.tres")
+	for enemy_id in ENEMIES:
+		var e := EnemyData.new()
+		e.id = StringName(enemy_id)
+		e.world = 1
+		for key in ENEMIES[enemy_id]:
+			e.set(key, ENEMIES[enemy_id][key])
+		e.sprite_frames = load("res://assets/enemies/%s/%s_frames.tres" % [enemy_id, enemy_id])
+		e.drop_table = tables["enemy_drops"]
+		if enemy_id == "small_octopus":
+			e.projectile_texture = load("res://assets/enemies/small_octopus/ink.png")
+		_save(e, "res://data/enemies/%s.tres" % enemy_id)
 
 
 func _create_data() -> void:

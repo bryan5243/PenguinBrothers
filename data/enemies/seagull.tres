@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3]
+
+[ext_resource type="Resource" path="res://data/drops/enemy_drops.tres" id="1_v0sjh"]
+[ext_resource type="Script" path="res://scripts/core/data/enemy_data.gd" id="2_23om0"]
+[ext_resource type="SpriteFrames" path="res://assets/enemies/seagull/seagull_frames.tres" id="3_7swil"]
+
+[resource]
+script = ExtResource("2_23om0")
+id = &"seagull"
+display_name = "Gaviota"
+behavior = 2
+detection_range = 700.0
+attack_cooldown = 2.5
+knockback_taken = 0.6
+score = 150
+drop_table = ExtResource("1_v0sjh")
+speed = 110.0
+flying = true
+sprite_frames = ExtResource("3_7swil")
+visual_height = 46.0
+body_size = Vector2(44, 30)
+sprite_on_ground = false
+death_color = Color(0.95, 0.95, 1, 1)

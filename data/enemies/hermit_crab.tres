@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3]
+
+[ext_resource type="Resource" path="res://data/drops/enemy_drops.tres" id="1_enlcj"]
+[ext_resource type="Script" path="res://scripts/core/data/enemy_data.gd" id="2_ohpd5"]
+[ext_resource type="SpriteFrames" path="res://assets/enemies/hermit_crab/hermit_crab_frames.tres" id="3_aw57k"]
+
+[resource]
+script = ExtResource("2_ohpd5")
+id = &"hermit_crab"
+display_name = "Cangrejo ermitaño"
+behavior = 1
+health = 2
+attack_range = 46.0
+score = 200
+drop_table = ExtResource("1_enlcj")
+speed = 55.0
+chase_speed = 95.0
+sprite_frames = ExtResource("3_aw57k")
+visual_height = 48.0
+body_size = Vector2(44, 34)
+death_color = Color(0.75, 0.65, 0.3, 1)

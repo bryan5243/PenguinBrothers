@@ -1,0 +1,67 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/enemy.gd" id="1_enemy"]
+[ext_resource type="Script" path="res://scripts/utilities/health_component.gd" id="2_health"]
+[ext_resource type="Script" path="res://scripts/utilities/state_machine.gd" id="3_fsm"]
+[ext_resource type="Script" path="res://scripts/enemies/states/idle.gd" id="4_idle"]
+[ext_resource type="Script" path="res://scripts/enemies/states/patrol.gd" id="5_patrol"]
+[ext_resource type="Script" path="res://scripts/enemies/states/chase.gd" id="6_chase"]
+[ext_resource type="Script" path="res://scripts/enemies/states/attack.gd" id="7_attack"]
+[ext_resource type="Script" path="res://scripts/enemies/states/hurt.gd" id="8_hurt"]
+[ext_resource type="Script" path="res://scripts/enemies/states/dead.gd" id="9_dead"]
+[ext_resource type="Script" path="res://scripts/enemies/states/special.gd" id="10_special"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(40, 30)
+
+[node name="Enemy" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 33
+floor_snap_length = 6.0
+script = ExtResource("1_enemy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -15)
+shape = SubResource("RectangleShape2D_body")
+
+[node name="VisualRoot" type="Node2D" parent="."]
+
+[node name="Animator" type="AnimatedSprite2D" parent="VisualRoot"]
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="Shape" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, -15)
+shape = SubResource("RectangleShape2D_body")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("2_health")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("3_fsm")
+initial_state = NodePath("Idle")
+auto_process = false
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("4_idle")
+
+[node name="Patrol" type="Node" parent="StateMachine"]
+script = ExtResource("5_patrol")
+
+[node name="Chase" type="Node" parent="StateMachine"]
+script = ExtResource("6_chase")
+
+[node name="Attack" type="Node" parent="StateMachine"]
+script = ExtResource("7_attack")
+
+[node name="Hurt" type="Node" parent="StateMachine"]
+script = ExtResource("8_hurt")
+
+[node name="Dead" type="Node" parent="StateMachine"]
+script = ExtResource("9_dead")
+
+[node name="Special" type="Node" parent="StateMachine"]
+script = ExtResource("10_special")

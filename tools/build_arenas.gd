@@ -31,6 +31,14 @@ const SCREENS := {
 		"blocks": [Rect2(452, 624, 56, 48)],
 		"objects": [["barrel", Vector2(330, 652)], ["barrel", Vector2(820, 540)], ["crate", Vector2(250, 560)],
 			["crate", Vector2(140, 336)], ["stone_block", Vector2(480, 224)]],
+		# Enemigos: tipo, entrada, posición, retraso, intervalo, cantidad, máx. vivos, oleada.
+		"spawners": [
+			["small_crab", "LEFT", Vector2(0, 672), 1.5, 5.0, 2, 1, 1],
+			["small_crab", "RIGHT", Vector2(960, 672), 3.0, 5.0, 2, 1, 1],
+			["seagull", "POINT", Vector2(480, 150), 4.0, 6.0, 1, 1, 1],
+			["hermit_crab", "TOP", Vector2(480, 0), 1.0, 4.0, 1, 1, 2],
+			["small_octopus", "POINT", Vector2(820, 336), 2.0, 4.0, 1, 1, 2],
+		],
 		"p1": Vector2(120, 672), "p2": Vector2(840, 672),
 	},
 	"res://scenes/stages/world_01/World01_Stage01_B.tscn": {
@@ -40,6 +48,11 @@ const SCREENS := {
 		"blocks": [Rect2(24, 624, 64, 48), Rect2(872, 624, 64, 48)],
 		"objects": [["barrel", Vector2(480, 540)], ["crate", Vector2(120, 448)], ["crate", Vector2(840, 448)],
 			["stone_block", Vector2(480, 336)]],
+		"spawners": [
+			["small_crab", "TOP", Vector2(300, 0), 2.0, 6.0, 2, 1, 1],
+			["seagull", "POINT", Vector2(700, 140), 5.0, 8.0, 1, 1, 1],
+			["small_octopus", "POINT", Vector2(120, 224), 3.0, 6.0, 1, 1, 1],
+		],
 		"p1": Vector2(150, 672), "p2": Vector2(810, 672),
 	},
 }
@@ -102,6 +115,25 @@ func _build(path: String, d: Dictionary) -> bool:
 		node.name = "%s%d" % [kind.to_pascal_case(), counts[kind]]
 		node.position = o[1]
 		_add(node, items)
+
+	var spawners := Node2D.new()
+	spawners.name = "Spawners"
+	_add(spawners, arena_root)
+	var n := 0
+	for sp in d.get("spawners", []):
+		n += 1
+		var es := Marker2D.new()
+		es.set_script(load("res://scripts/enemies/enemy_spawner.gd"))
+		es.name = "Spawner%d_%s" % [n, String(sp[0]).to_pascal_case()]
+		es.position = sp[2]
+		es.set("enemy_type", load("res://data/enemies/%s.tres" % sp[0]))
+		es.set("entry", ["POINT", "LEFT", "RIGHT", "TOP"].find(sp[1]))
+		es.set("spawn_delay", sp[3])
+		es.set("interval", sp[4])
+		es.set("count", sp[5])
+		es.set("max_enemies", sp[6])
+		es.set("wave", sp[7])
+		_add(es, spawners)
 
 	var spawner := Node2D.new()
 	spawner.name = "PlayerSpawner"

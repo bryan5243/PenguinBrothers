@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3]
+
+[ext_resource type="Resource" path="res://data/drops/enemy_drops.tres" id="1_3ntw1"]
+[ext_resource type="Script" path="res://scripts/core/data/enemy_data.gd" id="2_hsjin"]
+[ext_resource type="SpriteFrames" path="res://assets/enemies/small_crab/small_crab_frames.tres" id="3_aowl5"]
+
+[resource]
+script = ExtResource("2_hsjin")
+id = &"small_crab"
+display_name = "Cangrejo pequeño"
+attack_range = 44.0
+drop_table = ExtResource("1_3ntw1")
+chase_speed = 125.0
+jump_force = 640.0
+sprite_frames = ExtResource("3_aowl5")
+visual_height = 40.0
+body_size = Vector2(40, 28)
+death_color = Color(0.95, 0.3, 0.25, 1)

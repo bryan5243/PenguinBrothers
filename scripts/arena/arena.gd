@@ -7,7 +7,8 @@ extends Node2D
 ##   Arena
 ##   ├── Background / Geometry / Platforms / Ladders ...   (escenario)
 ##   ├── BombPool        (BombManager de la pantalla: bombas y explosiones reutilizables)
-##   ├── Enemies         (EnemyManager: cuenta enemigos; `cleared` -> llave en la pantalla A)
+##   ├── Enemies         (EnemyManager: cuenta enemigos y oleadas; `cleared` -> llave en la A)
+##   ├── Spawners        (EnemySpawner: tipo, entrada, retraso, cantidad, máximo, oleada)
 ##   ├── Items           (llave, power-ups, barriles... Fases 4–7)
 ##   ├── PlayerSpawner   (PlayerManager: 1 o 2 pingüinos según el modo, marcadores P1/P2)
 ##   ├── ArcadeCamera    (fija)
@@ -41,6 +42,12 @@ func _ready() -> void:
 		p.respawn_near_partner = not respawn_at_start
 		p.set_players_collide(players_collide)
 	enemies.cleared.connect(_on_enemies_cleared)
+	var list: Array[EnemySpawner] = []
+	if has_node("Spawners"):
+		for node in $Spawners.get_children():
+			if node is EnemySpawner:
+				list.append(node)
+	enemies.register_spawners(list)
 	StageManager.register_arena(self, time_limit)
 	hud.refresh()
 
