@@ -1,114 +1,95 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://scripts/arena/arena.gd" id="1_p4elk"]
-[ext_resource type="Script" path="res://scripts/arena/animated_backdrop.gd" id="2_o6hke"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/base.png" id="3_s0kuu"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_02.png" id="4_qrqmo"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_03.png" id="5_kf0at"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_04.png" id="6_3srpd"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_05.png" id="7_ikd0n"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_06.png" id="8_ctfx6"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_07.png" id="9_et46b"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_08.png" id="10_csbp3"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_09.png" id="11_o7pr3"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_10.png" id="12_lx27v"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_11.png" id="13_s1tc2"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_12.png" id="14_hinx0"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_13.png" id="15_5fvqh"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_14.png" id="16_k0va3"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_15.png" id="17_gn5jc"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_16.png" id="18_77ty1"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_17.png" id="19_1a6xe"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_18.png" id="20_n4gu2"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_19.png" id="21_7kk83"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_20.png" id="22_ivu4e"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_21.png" id="23_7u2yn"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_22.png" id="24_ma1y5"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_23.png" id="25_5xqce"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_24.png" id="26_kkjqq"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_25.png" id="27_gt7ru"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_26.png" id="28_vekb0"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_27.png" id="29_etjyu"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_28.png" id="30_b3ma2"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_29.png" id="31_jjit2"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_30.png" id="32_q7e0l"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/sea_mask.png" id="33_8elo2"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/palm.png" id="34_iba4i"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/palm_2.png" id="35_kf8r0"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/sandcastle.png" id="36_t0rvw"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/flag.png" id="37_n17ws"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/bush.png" id="38_klk8p"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/stone_tile.png" id="39_yqb3k"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/ground.png" id="40_g5hmd"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/rock_block.png" id="41_jqkhr"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/post_rope.png" id="42_1mxuf"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/plank.png" id="43_0gudn"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/fern.png" id="44_1xuwn"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/flowers.png" id="45_e4t6g"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/bush_flower.png" id="46_djh57"]
-[ext_resource type="Texture2D" path="res://assets/worlds/world_01/rock_flat.png" id="47_0yuxh"]
-[ext_resource type="Script" path="res://scripts/bombs/bomb_pool.gd" id="48_c17fp"]
-[ext_resource type="Script" path="res://scripts/arena/enemy_manager.gd" id="49_qo741"]
-[ext_resource type="PackedScene" path="res://scenes/objects/Barrel.tscn" id="50_ul2vp"]
-[ext_resource type="PackedScene" path="res://scenes/objects/Destructible.tscn" id="51_0pv12"]
-[ext_resource type="Resource" path="res://data/destructibles/stone_block.tres" id="52_adg0k"]
-[ext_resource type="Script" path="res://scripts/enemies/enemy_spawner.gd" id="53_387g8"]
-[ext_resource type="Resource" path="res://data/enemies/small_crab.tres" id="54_4kw6c"]
-[ext_resource type="Resource" path="res://data/enemies/seagull.tres" id="55_bonet"]
-[ext_resource type="Resource" path="res://data/enemies/hermit_crab.tres" id="56_68jwf"]
-[ext_resource type="Resource" path="res://data/enemies/small_octopus.tres" id="57_vnnn3"]
-[ext_resource type="Script" path="res://scripts/worlds/player_spawner.gd" id="58_yms80"]
-[ext_resource type="Script" path="res://scripts/arena/arcade_camera.gd" id="59_gjojo"]
-[ext_resource type="Script" path="res://scripts/arena/arcade_hud.gd" id="60_4p5dt"]
+[ext_resource type="Script" path="res://scripts/arena/arena.gd" id="1_bv2t5"]
+[ext_resource type="Script" path="res://scripts/arena/animated_backdrop.gd" id="2_e35kc"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/base.png" id="3_tdxow"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_01.png" id="4_al5t5"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_02.png" id="5_4vqn1"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_03.png" id="6_ii5dy"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_04.png" id="7_qcb16"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_05.png" id="8_r87xk"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_06.png" id="9_fugi1"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_07.png" id="10_ub4jv"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_08.png" id="11_c60of"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_09.png" id="12_sgbt5"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/frame_10.png" id="13_shnnm"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/backdrop/sea_mask.png" id="14_ckp5o"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/palm.png" id="15_qdv70"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/palm_2.png" id="16_x30sw"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/sandcastle.png" id="17_pqjx4"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/flag.png" id="18_jt1k7"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/bush.png" id="19_7pshv"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/stone_tile.png" id="20_p4elk"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/ground.png" id="21_o6hke"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/rock_block.png" id="22_s0kuu"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/post_rope.png" id="23_qrqmo"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/plank.png" id="24_kf0at"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/fern.png" id="25_3srpd"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/flowers.png" id="26_ikd0n"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/bush_flower.png" id="27_ctfx6"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/rock_flat.png" id="28_et46b"]
+[ext_resource type="Script" path="res://scripts/bombs/bomb_pool.gd" id="29_csbp3"]
+[ext_resource type="Script" path="res://scripts/arena/enemy_manager.gd" id="30_o7pr3"]
+[ext_resource type="PackedScene" path="res://scenes/objects/Barrel.tscn" id="31_lx27v"]
+[ext_resource type="PackedScene" path="res://scenes/objects/Destructible.tscn" id="32_s1tc2"]
+[ext_resource type="Resource" path="res://data/destructibles/stone_block.tres" id="33_hinx0"]
+[ext_resource type="Script" path="res://scripts/enemies/enemy_spawner.gd" id="34_5fvqh"]
+[ext_resource type="Resource" path="res://data/enemies/small_crab.tres" id="35_k0va3"]
+[ext_resource type="Resource" path="res://data/enemies/seagull.tres" id="36_gn5jc"]
+[ext_resource type="Resource" path="res://data/enemies/hermit_crab.tres" id="37_77ty1"]
+[ext_resource type="Resource" path="res://data/enemies/small_octopus.tres" id="38_1a6xe"]
+[ext_resource type="Script" path="res://scripts/worlds/player_spawner.gd" id="39_n4gu2"]
+[ext_resource type="Script" path="res://scripts/arena/arcade_camera.gd" id="40_7kk83"]
+[ext_resource type="Script" path="res://scripts/arena/arcade_hud.gd" id="41_ivu4e"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_po8og"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7u2yn"]
 size = Vector2(960, 16)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0fkys"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ma1y5"]
 size = Vector2(24, 672)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_434hi"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5xqce"]
 size = Vector2(24, 672)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ygm3n"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kkjqq"]
 size = Vector2(960, 48)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_x2gw3"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gt7ru"]
 size = Vector2(56, 48)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_au0rl"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vekb0"]
 size = Vector2(276, 16)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_yfgao"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_etjyu"]
 size = Vector2(276, 16)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wa25q"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b3ma2"]
 size = Vector2(300, 16)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_k5o5l"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jjit2"]
 size = Vector2(236, 16)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_epob6"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q7e0l"]
 size = Vector2(236, 16)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vbbg3"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8elo2"]
 size = Vector2(400, 16)
 
-[node name="World01_Stage01_A" type="Node2D" unique_id=721020471]
-script = ExtResource("1_p4elk")
+[node name="World01_Stage01_A" type="Node2D" unique_id=12549126]
+script = ExtResource("1_bv2t5")
 
-[node name="Background" type="Node2D" parent="." unique_id=1869316129]
+[node name="Background" type="Node2D" parent="." unique_id=7486735]
 z_index = -10
 
-[node name="Backdrop" type="Node2D" parent="Background" unique_id=115966324]
-script = ExtResource("2_o6hke")
-base = ExtResource("3_s0kuu")
-frames = Array[Texture2D]([ExtResource("4_qrqmo"), ExtResource("5_kf0at"), ExtResource("6_3srpd"), ExtResource("7_ikd0n"), ExtResource("8_ctfx6"), ExtResource("9_et46b"), ExtResource("10_csbp3"), ExtResource("11_o7pr3"), ExtResource("12_lx27v"), ExtResource("13_s1tc2"), ExtResource("14_hinx0"), ExtResource("15_5fvqh"), ExtResource("16_k0va3"), ExtResource("17_gn5jc"), ExtResource("18_77ty1"), ExtResource("19_1a6xe"), ExtResource("20_n4gu2"), ExtResource("21_7kk83"), ExtResource("22_ivu4e"), ExtResource("23_7u2yn"), ExtResource("24_ma1y5"), ExtResource("25_5xqce"), ExtResource("26_kkjqq"), ExtResource("27_gt7ru"), ExtResource("28_vekb0"), ExtResource("29_etjyu"), ExtResource("30_b3ma2"), ExtResource("31_jjit2"), ExtResource("32_q7e0l")])
-sea_mask = ExtResource("33_8elo2")
-sky_top = Color(0.10334999, 0.31199998, 0.43095, 1)
-sky_bottom = Color(0.159, 0.48, 0.663, 1)
+[node name="Backdrop" type="Node2D" parent="Background" unique_id=442536802]
+script = ExtResource("2_e35kc")
+base = ExtResource("3_tdxow")
+frames = Array[Texture2D]([ExtResource("4_al5t5"), ExtResource("5_4vqn1"), ExtResource("6_ii5dy"), ExtResource("7_qcb16"), ExtResource("8_r87xk"), ExtResource("9_fugi1"), ExtResource("10_ub4jv"), ExtResource("11_c60of"), ExtResource("12_sgbt5"), ExtResource("13_shnnm")])
+sea_mask = ExtResource("14_ckp5o")
+sky_top = Color(0.07735, 0.27625, 0.49659997, 1)
+sky_bottom = Color(0.119, 0.425, 0.764, 1)
 
-[node name="@Label@2" type="Label" parent="Background" unique_id=8117859]
+[node name="@Label@2" type="Label" parent="Background" unique_id=1439055195]
 offset_left = 36.0
 offset_top = 70.0
 offset_right = 36.0
@@ -119,445 +100,445 @@ theme_override_colors/font_outline_color = Color(0.05, 0.1, 0.2, 0.8)
 theme_override_constants/outline_size = 4
 text = "1-1  PANTALLA A"
 
-[node name="Decor" type="Node2D" parent="." unique_id=1157264616]
+[node name="Decor" type="Node2D" parent="." unique_id=848805274]
 z_index = -5
 
-[node name="@Sprite2D@3" type="Sprite2D" parent="Decor" unique_id=1343078277]
+[node name="@Sprite2D@3" type="Sprite2D" parent="Decor" unique_id=625488276]
 position = Vector2(70, 672)
 scale = Vector2(1.3, 1.3)
-texture = ExtResource("34_iba4i")
+texture = ExtResource("15_qdv70")
 centered = false
 offset = Vector2(-55.5, -200)
 
-[node name="@Sprite2D@4" type="Sprite2D" parent="Decor" unique_id=906420186]
+[node name="@Sprite2D@4" type="Sprite2D" parent="Decor" unique_id=1193611252]
 position = Vector2(905, 672)
 scale = Vector2(1.3, 1.3)
-texture = ExtResource("35_kf8r0")
+texture = ExtResource("16_x30sw")
 centered = false
 offset = Vector2(-53.5, -148)
 flip_h = true
 
-[node name="@Sprite2D@5" type="Sprite2D" parent="Decor" unique_id=60996730]
+[node name="@Sprite2D@5" type="Sprite2D" parent="Decor" unique_id=1285415276]
 position = Vector2(600, 672)
 scale = Vector2(0.8, 0.8)
-texture = ExtResource("36_t0rvw")
+texture = ExtResource("17_pqjx4")
 centered = false
 offset = Vector2(-40, -91)
 
-[node name="@Sprite2D@6" type="Sprite2D" parent="Decor" unique_id=1804660173]
+[node name="@Sprite2D@6" type="Sprite2D" parent="Decor" unique_id=759277849]
 position = Vector2(890, 336)
 scale = Vector2(0.6, 0.6)
-texture = ExtResource("37_n17ws")
+texture = ExtResource("18_jt1k7")
 centered = false
 offset = Vector2(-45.5, -83)
 
-[node name="@Sprite2D@7" type="Sprite2D" parent="Decor" unique_id=165281136]
+[node name="@Sprite2D@7" type="Sprite2D" parent="Decor" unique_id=1986546280]
 position = Vector2(470, 224)
 scale = Vector2(0.7, 0.7)
-texture = ExtResource("38_klk8p")
+texture = ExtResource("19_7pshv")
 centered = false
 offset = Vector2(-36.5, -52)
 
-[node name="Geometry" type="StaticBody2D" parent="." unique_id=1276154139]
+[node name="Geometry" type="StaticBody2D" parent="." unique_id=849914374]
 collision_mask = 0
 
-[node name="@CollisionShape2D@8" type="CollisionShape2D" parent="Geometry" unique_id=931664847]
+[node name="@CollisionShape2D@8" type="CollisionShape2D" parent="Geometry" unique_id=1260854203]
 position = Vector2(480, 56)
-shape = SubResource("RectangleShape2D_po8og")
+shape = SubResource("RectangleShape2D_7u2yn")
 
-[node name="@TextureRect@9" type="TextureRect" parent="Geometry" unique_id=264185146]
+[node name="@TextureRect@9" type="TextureRect" parent="Geometry" unique_id=1694014702]
 offset_top = 48.0
 offset_right = 3540.0
 offset_bottom = 107.0
 scale = Vector2(0.27118644, 0.27118644)
 mouse_filter = 2
-texture = ExtResource("39_yqb3k")
+texture = ExtResource("20_p4elk")
 stretch_mode = 1
 
-[node name="@CollisionShape2D@10" type="CollisionShape2D" parent="Geometry" unique_id=603240935]
+[node name="@CollisionShape2D@10" type="CollisionShape2D" parent="Geometry" unique_id=2014664449]
 position = Vector2(12, 384)
-shape = SubResource("RectangleShape2D_0fkys")
+shape = SubResource("RectangleShape2D_ma1y5")
 
-[node name="@TextureRect@11" type="TextureRect" parent="Geometry" unique_id=961444398]
+[node name="@TextureRect@11" type="TextureRect" parent="Geometry" unique_id=2131514398]
 offset_top = 48.0
 offset_right = 60.0
 offset_bottom = 1700.0
 scale = Vector2(0.40677965, 0.40677965)
 mouse_filter = 2
-texture = ExtResource("39_yqb3k")
+texture = ExtResource("20_p4elk")
 stretch_mode = 1
 
-[node name="@CollisionShape2D@12" type="CollisionShape2D" parent="Geometry" unique_id=799040221]
+[node name="@CollisionShape2D@12" type="CollisionShape2D" parent="Geometry" unique_id=1824626390]
 position = Vector2(948, 384)
-shape = SubResource("RectangleShape2D_434hi")
+shape = SubResource("RectangleShape2D_5xqce")
 
-[node name="@TextureRect@13" type="TextureRect" parent="Geometry" unique_id=24798982]
+[node name="@TextureRect@13" type="TextureRect" parent="Geometry" unique_id=336534336]
 offset_left = 936.0
 offset_top = 48.0
 offset_right = 996.0
 offset_bottom = 1700.0
 scale = Vector2(0.40677965, 0.40677965)
 mouse_filter = 2
-texture = ExtResource("39_yqb3k")
+texture = ExtResource("20_p4elk")
 stretch_mode = 1
 
-[node name="@CollisionShape2D@14" type="CollisionShape2D" parent="Geometry" unique_id=2094787276]
+[node name="@CollisionShape2D@14" type="CollisionShape2D" parent="Geometry" unique_id=962578237]
 position = Vector2(480, 696)
-shape = SubResource("RectangleShape2D_ygm3n")
+shape = SubResource("RectangleShape2D_kkjqq")
 
-[node name="@NinePatchRect@15" type="NinePatchRect" parent="Geometry" unique_id=1057266326]
+[node name="@NinePatchRect@15" type="NinePatchRect" parent="Geometry" unique_id=657098333]
 offset_top = 660.0
 offset_right = 960.0
 offset_bottom = 720.0
-texture = ExtResource("40_g5hmd")
+texture = ExtResource("21_o6hke")
 patch_margin_left = 14
 patch_margin_right = 14
 axis_stretch_horizontal = 2
 
-[node name="@CollisionShape2D@16" type="CollisionShape2D" parent="Geometry" unique_id=1428750536]
+[node name="@CollisionShape2D@16" type="CollisionShape2D" parent="Geometry" unique_id=2125168324]
 position = Vector2(480, 648)
-shape = SubResource("RectangleShape2D_x2gw3")
+shape = SubResource("RectangleShape2D_gt7ru")
 
-[node name="@TextureRect@17" type="TextureRect" parent="Geometry" unique_id=247851228]
+[node name="@TextureRect@17" type="TextureRect" parent="Geometry" unique_id=860392453]
 offset_left = 448.0
 offset_top = 618.0
 offset_right = 512.0
 offset_bottom = 672.0
 mouse_filter = 2
-texture = ExtResource("41_jqkhr")
+texture = ExtResource("22_s0kuu")
 expand_mode = 1
 
-[node name="Supports" type="Node2D" parent="." unique_id=361547751]
+[node name="Supports" type="Node2D" parent="." unique_id=237639832]
 z_index = -6
 
-[node name="@TextureRect@18" type="TextureRect" parent="Supports" unique_id=43558710]
+[node name="@TextureRect@18" type="TextureRect" parent="Supports" unique_id=358269768]
 offset_left = 33.0
 offset_top = 580.0
 offset_right = 56.0
 offset_bottom = 697.55554
 scale = Vector2(0.7826087, 0.7826087)
 mouse_filter = 2
-texture = ExtResource("42_1mxuf")
+texture = ExtResource("23_qrqmo")
 stretch_mode = 1
 
-[node name="@TextureRect@19" type="TextureRect" parent="Supports" unique_id=462649636]
+[node name="@TextureRect@19" type="TextureRect" parent="Supports" unique_id=1100553924]
 offset_left = 273.0
 offset_top = 580.0
 offset_right = 296.0
 offset_bottom = 697.55554
 scale = Vector2(0.7826087, 0.7826087)
 mouse_filter = 2
-texture = ExtResource("42_1mxuf")
+texture = ExtResource("23_qrqmo")
 stretch_mode = 1
 
-[node name="@TextureRect@20" type="TextureRect" parent="Supports" unique_id=146716884]
+[node name="@TextureRect@20" type="TextureRect" parent="Supports" unique_id=1229535697]
 offset_left = 669.0
 offset_top = 580.0
 offset_right = 692.0
 offset_bottom = 697.55554
 scale = Vector2(0.7826087, 0.7826087)
 mouse_filter = 2
-texture = ExtResource("42_1mxuf")
+texture = ExtResource("23_qrqmo")
 stretch_mode = 1
 
-[node name="@TextureRect@21" type="TextureRect" parent="Supports" unique_id=1048055433]
+[node name="@TextureRect@21" type="TextureRect" parent="Supports" unique_id=1345425284]
 offset_left = 909.0
 offset_top = 580.0
 offset_right = 932.0
 offset_bottom = 697.55554
 scale = Vector2(0.7826087, 0.7826087)
 mouse_filter = 2
-texture = ExtResource("42_1mxuf")
+texture = ExtResource("23_qrqmo")
 stretch_mode = 1
 
-[node name="@TextureRect@22" type="TextureRect" parent="Supports" unique_id=1225683980]
+[node name="@TextureRect@22" type="TextureRect" parent="Supports" unique_id=1067488180]
 offset_left = 339.0
 offset_top = 468.0
 offset_right = 362.0
 offset_bottom = 728.6666
 scale = Vector2(0.7826087, 0.7826087)
 mouse_filter = 2
-texture = ExtResource("42_1mxuf")
+texture = ExtResource("23_qrqmo")
 stretch_mode = 1
 
-[node name="@TextureRect@23" type="TextureRect" parent="Supports" unique_id=778260513]
+[node name="@TextureRect@23" type="TextureRect" parent="Supports" unique_id=39432225]
 offset_left = 603.0
 offset_top = 468.0
 offset_right = 626.0
 offset_bottom = 728.6666
 scale = Vector2(0.7826087, 0.7826087)
 mouse_filter = 2
-texture = ExtResource("42_1mxuf")
+texture = ExtResource("23_qrqmo")
 stretch_mode = 1
 
-[node name="@TextureRect@24" type="TextureRect" parent="Supports" unique_id=1113160789]
+[node name="@TextureRect@24" type="TextureRect" parent="Supports" unique_id=559452326]
 offset_left = 33.0
 offset_top = 356.0
 offset_right = 56.0
 offset_bottom = 616.6666
 scale = Vector2(0.7826087, 0.7826087)
 mouse_filter = 2
-texture = ExtResource("42_1mxuf")
+texture = ExtResource("23_qrqmo")
 stretch_mode = 1
 
-[node name="@TextureRect@25" type="TextureRect" parent="Supports" unique_id=587782338]
+[node name="@TextureRect@25" type="TextureRect" parent="Supports" unique_id=1738985249]
 offset_left = 233.0
 offset_top = 356.0
 offset_right = 256.0
 offset_bottom = 616.6666
 scale = Vector2(0.7826087, 0.7826087)
 mouse_filter = 2
-texture = ExtResource("42_1mxuf")
+texture = ExtResource("23_qrqmo")
 stretch_mode = 1
 
-[node name="@TextureRect@26" type="TextureRect" parent="Supports" unique_id=1422466724]
+[node name="@TextureRect@26" type="TextureRect" parent="Supports" unique_id=181336295]
 offset_left = 709.0
 offset_top = 356.0
 offset_right = 732.0
 offset_bottom = 616.6666
 scale = Vector2(0.7826087, 0.7826087)
 mouse_filter = 2
-texture = ExtResource("42_1mxuf")
+texture = ExtResource("23_qrqmo")
 stretch_mode = 1
 
-[node name="@TextureRect@27" type="TextureRect" parent="Supports" unique_id=536728241]
+[node name="@TextureRect@27" type="TextureRect" parent="Supports" unique_id=341343994]
 offset_left = 909.0
 offset_top = 356.0
 offset_right = 932.0
 offset_bottom = 616.6666
 scale = Vector2(0.7826087, 0.7826087)
 mouse_filter = 2
-texture = ExtResource("42_1mxuf")
+texture = ExtResource("23_qrqmo")
 stretch_mode = 1
 
-[node name="@TextureRect@28" type="TextureRect" parent="Supports" unique_id=1236352787]
+[node name="@TextureRect@28" type="TextureRect" parent="Supports" unique_id=475201842]
 offset_left = 289.0
 offset_top = 244.0
 offset_right = 312.0
 offset_bottom = 647.7778
 scale = Vector2(0.7826087, 0.7826087)
 mouse_filter = 2
-texture = ExtResource("42_1mxuf")
+texture = ExtResource("23_qrqmo")
 stretch_mode = 1
 
-[node name="@TextureRect@29" type="TextureRect" parent="Supports" unique_id=753043032]
+[node name="@TextureRect@29" type="TextureRect" parent="Supports" unique_id=232865098]
 offset_left = 653.0
 offset_top = 244.0
 offset_right = 676.0
 offset_bottom = 647.7778
 scale = Vector2(0.7826087, 0.7826087)
 mouse_filter = 2
-texture = ExtResource("42_1mxuf")
+texture = ExtResource("23_qrqmo")
 stretch_mode = 1
 
-[node name="Platforms" type="StaticBody2D" parent="." unique_id=658401809]
+[node name="Platforms" type="StaticBody2D" parent="." unique_id=1799059895]
 collision_layer = 32
 collision_mask = 0
 
-[node name="@CollisionShape2D@30" type="CollisionShape2D" parent="Platforms" unique_id=720128023]
+[node name="@CollisionShape2D@30" type="CollisionShape2D" parent="Platforms" unique_id=745954874]
 position = Vector2(162, 568)
-shape = SubResource("RectangleShape2D_au0rl")
+shape = SubResource("RectangleShape2D_vekb0")
 one_way_collision = true
 
-[node name="@NinePatchRect@31" type="NinePatchRect" parent="Platforms" unique_id=1296432721]
+[node name="@NinePatchRect@31" type="NinePatchRect" parent="Platforms" unique_id=1284892506]
 offset_left = 24.0
 offset_top = 557.0
 offset_right = 300.0
 offset_bottom = 587.0
-texture = ExtResource("43_0gudn")
+texture = ExtResource("24_kf0at")
 patch_margin_left = 14
 patch_margin_right = 14
 axis_stretch_horizontal = 2
 
-[node name="@CollisionShape2D@32" type="CollisionShape2D" parent="Platforms" unique_id=845851168]
+[node name="@CollisionShape2D@32" type="CollisionShape2D" parent="Platforms" unique_id=1116890964]
 position = Vector2(798, 568)
-shape = SubResource("RectangleShape2D_yfgao")
+shape = SubResource("RectangleShape2D_etjyu")
 one_way_collision = true
 
-[node name="@NinePatchRect@33" type="NinePatchRect" parent="Platforms" unique_id=1293064673]
+[node name="@NinePatchRect@33" type="NinePatchRect" parent="Platforms" unique_id=699367683]
 offset_left = 660.0
 offset_top = 557.0
 offset_right = 936.0
 offset_bottom = 587.0
-texture = ExtResource("43_0gudn")
+texture = ExtResource("24_kf0at")
 patch_margin_left = 14
 patch_margin_right = 14
 axis_stretch_horizontal = 2
 
-[node name="@CollisionShape2D@34" type="CollisionShape2D" parent="Platforms" unique_id=424735319]
+[node name="@CollisionShape2D@34" type="CollisionShape2D" parent="Platforms" unique_id=1056414446]
 position = Vector2(480, 456)
-shape = SubResource("RectangleShape2D_wa25q")
+shape = SubResource("RectangleShape2D_b3ma2")
 one_way_collision = true
 
-[node name="@NinePatchRect@35" type="NinePatchRect" parent="Platforms" unique_id=305836502]
+[node name="@NinePatchRect@35" type="NinePatchRect" parent="Platforms" unique_id=932195524]
 offset_left = 330.0
 offset_top = 445.0
 offset_right = 630.0
 offset_bottom = 475.0
-texture = ExtResource("43_0gudn")
+texture = ExtResource("24_kf0at")
 patch_margin_left = 14
 patch_margin_right = 14
 axis_stretch_horizontal = 2
 
-[node name="@CollisionShape2D@36" type="CollisionShape2D" parent="Platforms" unique_id=1012267573]
+[node name="@CollisionShape2D@36" type="CollisionShape2D" parent="Platforms" unique_id=343854238]
 position = Vector2(142, 344)
-shape = SubResource("RectangleShape2D_k5o5l")
+shape = SubResource("RectangleShape2D_jjit2")
 one_way_collision = true
 
-[node name="@NinePatchRect@37" type="NinePatchRect" parent="Platforms" unique_id=686159861]
+[node name="@NinePatchRect@37" type="NinePatchRect" parent="Platforms" unique_id=1956809545]
 offset_left = 24.0
 offset_top = 333.0
 offset_right = 260.0
 offset_bottom = 363.0
-texture = ExtResource("43_0gudn")
+texture = ExtResource("24_kf0at")
 patch_margin_left = 14
 patch_margin_right = 14
 axis_stretch_horizontal = 2
 
-[node name="@CollisionShape2D@38" type="CollisionShape2D" parent="Platforms" unique_id=1622030325]
+[node name="@CollisionShape2D@38" type="CollisionShape2D" parent="Platforms" unique_id=603127544]
 position = Vector2(818, 344)
-shape = SubResource("RectangleShape2D_epob6")
+shape = SubResource("RectangleShape2D_q7e0l")
 one_way_collision = true
 
-[node name="@NinePatchRect@39" type="NinePatchRect" parent="Platforms" unique_id=169720277]
+[node name="@NinePatchRect@39" type="NinePatchRect" parent="Platforms" unique_id=1811325458]
 offset_left = 700.0
 offset_top = 333.0
 offset_right = 936.0
 offset_bottom = 363.0
-texture = ExtResource("43_0gudn")
+texture = ExtResource("24_kf0at")
 patch_margin_left = 14
 patch_margin_right = 14
 axis_stretch_horizontal = 2
 
-[node name="@CollisionShape2D@40" type="CollisionShape2D" parent="Platforms" unique_id=538985905]
+[node name="@CollisionShape2D@40" type="CollisionShape2D" parent="Platforms" unique_id=1305994500]
 position = Vector2(480, 232)
-shape = SubResource("RectangleShape2D_vbbg3")
+shape = SubResource("RectangleShape2D_8elo2")
 one_way_collision = true
 
-[node name="@NinePatchRect@41" type="NinePatchRect" parent="Platforms" unique_id=1989382407]
+[node name="@NinePatchRect@41" type="NinePatchRect" parent="Platforms" unique_id=1535312747]
 offset_left = 280.0
 offset_top = 221.0
 offset_right = 680.0
 offset_bottom = 251.0
-texture = ExtResource("43_0gudn")
+texture = ExtResource("24_kf0at")
 patch_margin_left = 14
 patch_margin_right = 14
 axis_stretch_horizontal = 2
 
-[node name="FrontDecor" type="Node2D" parent="." unique_id=31151720]
+[node name="FrontDecor" type="Node2D" parent="." unique_id=1428381279]
 z_index = 4
 
-[node name="@Sprite2D@42" type="Sprite2D" parent="FrontDecor" unique_id=2050510182]
+[node name="@Sprite2D@42" type="Sprite2D" parent="FrontDecor" unique_id=1369286963]
 position = Vector2(40, 676)
 scale = Vector2(0.8, 0.8)
-texture = ExtResource("44_1xuwn")
+texture = ExtResource("25_3srpd")
 centered = false
 offset = Vector2(-21.5, -44)
 
-[node name="@Sprite2D@43" type="Sprite2D" parent="FrontDecor" unique_id=1829951890]
+[node name="@Sprite2D@43" type="Sprite2D" parent="FrontDecor" unique_id=733794561]
 position = Vector2(230, 676)
 scale = Vector2(0.8, 0.8)
-texture = ExtResource("45_e4t6g")
+texture = ExtResource("26_ikd0n")
 centered = false
 offset = Vector2(-18.5, -28)
 
-[node name="@Sprite2D@44" type="Sprite2D" parent="FrontDecor" unique_id=703674567]
+[node name="@Sprite2D@44" type="Sprite2D" parent="FrontDecor" unique_id=1213262163]
 position = Vector2(760, 676)
 scale = Vector2(0.8, 0.8)
-texture = ExtResource("46_djh57")
+texture = ExtResource("27_ctfx6")
 centered = false
 offset = Vector2(-34, -61)
 
-[node name="@Sprite2D@45" type="Sprite2D" parent="FrontDecor" unique_id=798540853]
+[node name="@Sprite2D@45" type="Sprite2D" parent="FrontDecor" unique_id=740621073]
 position = Vector2(930, 678)
 scale = Vector2(0.7, 0.7)
-texture = ExtResource("47_0yuxh")
+texture = ExtResource("28_et46b")
 centered = false
 offset = Vector2(-29.5, -32)
 
-[node name="BombPool" type="Node2D" parent="." unique_id=2106461995]
-script = ExtResource("48_c17fp")
+[node name="BombPool" type="Node2D" parent="." unique_id=868507621]
+script = ExtResource("29_csbp3")
 
-[node name="Enemies" type="Node2D" parent="." unique_id=1996771318]
-script = ExtResource("49_qo741")
+[node name="Enemies" type="Node2D" parent="." unique_id=34936310]
+script = ExtResource("30_o7pr3")
 
-[node name="Items" type="Node2D" parent="." unique_id=359971373]
+[node name="Items" type="Node2D" parent="." unique_id=174122856]
 
-[node name="Barrel1" parent="Items" unique_id=567805951 instance=ExtResource("50_ul2vp")]
+[node name="Barrel1" parent="Items" unique_id=439847268 instance=ExtResource("31_lx27v")]
 position = Vector2(330, 652)
 
-[node name="Barrel2" parent="Items" unique_id=1238845901 instance=ExtResource("50_ul2vp")]
+[node name="Barrel2" parent="Items" unique_id=1547366942 instance=ExtResource("31_lx27v")]
 position = Vector2(820, 540)
 
-[node name="Crate1" parent="Items" unique_id=1907871086 instance=ExtResource("51_0pv12")]
+[node name="Crate1" parent="Items" unique_id=1645559813 instance=ExtResource("32_s1tc2")]
 position = Vector2(250, 560)
 
-[node name="Crate2" parent="Items" unique_id=577042503 instance=ExtResource("51_0pv12")]
+[node name="Crate2" parent="Items" unique_id=198132915 instance=ExtResource("32_s1tc2")]
 position = Vector2(140, 336)
 
-[node name="StoneBlock1" parent="Items" unique_id=243709225 instance=ExtResource("51_0pv12")]
+[node name="StoneBlock1" parent="Items" unique_id=760364857 instance=ExtResource("32_s1tc2")]
 position = Vector2(480, 224)
-data = ExtResource("52_adg0k")
+data = ExtResource("33_hinx0")
 
-[node name="Spawners" type="Node2D" parent="." unique_id=1886770948]
+[node name="Spawners" type="Node2D" parent="." unique_id=87639963]
 
-[node name="Spawner1_SmallCrab" type="Marker2D" parent="Spawners" unique_id=1710420303]
+[node name="Spawner1_SmallCrab" type="Marker2D" parent="Spawners" unique_id=388473423]
 position = Vector2(0, 672)
-script = ExtResource("53_387g8")
-enemy_type = ExtResource("54_4kw6c")
+script = ExtResource("34_5fvqh")
+enemy_type = ExtResource("35_k0va3")
 entry = 1
 spawn_delay = 1.5
 interval = 5.0
 count = 2
 max_enemies = 1
 
-[node name="Spawner2_SmallCrab" type="Marker2D" parent="Spawners" unique_id=512641057]
+[node name="Spawner2_SmallCrab" type="Marker2D" parent="Spawners" unique_id=1331543120]
 position = Vector2(960, 672)
-script = ExtResource("53_387g8")
-enemy_type = ExtResource("54_4kw6c")
+script = ExtResource("34_5fvqh")
+enemy_type = ExtResource("35_k0va3")
 entry = 2
 spawn_delay = 3.0
 interval = 5.0
 count = 2
 max_enemies = 1
 
-[node name="Spawner3_Seagull" type="Marker2D" parent="Spawners" unique_id=1559929708]
+[node name="Spawner3_Seagull" type="Marker2D" parent="Spawners" unique_id=461473541]
 position = Vector2(480, 150)
-script = ExtResource("53_387g8")
-enemy_type = ExtResource("55_bonet")
+script = ExtResource("34_5fvqh")
+enemy_type = ExtResource("36_gn5jc")
 spawn_delay = 4.0
 interval = 6.0
 max_enemies = 1
 
-[node name="Spawner4_HermitCrab" type="Marker2D" parent="Spawners" unique_id=135994425]
+[node name="Spawner4_HermitCrab" type="Marker2D" parent="Spawners" unique_id=179257350]
 position = Vector2(480, 0)
-script = ExtResource("53_387g8")
-enemy_type = ExtResource("56_68jwf")
+script = ExtResource("34_5fvqh")
+enemy_type = ExtResource("37_77ty1")
 entry = 3
 interval = 4.0
 max_enemies = 1
 wave = 2
 
-[node name="Spawner5_SmallOctopus" type="Marker2D" parent="Spawners" unique_id=1303337518]
+[node name="Spawner5_SmallOctopus" type="Marker2D" parent="Spawners" unique_id=1634437852]
 position = Vector2(820, 336)
-script = ExtResource("53_387g8")
-enemy_type = ExtResource("57_vnnn3")
+script = ExtResource("34_5fvqh")
+enemy_type = ExtResource("38_1a6xe")
 spawn_delay = 2.0
 interval = 4.0
 max_enemies = 1
 wave = 2
 
-[node name="PlayerSpawner" type="Node2D" parent="." unique_id=741561918]
-script = ExtResource("58_yms80")
+[node name="PlayerSpawner" type="Node2D" parent="." unique_id=264954074]
+script = ExtResource("39_n4gu2")
 
-[node name="P1" type="Marker2D" parent="PlayerSpawner" unique_id=2057390521]
+[node name="P1" type="Marker2D" parent="PlayerSpawner" unique_id=54230334]
 position = Vector2(120, 672)
 
-[node name="P2" type="Marker2D" parent="PlayerSpawner" unique_id=118993346]
+[node name="P2" type="Marker2D" parent="PlayerSpawner" unique_id=766403675]
 position = Vector2(840, 672)
 
-[node name="ArcadeCamera" type="Camera2D" parent="." unique_id=490400565]
-script = ExtResource("59_gjojo")
+[node name="ArcadeCamera" type="Camera2D" parent="." unique_id=809777575]
+script = ExtResource("40_7kk83")
 
-[node name="HUD" type="CanvasLayer" parent="." unique_id=1142768282]
-script = ExtResource("60_4p5dt")
+[node name="HUD" type="CanvasLayer" parent="." unique_id=257284999]
+script = ExtResource("41_ivu4e")
