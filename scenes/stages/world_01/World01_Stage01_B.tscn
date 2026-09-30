@@ -77,14 +77,14 @@ size = Vector2(226, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_16fg1"]
 size = Vector2(226, 16)
 
-[node name="World01_Stage01_B" type="Node2D" unique_id=329635860]
+[node name="World01_Stage01_B" type="Node2D" unique_id=386574474]
 script = ExtResource("1_w5khw")
 screen_role = "B"
 
-[node name="Background" type="Node2D" parent="." unique_id=1563092916]
+[node name="Background" type="Node2D" parent="." unique_id=1410407552]
 z_index = -10
 
-[node name="Backdrop" type="Node2D" parent="Background" unique_id=76458392]
+[node name="Backdrop" type="Node2D" parent="Background" unique_id=1543132887]
 script = ExtResource("2_2ueel")
 base = ExtResource("3_h3jvd")
 frames = Array[Texture2D]([ExtResource("4_dnv4c"), ExtResource("5_6022i"), ExtResource("6_hdrig"), ExtResource("7_smjw6"), ExtResource("8_yxb4n"), ExtResource("9_jsiq6"), ExtResource("10_gaf52"), ExtResource("11_ybfsn"), ExtResource("12_p3l8m"), ExtResource("13_yk0ov")])
@@ -92,7 +92,7 @@ sea_mask = ExtResource("14_ejctk")
 sky_top = Color(0.07735, 0.27625, 0.49659997, 1)
 sky_bottom = Color(0.119, 0.425, 0.764, 1)
 
-[node name="@Label@48" type="Label" parent="Background" unique_id=412587833]
+[node name="@Label@48" type="Label" parent="Background" unique_id=805369356]
 offset_left = 36.0
 offset_top = 70.0
 offset_right = 36.0
@@ -103,17 +103,17 @@ theme_override_colors/font_outline_color = Color(0.05, 0.1, 0.2, 0.8)
 theme_override_constants/outline_size = 4
 text = "1-1  PANTALLA B"
 
-[node name="Decor" type="Node2D" parent="." unique_id=1708681938]
+[node name="Decor" type="Node2D" parent="." unique_id=1155702756]
 z_index = -5
 
-[node name="@Sprite2D@49" type="Sprite2D" parent="Decor" unique_id=449892285]
+[node name="@Sprite2D@49" type="Sprite2D" parent="Decor" unique_id=2139966198]
 position = Vector2(120, 672)
 scale = Vector2(1.25, 1.25)
 texture = ExtResource("15_qbxoe")
 centered = false
 offset = Vector2(-53.5, -148)
 
-[node name="@Sprite2D@50" type="Sprite2D" parent="Decor" unique_id=1768749242]
+[node name="@Sprite2D@50" type="Sprite2D" parent="Decor" unique_id=1253327346]
 position = Vector2(850, 672)
 scale = Vector2(1.25, 1.25)
 texture = ExtResource("16_6meb0")
@@ -121,35 +121,35 @@ centered = false
 offset = Vector2(-55.5, -200)
 flip_h = true
 
-[node name="@Sprite2D@51" type="Sprite2D" parent="Decor" unique_id=1542712239]
+[node name="@Sprite2D@51" type="Sprite2D" parent="Decor" unique_id=1540353550]
 position = Vector2(700, 224)
 scale = Vector2(0.6, 0.6)
 texture = ExtResource("17_mslss")
 centered = false
 offset = Vector2(-44.5, -52)
 
-[node name="@Sprite2D@52" type="Sprite2D" parent="Decor" unique_id=537936710]
+[node name="@Sprite2D@52" type="Sprite2D" parent="Decor" unique_id=645271976]
 position = Vector2(480, 560)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("18_blqw4")
 centered = false
 offset = Vector2(-18, -54)
 
-[node name="@Sprite2D@53" type="Sprite2D" parent="Decor" unique_id=521165700]
+[node name="@Sprite2D@53" type="Sprite2D" parent="Decor" unique_id=1487109575]
 position = Vector2(620, 336)
 scale = Vector2(0.8, 0.8)
 texture = ExtResource("19_x0thx")
 centered = false
 offset = Vector2(-22.5, -48)
 
-[node name="Geometry" type="StaticBody2D" parent="." unique_id=327406473]
+[node name="Geometry" type="StaticBody2D" parent="." unique_id=903560739]
 collision_mask = 0
 
-[node name="@CollisionShape2D@54" type="CollisionShape2D" parent="Geometry" unique_id=877430738]
+[node name="@CollisionShape2D@54" type="CollisionShape2D" parent="Geometry" unique_id=1634144534]
 position = Vector2(480, 56)
 shape = SubResource("RectangleShape2D_6mdql")
 
-[node name="@TextureRect@55" type="TextureRect" parent="Geometry" unique_id=2097446014]
+[node name="@TextureRect@55" type="TextureRect" parent="Geometry" unique_id=1350677663]
 offset_top = 48.0
 offset_right = 3540.0
 offset_bottom = 107.0
@@ -158,11 +158,11 @@ mouse_filter = 2
 texture = ExtResource("20_ryut3")
 stretch_mode = 1
 
-[node name="@CollisionShape2D@56" type="CollisionShape2D" parent="Geometry" unique_id=1654255861]
+[node name="@CollisionShape2D@56" type="CollisionShape2D" parent="Geometry" unique_id=506391282]
 position = Vector2(12, 384)
 shape = SubResource("RectangleShape2D_vr6sg")
 
-[node name="@TextureRect@57" type="TextureRect" parent="Geometry" unique_id=1956433344]
+[node name="@TextureRect@57" type="TextureRect" parent="Geometry" unique_id=693404906]
 offset_top = 48.0
 offset_right = 60.0
 offset_bottom = 1700.0
@@ -171,11 +171,11 @@ mouse_filter = 2
 texture = ExtResource("20_ryut3")
 stretch_mode = 1
 
-[node name="@CollisionShape2D@58" type="CollisionShape2D" parent="Geometry" unique_id=1168890476]
+[node name="@CollisionShape2D@58" type="CollisionShape2D" parent="Geometry" unique_id=1641636627]
 position = Vector2(948, 384)
 shape = SubResource("RectangleShape2D_aunl4")
 
-[node name="@TextureRect@59" type="TextureRect" parent="Geometry" unique_id=1045739055]
+[node name="@TextureRect@59" type="TextureRect" parent="Geometry" unique_id=805130566]
 offset_left = 936.0
 offset_top = 48.0
 offset_right = 996.0
@@ -185,11 +185,11 @@ mouse_filter = 2
 texture = ExtResource("20_ryut3")
 stretch_mode = 1
 
-[node name="@CollisionShape2D@60" type="CollisionShape2D" parent="Geometry" unique_id=1667244964]
+[node name="@CollisionShape2D@60" type="CollisionShape2D" parent="Geometry" unique_id=1530458857]
 position = Vector2(480, 696)
 shape = SubResource("RectangleShape2D_0l1f4")
 
-[node name="@NinePatchRect@61" type="NinePatchRect" parent="Geometry" unique_id=571468040]
+[node name="@NinePatchRect@61" type="NinePatchRect" parent="Geometry" unique_id=1283104483]
 offset_top = 660.0
 offset_right = 960.0
 offset_bottom = 720.0
@@ -198,11 +198,11 @@ patch_margin_left = 14
 patch_margin_right = 14
 axis_stretch_horizontal = 2
 
-[node name="@CollisionShape2D@62" type="CollisionShape2D" parent="Geometry" unique_id=1110094141]
+[node name="@CollisionShape2D@62" type="CollisionShape2D" parent="Geometry" unique_id=93460900]
 position = Vector2(56, 648)
 shape = SubResource("RectangleShape2D_gou02")
 
-[node name="@TextureRect@63" type="TextureRect" parent="Geometry" unique_id=2035256507]
+[node name="@TextureRect@63" type="TextureRect" parent="Geometry" unique_id=78613096]
 offset_left = 20.0
 offset_top = 618.0
 offset_right = 92.0
@@ -211,11 +211,11 @@ mouse_filter = 2
 texture = ExtResource("22_kqlgk")
 expand_mode = 1
 
-[node name="@CollisionShape2D@64" type="CollisionShape2D" parent="Geometry" unique_id=2109080727]
+[node name="@CollisionShape2D@64" type="CollisionShape2D" parent="Geometry" unique_id=642095300]
 position = Vector2(904, 648)
 shape = SubResource("RectangleShape2D_6hrat")
 
-[node name="@TextureRect@65" type="TextureRect" parent="Geometry" unique_id=160000539]
+[node name="@TextureRect@65" type="TextureRect" parent="Geometry" unique_id=113583333]
 offset_left = 868.0
 offset_top = 618.0
 offset_right = 940.0
@@ -224,10 +224,10 @@ mouse_filter = 2
 texture = ExtResource("22_kqlgk")
 expand_mode = 1
 
-[node name="Supports" type="Node2D" parent="." unique_id=1391211355]
+[node name="Supports" type="Node2D" parent="." unique_id=1583699054]
 z_index = -6
 
-[node name="@TextureRect@66" type="TextureRect" parent="Supports" unique_id=78563327]
+[node name="@TextureRect@66" type="TextureRect" parent="Supports" unique_id=1042068682]
 offset_left = 259.0
 offset_top = 580.0
 offset_right = 282.0
@@ -237,7 +237,7 @@ mouse_filter = 2
 texture = ExtResource("23_nf14e")
 stretch_mode = 1
 
-[node name="@TextureRect@67" type="TextureRect" parent="Supports" unique_id=1670176276]
+[node name="@TextureRect@67" type="TextureRect" parent="Supports" unique_id=1077191693]
 offset_left = 683.0
 offset_top = 580.0
 offset_right = 706.0
@@ -247,7 +247,7 @@ mouse_filter = 2
 texture = ExtResource("23_nf14e")
 stretch_mode = 1
 
-[node name="@TextureRect@68" type="TextureRect" parent="Supports" unique_id=930959159]
+[node name="@TextureRect@68" type="TextureRect" parent="Supports" unique_id=1260117741]
 offset_left = 33.0
 offset_top = 468.0
 offset_right = 56.0
@@ -257,7 +257,7 @@ mouse_filter = 2
 texture = ExtResource("23_nf14e")
 stretch_mode = 1
 
-[node name="@TextureRect@69" type="TextureRect" parent="Supports" unique_id=458345547]
+[node name="@TextureRect@69" type="TextureRect" parent="Supports" unique_id=554460616]
 offset_left = 303.0
 offset_top = 468.0
 offset_right = 326.0
@@ -267,7 +267,7 @@ mouse_filter = 2
 texture = ExtResource("23_nf14e")
 stretch_mode = 1
 
-[node name="@TextureRect@70" type="TextureRect" parent="Supports" unique_id=1219395629]
+[node name="@TextureRect@70" type="TextureRect" parent="Supports" unique_id=1747134467]
 offset_left = 639.0
 offset_top = 468.0
 offset_right = 662.0
@@ -277,7 +277,7 @@ mouse_filter = 2
 texture = ExtResource("23_nf14e")
 stretch_mode = 1
 
-[node name="@TextureRect@71" type="TextureRect" parent="Supports" unique_id=1549277196]
+[node name="@TextureRect@71" type="TextureRect" parent="Supports" unique_id=610579212]
 offset_left = 909.0
 offset_top = 468.0
 offset_right = 932.0
@@ -287,7 +287,7 @@ mouse_filter = 2
 texture = ExtResource("23_nf14e")
 stretch_mode = 1
 
-[node name="@TextureRect@72" type="TextureRect" parent="Supports" unique_id=1097634560]
+[node name="@TextureRect@72" type="TextureRect" parent="Supports" unique_id=1237503677]
 offset_left = 339.0
 offset_top = 356.0
 offset_right = 362.0
@@ -297,7 +297,7 @@ mouse_filter = 2
 texture = ExtResource("23_nf14e")
 stretch_mode = 1
 
-[node name="@TextureRect@73" type="TextureRect" parent="Supports" unique_id=1405278178]
+[node name="@TextureRect@73" type="TextureRect" parent="Supports" unique_id=1660859907]
 offset_left = 603.0
 offset_top = 356.0
 offset_right = 626.0
@@ -307,7 +307,7 @@ mouse_filter = 2
 texture = ExtResource("23_nf14e")
 stretch_mode = 1
 
-[node name="@TextureRect@74" type="TextureRect" parent="Supports" unique_id=968080751]
+[node name="@TextureRect@74" type="TextureRect" parent="Supports" unique_id=1538699319]
 offset_left = 33.0
 offset_top = 244.0
 offset_right = 56.0
@@ -317,7 +317,7 @@ mouse_filter = 2
 texture = ExtResource("23_nf14e")
 stretch_mode = 1
 
-[node name="@TextureRect@75" type="TextureRect" parent="Supports" unique_id=863586395]
+[node name="@TextureRect@75" type="TextureRect" parent="Supports" unique_id=1655849365]
 offset_left = 223.0
 offset_top = 244.0
 offset_right = 246.0
@@ -327,7 +327,7 @@ mouse_filter = 2
 texture = ExtResource("23_nf14e")
 stretch_mode = 1
 
-[node name="@TextureRect@76" type="TextureRect" parent="Supports" unique_id=1102223760]
+[node name="@TextureRect@76" type="TextureRect" parent="Supports" unique_id=1117462801]
 offset_left = 719.0
 offset_top = 244.0
 offset_right = 742.0
@@ -337,7 +337,7 @@ mouse_filter = 2
 texture = ExtResource("23_nf14e")
 stretch_mode = 1
 
-[node name="@TextureRect@77" type="TextureRect" parent="Supports" unique_id=1166498847]
+[node name="@TextureRect@77" type="TextureRect" parent="Supports" unique_id=872783865]
 offset_left = 909.0
 offset_top = 244.0
 offset_right = 932.0
@@ -347,16 +347,16 @@ mouse_filter = 2
 texture = ExtResource("23_nf14e")
 stretch_mode = 1
 
-[node name="Platforms" type="StaticBody2D" parent="." unique_id=1085221348]
+[node name="Platforms" type="StaticBody2D" parent="." unique_id=478825712]
 collision_layer = 32
 collision_mask = 0
 
-[node name="@CollisionShape2D@78" type="CollisionShape2D" parent="Platforms" unique_id=1989873019]
+[node name="@CollisionShape2D@78" type="CollisionShape2D" parent="Platforms" unique_id=1584223154]
 position = Vector2(480, 568)
 shape = SubResource("RectangleShape2D_x782o")
 one_way_collision = true
 
-[node name="@NinePatchRect@79" type="NinePatchRect" parent="Platforms" unique_id=605721793]
+[node name="@NinePatchRect@79" type="NinePatchRect" parent="Platforms" unique_id=977555996]
 offset_left = 250.0
 offset_top = 557.0
 offset_right = 710.0
@@ -366,12 +366,12 @@ patch_margin_left = 14
 patch_margin_right = 14
 axis_stretch_horizontal = 2
 
-[node name="@CollisionShape2D@80" type="CollisionShape2D" parent="Platforms" unique_id=195238789]
+[node name="@CollisionShape2D@80" type="CollisionShape2D" parent="Platforms" unique_id=861641406]
 position = Vector2(177, 456)
 shape = SubResource("RectangleShape2D_0ahyf")
 one_way_collision = true
 
-[node name="@NinePatchRect@81" type="NinePatchRect" parent="Platforms" unique_id=222891776]
+[node name="@NinePatchRect@81" type="NinePatchRect" parent="Platforms" unique_id=1218119159]
 offset_left = 24.0
 offset_top = 445.0
 offset_right = 330.0
@@ -381,12 +381,12 @@ patch_margin_left = 14
 patch_margin_right = 14
 axis_stretch_horizontal = 2
 
-[node name="@CollisionShape2D@82" type="CollisionShape2D" parent="Platforms" unique_id=1745105992]
+[node name="@CollisionShape2D@82" type="CollisionShape2D" parent="Platforms" unique_id=1985374715]
 position = Vector2(783, 456)
 shape = SubResource("RectangleShape2D_c83ww")
 one_way_collision = true
 
-[node name="@NinePatchRect@83" type="NinePatchRect" parent="Platforms" unique_id=442866766]
+[node name="@NinePatchRect@83" type="NinePatchRect" parent="Platforms" unique_id=1893112910]
 offset_left = 630.0
 offset_top = 445.0
 offset_right = 936.0
@@ -396,12 +396,12 @@ patch_margin_left = 14
 patch_margin_right = 14
 axis_stretch_horizontal = 2
 
-[node name="@CollisionShape2D@84" type="CollisionShape2D" parent="Platforms" unique_id=1573133823]
+[node name="@CollisionShape2D@84" type="CollisionShape2D" parent="Platforms" unique_id=1411455514]
 position = Vector2(480, 344)
 shape = SubResource("RectangleShape2D_jhpna")
 one_way_collision = true
 
-[node name="@NinePatchRect@85" type="NinePatchRect" parent="Platforms" unique_id=996639447]
+[node name="@NinePatchRect@85" type="NinePatchRect" parent="Platforms" unique_id=1835975497]
 offset_left = 330.0
 offset_top = 333.0
 offset_right = 630.0
@@ -411,12 +411,12 @@ patch_margin_left = 14
 patch_margin_right = 14
 axis_stretch_horizontal = 2
 
-[node name="@CollisionShape2D@86" type="CollisionShape2D" parent="Platforms" unique_id=650011283]
+[node name="@CollisionShape2D@86" type="CollisionShape2D" parent="Platforms" unique_id=316283131]
 position = Vector2(137, 232)
 shape = SubResource("RectangleShape2D_mp8gh")
 one_way_collision = true
 
-[node name="@NinePatchRect@87" type="NinePatchRect" parent="Platforms" unique_id=1815777821]
+[node name="@NinePatchRect@87" type="NinePatchRect" parent="Platforms" unique_id=2118826321]
 offset_left = 24.0
 offset_top = 221.0
 offset_right = 250.0
@@ -426,12 +426,12 @@ patch_margin_left = 14
 patch_margin_right = 14
 axis_stretch_horizontal = 2
 
-[node name="@CollisionShape2D@88" type="CollisionShape2D" parent="Platforms" unique_id=1894165816]
+[node name="@CollisionShape2D@88" type="CollisionShape2D" parent="Platforms" unique_id=189363204]
 position = Vector2(823, 232)
 shape = SubResource("RectangleShape2D_16fg1")
 one_way_collision = true
 
-[node name="@NinePatchRect@89" type="NinePatchRect" parent="Platforms" unique_id=1925794249]
+[node name="@NinePatchRect@89" type="NinePatchRect" parent="Platforms" unique_id=493246066]
 offset_left = 710.0
 offset_top = 221.0
 offset_right = 936.0
@@ -441,62 +441,62 @@ patch_margin_left = 14
 patch_margin_right = 14
 axis_stretch_horizontal = 2
 
-[node name="FrontDecor" type="Node2D" parent="." unique_id=217061470]
+[node name="FrontDecor" type="Node2D" parent="." unique_id=959770441]
 z_index = 4
 
-[node name="@Sprite2D@90" type="Sprite2D" parent="FrontDecor" unique_id=1475296979]
+[node name="@Sprite2D@90" type="Sprite2D" parent="FrontDecor" unique_id=2112352795]
 position = Vector2(300, 676)
 scale = Vector2(0.8, 0.8)
 texture = ExtResource("25_kq7l1")
 centered = false
 offset = Vector2(-18.5, -28)
 
-[node name="@Sprite2D@91" type="Sprite2D" parent="FrontDecor" unique_id=2096401865]
+[node name="@Sprite2D@91" type="Sprite2D" parent="FrontDecor" unique_id=340277556]
 position = Vector2(690, 676)
 scale = Vector2(0.8, 0.8)
 texture = ExtResource("26_6dth0")
 centered = false
 offset = Vector2(-21.5, -44)
 
-[node name="Rotators" type="Node2D" parent="." unique_id=1812465233]
+[node name="Rotators" type="Node2D" parent="." unique_id=541133344]
 
-[node name="RotatingPlatform1" parent="Rotators" unique_id=1514787988 instance=ExtResource("27_uub4n")]
+[node name="RotatingPlatform1" parent="Rotators" unique_id=926208896 instance=ExtResource("27_uub4n")]
 position = Vector2(200, 672)
 launch_height = 240.0
 can_flip_down = false
 
-[node name="RotatingPlatform2" parent="Rotators" unique_id=1412024211 instance=ExtResource("27_uub4n")]
+[node name="RotatingPlatform2" parent="Rotators" unique_id=519871589 instance=ExtResource("27_uub4n")]
 position = Vector2(740, 672)
 launch_height = 240.0
 can_flip_down = false
 
-[node name="BombPool" type="Node2D" parent="." unique_id=1955946867]
+[node name="BombPool" type="Node2D" parent="." unique_id=1055072753]
 script = ExtResource("28_y1ng5")
 
-[node name="Enemies" type="Node2D" parent="." unique_id=1505060291]
+[node name="Enemies" type="Node2D" parent="." unique_id=212380438]
 script = ExtResource("29_86qml")
 
-[node name="Items" type="Node2D" parent="." unique_id=130562845]
+[node name="Items" type="Node2D" parent="." unique_id=2051504990]
 
-[node name="Barrel1" parent="Items" unique_id=2127507719 instance=ExtResource("30_m48gv")]
+[node name="Barrel1" parent="Items" unique_id=832466144 instance=ExtResource("30_m48gv")]
 position = Vector2(480, 540)
 
-[node name="Crate1" parent="Items" unique_id=229962194 instance=ExtResource("31_momfg")]
+[node name="Crate1" parent="Items" unique_id=1461080853 instance=ExtResource("31_momfg")]
 position = Vector2(120, 448)
 
-[node name="Crate2" parent="Items" unique_id=1539925993 instance=ExtResource("31_momfg")]
+[node name="Crate2" parent="Items" unique_id=1164848499 instance=ExtResource("31_momfg")]
 position = Vector2(840, 448)
 
-[node name="StoneBlock1" parent="Items" unique_id=986322413 instance=ExtResource("31_momfg")]
+[node name="StoneBlock1" parent="Items" unique_id=1093246953 instance=ExtResource("31_momfg")]
 position = Vector2(480, 336)
 data = ExtResource("32_44xbm")
 
-[node name="ExitDoor" parent="Items" unique_id=607202546 instance=ExtResource("33_3vw1v")]
+[node name="ExitDoor" parent="Items" unique_id=1097342290 instance=ExtResource("33_3vw1v")]
 position = Vector2(150, 224)
 
-[node name="Spawners" type="Node2D" parent="." unique_id=1368600836]
+[node name="Spawners" type="Node2D" parent="." unique_id=1799850227]
 
-[node name="Spawner1_SmallCrab" type="Marker2D" parent="Spawners" unique_id=2097712772]
+[node name="Spawner1_SmallCrab" type="Marker2D" parent="Spawners" unique_id=1879425230]
 position = Vector2(300, 0)
 script = ExtResource("34_gvw61")
 enemy_type = ExtResource("35_u1158")
@@ -506,7 +506,7 @@ interval = 6.0
 count = 2
 max_enemies = 1
 
-[node name="Spawner2_Seagull" type="Marker2D" parent="Spawners" unique_id=147793208]
+[node name="Spawner2_Seagull" type="Marker2D" parent="Spawners" unique_id=1296384268]
 position = Vector2(700, 140)
 script = ExtResource("34_gvw61")
 enemy_type = ExtResource("36_1i63t")
@@ -514,7 +514,7 @@ spawn_delay = 5.0
 interval = 8.0
 max_enemies = 1
 
-[node name="Spawner3_SmallOctopus" type="Marker2D" parent="Spawners" unique_id=482999495]
+[node name="Spawner3_SmallOctopus" type="Marker2D" parent="Spawners" unique_id=1974673974]
 position = Vector2(120, 224)
 script = ExtResource("34_gvw61")
 enemy_type = ExtResource("37_1w56x")
@@ -522,17 +522,17 @@ spawn_delay = 3.0
 interval = 6.0
 max_enemies = 1
 
-[node name="PlayerSpawner" type="Node2D" parent="." unique_id=474938760]
+[node name="PlayerSpawner" type="Node2D" parent="." unique_id=1245896762]
 script = ExtResource("38_8nxmk")
 
-[node name="P1" type="Marker2D" parent="PlayerSpawner" unique_id=561126782]
+[node name="P1" type="Marker2D" parent="PlayerSpawner" unique_id=1072693695]
 position = Vector2(112, 672)
 
-[node name="P2" type="Marker2D" parent="PlayerSpawner" unique_id=1482750291]
+[node name="P2" type="Marker2D" parent="PlayerSpawner" unique_id=877060698]
 position = Vector2(848, 672)
 
-[node name="ArcadeCamera" type="Camera2D" parent="." unique_id=70181541]
+[node name="ArcadeCamera" type="Camera2D" parent="." unique_id=726649604]
 script = ExtResource("39_17uvx")
 
-[node name="HUD" type="CanvasLayer" parent="." unique_id=213652532]
+[node name="HUD" type="CanvasLayer" parent="." unique_id=876926624]
 script = ExtResource("40_ks5x7")

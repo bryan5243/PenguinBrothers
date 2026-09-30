@@ -42,9 +42,9 @@ const SCREENS := {
 			["crate", Vector2(140, 336)], ["stone_block", Vector2(480, 224)]],
 		# Enemigos: tipo, entrada, posición, retraso, intervalo, cantidad, máx. vivos, oleada.
 		"spawners": [
-			["small_crab", "LEFT", Vector2(0, 672), 1.5, 5.0, 2, 1, 1],
-			["small_crab", "RIGHT", Vector2(960, 672), 3.0, 5.0, 2, 1, 1],
-			["seagull", "POINT", Vector2(480, 150), 4.0, 6.0, 1, 1, 1],
+			["small_crab", "LEFT", Vector2(0, 672), 2.5, 5.0, 2, 1, 1],
+			["small_crab", "RIGHT", Vector2(960, 672), 4.5, 5.0, 2, 1, 1],
+			["seagull", "POINT", Vector2(480, 150), 6.0, 6.0, 1, 1, 1],
 			["hermit_crab", "TOP", Vector2(480, 0), 1.0, 4.0, 1, 1, 2],
 			["small_octopus", "POINT", Vector2(820, 336), 2.0, 4.0, 1, 1, 2],
 		],
