@@ -10,16 +10,25 @@ const SAME_FLOOR := 44.0
 ## Altura máxima de una plataforma que intenta alcanzar saltando.
 const JUMP_REACH := 130.0
 
+## Distancia horizontal mínima para girarse hacia el jugador (evita temblar debajo/encima).
+const TURN_DEADZONE := 20.0
+
 var _attack_time := 0.0
 var _hit_done := false
 var _jump_cooldown := 0.0
+## Altura del piso donde estaba el jugador la última vez que pisó suelo: si salta, el enemigo
+## no cambia de plan a cada momento.
+var _target_floor_y := INF
+var _target_ref: Player
 
 
 func patrol(delta: float) -> void:
 	enemy.apply_gravity(delta)
 	_jump_cooldown = maxf(0.0, _jump_cooldown - delta)
-	if enemy.is_on_floor() and (enemy.wall_ahead(enemy.facing) or not enemy.ground_ahead(enemy.facing)):
+	if enemy.is_on_floor() and (enemy.wall_ahead(enemy.facing) or not enemy.ground_ahead(enemy.facing)
+			or (enemy.turn_timer <= 0.0 and enemy.enemy_ahead(enemy.facing))):
 		enemy.facing = -enemy.facing
+		enemy.turn_timer = Enemy.TURN_DELAY
 	enemy.velocity.x = enemy.facing * data.speed
 	enemy.play(&"walk")
 
@@ -28,9 +37,10 @@ func chase(delta: float, target: Player) -> void:
 	enemy.apply_gravity(delta)
 	_jump_cooldown = maxf(0.0, _jump_cooldown - delta)
 	var dx := target.global_position.x - enemy.global_position.x
-	var dy := target.global_position.y - enemy.global_position.y
-	var dir := signi(int(signf(dx))) if absf(dx) > 6.0 else enemy.facing
-	enemy.facing = dir
+	var dy := _target_floor(target) - enemy.global_position.y
+	if absf(dx) > TURN_DEADZONE:
+		enemy.turn_to(signi(int(signf(dx))))
+	var dir := enemy.facing
 	var speed := _chase_speed()
 	var on_floor := enemy.is_on_floor()
 	if dy > SAME_FLOOR:
@@ -49,7 +59,7 @@ func chase(delta: float, target: Player) -> void:
 	else:
 		# Mismo piso: ir hacia él sin caerse del borde.
 		var blocked := on_floor and not enemy.ground_ahead(dir)
-		enemy.velocity.x = 0.0 if blocked or absf(dx) < 8.0 else dir * speed
+		enemy.velocity.x = 0.0 if blocked or absf(dx) < TURN_DEADZONE * 0.5 else dir * speed
 	enemy.play(&"run" if absf(enemy.velocity.x) > data.speed + 1.0 else &"walk")
 
 
@@ -78,6 +88,17 @@ func attack(delta: float, _target: Player) -> bool:
 		enemy.attack_cooldown = data.attack_cooldown
 		return true
 	return false
+
+
+## Altura «de piso» del jugador: la real si está en el suelo; si está en el aire, la del último
+## suelo que pisó.
+func _target_floor(target: Player) -> float:
+	if target != _target_ref:
+		_target_ref = target
+		_target_floor_y = target.global_position.y
+	if target.is_on_floor() or _target_floor_y == INF:
+		_target_floor_y = target.global_position.y
+	return _target_floor_y
 
 
 func _chase_speed() -> float:

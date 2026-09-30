@@ -34,6 +34,8 @@ var facing := 1:
 var last_attacker := -1
 var attack_cooldown := 0.0
 var spawn_grace := SPAWN_GRACE
+## Tiempo mínimo entre giros voluntarios (perseguir): evita que tiemble de lado a lado.
+var turn_timer := 0.0
 var rng := RandomNumberGenerator.new()
 var _drop_timer := 0.0
 var _gravity := 1750.0
@@ -89,6 +91,7 @@ func _physics_process(delta: float) -> void:
 	if data == null:
 		return
 	attack_cooldown = maxf(0.0, attack_cooldown - delta)
+	turn_timer = maxf(0.0, turn_timer - delta)
 	if _drop_timer > 0.0:
 		_drop_timer -= delta
 		if _drop_timer <= 0.0:
@@ -114,6 +117,17 @@ func play(anim: StringName, restart := false) -> void:
 	var a := anim if animator.sprite_frames.has_animation(anim) else &"idle"
 	if restart or animator.animation != a:
 		animator.play(a)
+
+
+## Giro voluntario (hacia el jugador): como mucho uno cada TURN_DELAY segundos.
+const TURN_DELAY := 0.35
+
+
+func turn_to(direction: int) -> void:
+	if direction == 0 or direction == facing or turn_timer > 0.0:
+		return
+	facing = direction
+	turn_timer = TURN_DELAY
 
 
 func apply_gravity(delta: float) -> void:
@@ -143,6 +157,19 @@ func ground_ahead(direction: int) -> bool:
 	var query := PhysicsRayQueryParameters2D.create(from, from + Vector2(0, 24), GROUND_MASK)
 	query.exclude = [get_rid()]
 	return not get_world_2d().direct_space_state.intersect_ray(query).is_empty()
+
+
+## ¿Hay otro enemigo justo delante en el mismo piso? (patrullando se dan la vuelta y no se
+## amontonan).
+func enemy_ahead(direction: int) -> bool:
+	for node in get_tree().get_nodes_in_group(&"enemies"):
+		var other := node as Enemy
+		if other == null or other == self or not other.is_alive() or other.data == null or other.data.flying:
+			continue
+		var dx := other.global_position.x - global_position.x
+		if signf(dx) == direction and absf(dx) < data.body_size.x and absf(other.global_position.y - global_position.y) < 12.0:
+			return true
+	return false
 
 
 func wall_ahead(direction: int) -> bool:

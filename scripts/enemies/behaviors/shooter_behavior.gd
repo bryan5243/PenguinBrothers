@@ -10,10 +10,11 @@ var _fired := false
 
 func chase(delta: float, target: Player) -> void:
 	var dx := target.global_position.x - enemy.global_position.x
-	var dy := target.global_position.y - enemy.global_position.y
+	var dy := _target_floor(target) - enemy.global_position.y
 	if absf(dy) < SAME_FLOOR:
 		enemy.apply_gravity(delta)
-		enemy.facing = signi(int(signf(dx))) if absf(dx) > 4.0 else enemy.facing
+		if absf(dx) > TURN_DEADZONE:
+			enemy.turn_to(signi(int(signf(dx))))
 		# Mantiene la distancia de disparo: se acerca solo si está lejos.
 		var far := absf(dx) > data.projectile_range * 0.6
 		var blocked := enemy.is_on_floor() and not enemy.ground_ahead(enemy.facing)
