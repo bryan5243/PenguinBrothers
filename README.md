@@ -9,16 +9,17 @@ Controles: teclado, mando y pantalla táctil.
 
 ## Estado
 
-**Reconstrucción arcade de pantalla fija – Fases 1 a 4 completadas** (arquitectura, dos jugadores,
-bombas arcade, barriles/destrucción/power-ups).
+**Reconstrucción arcade de pantalla fija – Fases 1 a 5 completadas** (arquitectura, dos jugadores,
+bombas arcade, barriles/destrucción/power-ups, enemigos del Mundo 1).
 Ver [docs/ROADMAP.md](docs/ROADMAP.md).
 
 Al ejecutar el proyecto aparece el título arcade (**PULSA START** → 1 PLAYER / 2 PLAYERS /
 OPCIONES / CONTROLES / SALIR). 1 PLAYER o 2 PLAYERS abre la pantalla A del Mundo 1-1: una arena fija
 de 960×720 (4:3) con el pingüino azul y el rosa, marcador (SCORE 1/2, vidas, TIME), pisos de
 plataformas y bombas. Pausa con Esc/Start. En desarrollo: F1 muestra la depuración del jugador y
-F2 salta a la pantalla siguiente. Hay barriles, cajas y bloques que romper y power-ups que recoger.
-Enemigos, plataformas giratorias, llave y puerta llegan en las fases 5–9.
+F2 salta a la pantalla siguiente. Hay barriles, cajas y bloques que romper, power-ups que recoger y
+oleadas de enemigos (cangrejos, ermitaño, gaviota y pulpo). Plataformas giratorias, llave y puerta
+llegan en las fases 6–9.
 
 ## Cómo abrirlo
 

@@ -266,6 +266,11 @@ Power-ups (`data/powerups/`): cereza 100, banana 200, naranja 300, manzana 500, 
 visible) · botas (×1,4 de velocidad 10 s) · fuego (+1 nivel de bomba). Aparecen, caen al suelo y
 parpadean antes de desaparecer (10 s).
 
+## Enemigos (Fase 5)
+
+Ver `docs/ENEMIES.md`: cangrejo, ermitaño, gaviota y pulpo, con oleadas por pantalla. Tocar a un
+enemigo o recibir su ataque quita vida; bombas y barriles lanzados los derrotan (con combos).
+
 <details><summary>Sistema de bombas de la etapa 1 (referencia)</summary>
 
 ### Bombas (etapa 1)

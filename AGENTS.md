@@ -48,8 +48,10 @@ Lee esto antes de modificar el proyecto.
   por animación ni cambies la colisión según el dibujo.
 - **Jugadores en una pantalla**: usa `PlayerSpawner` (crea 1 o 2 según el modo); la `Arena` activa
   el choque entre jugadores y la reaparición arcade. No instancies `Player.tscn` a mano.
-- **Enemigos**: dentro del nodo `Enemies` (`EnemyManager`), en el grupo `enemies` y con la señal
-  `defeated`; así la pantalla sabe cuándo quedó limpia.
+- **Enemigos**: una sola escena `scenes/enemies/Enemy.tscn`; el tipo es un `EnemyData` y su
+  comportamiento un `EnemyBehavior` (`scripts/enemies/behaviors/`). Aparecen con `EnemySpawner`
+  (nodo `Spawners` de la Arena) dentro de `Enemies` (`EnemyManager`: oleadas y pantalla limpia).
+  Todo enemigo está en el grupo `enemies` y emite `defeated`.
 - **Animación**: separada de la lógica (`PlayerAnimator`). Nombres estándar: `idle, walk, run, jump,
   fall, land, crouch, slide, climb, lift, carry, throw, place_bomb, hurt, death, victory`
   (enemigos: `idle, walk, attack, hurt, death, special`).

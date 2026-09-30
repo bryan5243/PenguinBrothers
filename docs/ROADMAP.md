@@ -16,8 +16,8 @@ que siga al jugador.** Referencia de diseño: `docs/GAME_DESIGN.md`.
 | 2 | Player 1 y Player 2 en la arena (movimiento arcade, bloqueo/empuje, fuego amigo, reaparición) | ✅ Completada |
 | 3 | Bombas arcade (física controlada, área visible, niveles de poder 1–4) | ✅ Completada |
 | 4 | Barriles y destrucción del escenario (`Barrel.tscn`, destructibles con drop_table) | ✅ Completada |
-| 5 | Enemigos (base con IDLE/PATROL/CHASE/ATTACK/HURT/DEAD, `EnemySpawner`) | Siguiente |
-| 6 | Plataformas giratorias (`RotatingPlatform.tscn`, giro de 180°) | Pendiente |
+| 5 | Enemigos (base con IDLE/PATROL/CHASE/ATTACK/HURT/DEAD, `EnemySpawner`) | ✅ Completada |
+| 6 | Plataformas giratorias (`RotatingPlatform.tscn`, giro de 180°) | Siguiente |
 | 7 | Llave y puerta (`KeyItem.tscn`, `ExitDoor.tscn`) | Pendiente |
 | 8 | Pantalla 1 (World01_Stage01_A completa) | Pendiente |
 | 9 | Pantalla 2 (World01_Stage01_B completa) | Pendiente |
@@ -79,6 +79,17 @@ que siga al jugador.** Referencia de diseño: `docs/GAME_DESIGN.md`.
   de bomba). Salen del botín, caen al suelo, parpadean y desaparecen si nadie los recoge.
 - Pantallas A y B con barriles, cajas y bloques (`tools/build_arenas.gd`).
 - Pruebas: 267 comprobaciones (28 nuevas).
+
+### Fase 5 (arcade) – Enemigos del Mundo 1 (completada)
+
+- `Enemy.tscn` única + `EnemyData` + comportamiento (`EnemyBehavior`): cangrejo (WALKER), ermitaño
+  (SHELL), gaviota (FLYER) y pulpo (SWIMMER, dispara tinta). Estados IDLE, PATROL, CHASE, ATTACK,
+  HURT, DEAD y SPECIAL. Usan plataformas: bajan de las atravesables y saltan al piso de arriba.
+- `EnemySpawner` (tipo, entrada izquierda/derecha/arriba/punto, retraso, intervalo, cantidad,
+  máximo vivos, oleada) y oleadas en `EnemyManager`; pantalla limpia al acabar con todos.
+- Derrotas con puntos y **combo**, botín (`enemy_drops`), daño por contacto y por ataque.
+- Sprites de los 4 enemigos extraídos de sus hojas (`tools/sprites/extract_enemies.py`).
+- Pruebas: 293 comprobaciones (25 nuevas).
 
 ## Historial: etapa 1 (formato plataformas con scroll, sustituido)
 
