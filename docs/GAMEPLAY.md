@@ -237,6 +237,9 @@ Interactuar suelta, Cambiar bomba cambia de tipo). Cambios del formato arcade:
 
 - **Física controlada** (`CarryableBody`, parámetros en `BombData`): gravedad fija, `max_bounces`
   botes con `bounce` fijo, `ground_friction` al rodar, `wall_bounce` en paredes. Siempre igual.
+- **Colocar y lanzar**: la bomba colocada se queda quieta donde se puso (pasar por encima no la
+  mueve: las patadas están desactivadas, `kick_enabled`). Lanzada de pie cae a ~70–100 px y se
+  queda; lanzada saltando, solo un poco más lejos (`throw_force` (260, −300), `throw_inherit` 0,25).
 - **Tipos** (`data/bombs/`):
 
   | Tipo | Daño | Radio base | Mecha |

@@ -91,6 +91,16 @@ que siga al jugador.** Referencia de diseño: `docs/GAME_DESIGN.md`.
 - Sprites de los 4 enemigos extraídos de sus hojas (`tools/sprites/extract_enemies.py`).
 - Pruebas: 293 comprobaciones (25 nuevas).
 
+### Ajustes tras la Fase 5 + arte de las arenas
+
+- Enemigos: ya no tiemblan girándose de lado a lado (zona muerta y retardo de giro, persiguen el
+  último piso del jugador cuando salta) ni se amontonan (patrullando se dan la vuelta entre ellos).
+- Bombas: la colocada se queda donde se puso (las patadas pasan a ser opcionales,
+  `PlayerConfig.kick_enabled`, desactivadas); el lanzamiento es corto (~70–100 px) y saltando cae
+  solo un poco más lejos; al tocar el suelo casi no rueda.
+- Pantallas A y B de la 1-1 con el arte de la hoja de tiles del Mundo 1 (`docs/WORLDS.md`).
+- Pruebas: 296 comprobaciones.
+
 ## Historial: etapa 1 (formato plataformas con scroll, sustituido)
 
 Se conserva todo lo construido; el nivel largo con cámara que sigue queda como «laboratorio de

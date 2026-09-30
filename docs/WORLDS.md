@@ -34,3 +34,23 @@ Primer mundo completamente jugable (Fases 7–9).
 - **Contenido mínimo del nivel de prueba**: inicio, suelo, plataformas, agua, puente,
   palmeras, barriles, cajas, frutas, enemigos, checkpoints, zona final y puerta/meta.
 - **Jefe**: Orca Ninja, en una arena propia.
+
+## Arte de las arenas del Mundo 1 (implementado)
+
+Las pantallas de la 1-1 usan las piezas de `world_01_tileset_isla_palmera.png`, extraídas con
+`python3 tools/sprites/extract_tileset.py` a `assets/worlds/world_01/` (37 piezas + `background.png`):
+
+| Elemento | Pieza | Cómo se usa |
+|---|---|---|
+| Fondo | `background.png` | Isla, mar y playa a pantalla completa (960×720), algo atenuado |
+| Plataformas atravesables | `plank.png` | NinePatch: extremos fijos y centro en mosaico, al ancho de cada plataforma |
+| Suelo | `ground.png` | NinePatch a lo ancho; la hierba asoma sobre el borde de colisión |
+| Techo y paredes | `stone_tile.png` | Mosaico de piedra |
+| Rocas del suelo | `rock_block.png` | Estirada al bloque sólido |
+| Andamios | `post_rope.png` | Postes automáticos bajo los extremos de las plataformas |
+| Caja, barril, bloque de piedra | `crate.png`, `barrel.png`, `stone_blocks.png` | Objetos de la Fase 4 |
+| Decoración | palmeras, arbustos, flores, castillo de arena, bandera, cartel... | Capa trasera (`Decor`) y delantera (`FrontDecor`), sin colisión |
+| Reservadas | `rotating_disk.png`, `key.png`, `door.png`, `door_portal.png`, `ladder.png`, `spike_fence.png`... | Plataformas giratorias (F6), llave y puerta (F7), escaleras y peligros |
+
+La colisión nunca depende del dibujo: las arenas siguen siendo rectángulos exactos definidos en
+`tools/build_arenas.gd` (plataformas, bloques, decoración por pantalla en `decor` / `front_decor`).
