@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ObjectiveData" format=3]
+
+[ext_resource type="Script" path="res://scripts/core/data/objective_data.gd" id="1_obj"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/key.png" id="2_key"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/door.png" id="3_door"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/door_portal.png" id="4_portal"]
+
+[resource]
+script = ExtResource("1_obj")
+key_texture = ExtResource("2_key")
+door_closed = ExtResource("3_door")
+door_open = ExtResource("4_portal")
