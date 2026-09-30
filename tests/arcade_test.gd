@@ -70,6 +70,10 @@ func _arena_coop() -> void:
 	var cam := arena.camera
 	t.check(cam.is_current() and cam.global_position == arena.arena_size * 0.5 and cam.zoom == Vector2.ONE,
 		"cámara fija que encuadra la arena completa")
+	var backdrop := arena.get_node("Background/Backdrop") as AnimatedBackdrop
+	var f0 := backdrop.current
+	await t.get_tree().create_timer(backdrop.frame_time * 1.5).timeout
+	t.check(backdrop.frames.size() >= 2 and backdrop.current != f0, "fondo animado: el mar cambia de fotograma")
 
 	await _arcade_movement()
 	await _walls_and_jump()

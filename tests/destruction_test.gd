@@ -69,7 +69,25 @@ func _barrel_as_weapon() -> void:
 	await _press("p1_interact")
 	t.check(p1.bombs.held_object == barrel and barrel.is_held(), "E recoge el barril")
 	await t.wait_frames(40)
-	t.check(p1.animator.animation == &"carry", "lo lleva con la animación de carga")
+	t.check(p1.animator.animation == &"carry_barrel_idle" and not barrel.sprite.visible,
+		"el azul lo lleva con sus animaciones de barril (el barril va dibujado en el sprite)")
+	Input.action_press("p1_move_right")
+	await t.wait_frames(10)
+	t.check(p1.animator.animation == &"carry_barrel_walk", "camina con el barril")
+	Input.action_release("p1_move_right")
+	await t.wait_frames(6)
+	# El rosa no tiene esas animaciones: usa «carry» y el barril se sigue viendo.
+	var other := _first(Barrel, &"", barrel) as Barrel
+	if other:
+		await _place(p2, Vector2(other.global_position.x - 30.0, other.global_position.y))
+		p2.bombs.try_pick_up()
+		await t.wait_frames(40)
+		t.check(p2.bombs.held_object == other and other.sprite.visible and p2.animator.animation != &"carry_barrel_idle",
+			"el rosa lo lleva con «carry» y el barril visible aparte")
+		p2.bombs.drop_held()
+		await t.wait_frames(20)
+		t.check(other.sprite.visible and not other.is_held(), "al soltarlo el barril vuelve a ser un objeto visible")
+		await _place(p2, Vector2(880, FLOOR_Y))
 	var enemy := _DummyEnemy.new()
 	enemy.position = Vector2(barrel.global_position.x + 100.0, FLOOR_Y - 20.0)
 	arena.enemies.add_child(enemy)
@@ -194,9 +212,9 @@ func _only(item: PowerUpData) -> DropTable:
 	return table
 
 
-func _first(kind: Variant, id: StringName = &"") -> Node:
+func _first(kind: Variant, id: StringName = &"", except: Node = null) -> Node:
 	for n in items.get_children():
-		if is_instance_of(n, kind) and not n.is_queued_for_deletion():
+		if n != except and is_instance_of(n, kind) and not n.is_queued_for_deletion():
 			if id == &"" or (n.get("data") and n.data.id == id):
 				return n
 	return null
