@@ -257,19 +257,16 @@
     },
     "carry_barrel_throw": {
       "frames": [
-        "processed/cb_throw_1.png",
-        "processed/cb_throw_2.png",
-        "processed/cb_throw_3.png",
         "processed/cb_throw_4.png"
       ],
-      "fps": 14,
+      "fps": 8,
       "loop": false
     },
     "carry_barrel_drop": {
       "frames": [
         "processed/cb_drop_2.png"
       ],
-      "fps": 6,
+      "fps": 8,
       "loop": false
     }
   },

@@ -287,8 +287,8 @@ PROFILES = {
             "carry_barrel_jump": {"frames": ["cb_jump_2", "cb_jump_3", "cb_jump_4"], "fps": 8, "loop": False},
             "carry_barrel_land": {"frames": ["cb_jump_5"], "fps": 10, "loop": False},
             "carry_barrel_crouch": {"frames": ["cb_crouch_1", "cb_crouch_2", "cb_crouch_3", "cb_crouch_4"], "fps": 12, "loop": False},
-            "carry_barrel_throw": {"frames": ["cb_throw_1", "cb_throw_2", "cb_throw_3", "cb_throw_4"], "fps": 14, "loop": False},
-            "carry_barrel_drop": {"frames": ["cb_drop_2"], "fps": 6, "loop": False},
+            "carry_barrel_throw": {"frames": ["cb_throw_4"], "fps": 8, "loop": False},
+            "carry_barrel_drop": {"frames": ["cb_drop_2"], "fps": 8, "loop": False},
         },
         # Secciones de la hoja que no se extraen (motivo documentado).
         "skipped": {
