@@ -1,0 +1,144 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/enemies/seagull/processed/attack_1.png" id="1_2woat"]
+[ext_resource type="Texture2D" path="res://assets/enemies/seagull/processed/attack_2.png" id="2_f7dvt"]
+[ext_resource type="Texture2D" path="res://assets/enemies/seagull/processed/attack_3.png" id="3_o8lne"]
+[ext_resource type="Texture2D" path="res://assets/enemies/seagull/processed/attack_4.png" id="4_y3sqb"]
+[ext_resource type="Texture2D" path="res://assets/enemies/seagull/processed/attack_5.png" id="5_te0t8"]
+[ext_resource type="Texture2D" path="res://assets/enemies/seagull/processed/attack_6.png" id="6_7wui0"]
+[ext_resource type="Texture2D" path="res://assets/enemies/seagull/processed/death_1.png" id="7_437xh"]
+[ext_resource type="Texture2D" path="res://assets/enemies/seagull/processed/death_2.png" id="8_armcv"]
+[ext_resource type="Texture2D" path="res://assets/enemies/seagull/processed/death_3.png" id="9_4iins"]
+[ext_resource type="Texture2D" path="res://assets/enemies/seagull/processed/death_4.png" id="10_wgw3a"]
+[ext_resource type="Texture2D" path="res://assets/enemies/seagull/processed/death_5.png" id="11_pyil1"]
+[ext_resource type="Texture2D" path="res://assets/enemies/seagull/processed/hurt_1.png" id="12_rmybg"]
+[ext_resource type="Texture2D" path="res://assets/enemies/seagull/processed/hurt_2.png" id="13_yoyhx"]
+[ext_resource type="Texture2D" path="res://assets/enemies/seagull/processed/hurt_3.png" id="14_ar4y3"]
+[ext_resource type="Texture2D" path="res://assets/enemies/seagull/processed/hurt_4.png" id="15_2rjat"]
+[ext_resource type="Texture2D" path="res://assets/enemies/seagull/processed/idle_1.png" id="16_ooekk"]
+[ext_resource type="Texture2D" path="res://assets/enemies/seagull/processed/idle_2.png" id="17_jctev"]
+[ext_resource type="Texture2D" path="res://assets/enemies/seagull/processed/idle_3.png" id="18_nj6r5"]
+[ext_resource type="Texture2D" path="res://assets/enemies/seagull/processed/idle_4.png" id="19_horm6"]
+[ext_resource type="Texture2D" path="res://assets/enemies/seagull/processed/idle_5.png" id="20_fjx11"]
+[ext_resource type="Texture2D" path="res://assets/enemies/seagull/processed/idle_6.png" id="21_mptfq"]
+[ext_resource type="Texture2D" path="res://assets/enemies/seagull/processed/walk_1.png" id="22_l4btl"]
+[ext_resource type="Texture2D" path="res://assets/enemies/seagull/processed/walk_2.png" id="23_56svj"]
+[ext_resource type="Texture2D" path="res://assets/enemies/seagull/processed/walk_3.png" id="24_b6w7u"]
+[ext_resource type="Texture2D" path="res://assets/enemies/seagull/processed/walk_4.png" id="25_vnnj0"]
+[ext_resource type="Texture2D" path="res://assets/enemies/seagull/processed/walk_5.png" id="26_pugj1"]
+[ext_resource type="Texture2D" path="res://assets/enemies/seagull/processed/walk_6.png" id="27_tham0"]
+[ext_resource type="Texture2D" path="res://assets/enemies/seagull/processed/walk_7.png" id="28_k1bdf"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_2woat")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_f7dvt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_o8lne")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_y3sqb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_te0t8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_7wui0")
+}],
+"loop": 1,
+"name": &"attack",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_437xh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_armcv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_4iins")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_wgw3a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_pyil1")
+}],
+"loop": 0,
+"name": &"death",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_rmybg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_yoyhx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_ar4y3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_2rjat")
+}],
+"loop": 0,
+"name": &"hurt",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("16_ooekk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_jctev")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_nj6r5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_horm6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_fjx11")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_mptfq")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("22_l4btl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_56svj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_b6w7u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_vnnj0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_pugj1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_tham0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_k1bdf")
+}],
+"loop": 1,
+"name": &"walk",
+"speed": 12.0
+}]
+metadata/canvas_size = Vector2i(120, 102)
+metadata/reference_height = 83

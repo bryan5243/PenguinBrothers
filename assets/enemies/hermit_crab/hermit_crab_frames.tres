@@ -1,0 +1,210 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/attack_1.png" id="1_3amf6"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/attack_2.png" id="2_rc48x"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/attack_3.png" id="3_33kns"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/attack_4.png" id="4_7y8g2"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/attack_5.png" id="5_ejwkw"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/attack_6.png" id="6_nqxko"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/death_1.png" id="7_y8uwn"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/death_2.png" id="8_bcnj0"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/death_3.png" id="9_u6bb5"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/death_4.png" id="10_2cjnc"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/death_5.png" id="11_0bd4p"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/death_6.png" id="12_ytcf7"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/hurt_1.png" id="13_kdnt7"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/hurt_2.png" id="14_bbmid"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/hurt_3.png" id="15_08xxo"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/hurt_4.png" id="16_jf2at"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/hurt_5.png" id="17_2irrm"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/idle_1.png" id="18_owquf"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/idle_2.png" id="19_a3cei"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/idle_3.png" id="20_03ck5"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/idle_4.png" id="21_m3eqh"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/idle_5.png" id="22_7o0cs"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/idle_6.png" id="23_58kcc"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/run_1.png" id="24_33mix"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/run_2.png" id="25_jr61y"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/run_3.png" id="26_pmlfw"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/run_4.png" id="27_6sjtl"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/run_5.png" id="28_phlpc"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/run_6.png" id="29_0vufs"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/special_1.png" id="30_5mv66"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/special_2.png" id="31_qsxga"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/special_3.png" id="32_olyc4"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/special_4.png" id="33_qf2be"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/special_5.png" id="34_8oiou"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/special_6.png" id="35_kd583"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/walk_1.png" id="36_h6nfc"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/walk_2.png" id="37_g1ai1"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/walk_3.png" id="38_70odu"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/walk_4.png" id="39_0so4t"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/walk_5.png" id="40_0rgwu"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/walk_6.png" id="41_i54qk"]
+[ext_resource type="Texture2D" path="res://assets/enemies/hermit_crab/processed/walk_7.png" id="42_o8hqv"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_3amf6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_rc48x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_33kns")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_7y8g2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ejwkw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_nqxko")
+}],
+"loop": 0,
+"name": &"attack",
+"speed": 14.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_y8uwn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_bcnj0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_u6bb5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_2cjnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_0bd4p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_ytcf7")
+}],
+"loop": 0,
+"name": &"death",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_kdnt7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_bbmid")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_08xxo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_jf2at")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_2irrm")
+}],
+"loop": 0,
+"name": &"hurt",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("18_owquf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_a3cei")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_03ck5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_m3eqh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_7o0cs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_58kcc")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("24_33mix")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_jr61y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_pmlfw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_6sjtl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_phlpc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_0vufs")
+}],
+"loop": 1,
+"name": &"run",
+"speed": 14.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("30_5mv66")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_qsxga")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_olyc4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_qf2be")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_8oiou")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_kd583")
+}],
+"loop": 0,
+"name": &"special",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("36_h6nfc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_g1ai1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_70odu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_0so4t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_0rgwu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("41_i54qk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_o8hqv")
+}],
+"loop": 1,
+"name": &"walk",
+"speed": 12.0
+}]
+metadata/canvas_size = Vector2i(130, 86)
+metadata/reference_height = 67

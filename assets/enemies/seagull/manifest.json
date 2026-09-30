@@ -1,0 +1,70 @@
+{
+  "character": "seagull",
+  "source": "assets/references/enemies/world_01_seagull.png",
+  "canvas": [
+    120,
+    102
+  ],
+  "anchor": "center",
+  "reference_height": 83,
+  "animations": {
+    "idle": {
+      "frames": [
+        "processed/idle_1.png",
+        "processed/idle_2.png",
+        "processed/idle_3.png",
+        "processed/idle_4.png",
+        "processed/idle_5.png",
+        "processed/idle_6.png"
+      ],
+      "fps": 8,
+      "loop": true
+    },
+    "walk": {
+      "frames": [
+        "processed/walk_1.png",
+        "processed/walk_2.png",
+        "processed/walk_3.png",
+        "processed/walk_4.png",
+        "processed/walk_5.png",
+        "processed/walk_6.png",
+        "processed/walk_7.png"
+      ],
+      "fps": 12,
+      "loop": true
+    },
+    "attack": {
+      "frames": [
+        "processed/attack_1.png",
+        "processed/attack_2.png",
+        "processed/attack_3.png",
+        "processed/attack_4.png",
+        "processed/attack_5.png",
+        "processed/attack_6.png"
+      ],
+      "fps": 12,
+      "loop": true
+    },
+    "hurt": {
+      "frames": [
+        "processed/hurt_1.png",
+        "processed/hurt_2.png",
+        "processed/hurt_3.png",
+        "processed/hurt_4.png"
+      ],
+      "fps": 10,
+      "loop": false
+    },
+    "death": {
+      "frames": [
+        "processed/death_1.png",
+        "processed/death_2.png",
+        "processed/death_3.png",
+        "processed/death_4.png",
+        "processed/death_5.png"
+      ],
+      "fps": 8,
+      "loop": false
+    }
+  }
+}

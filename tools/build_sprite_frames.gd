@@ -3,11 +3,11 @@ extends SceneTree
 ## Uso (después de importar los PNG):
 ##   godot --headless --path . --import
 ##   godot --headless --path . -s tools/build_sprite_frames.gd
-## Recorre assets/characters/*/manifest.json y assets/bombs/*/manifest.json y guarda
+## Recorre assets/characters/, assets/bombs/ y assets/enemies/ (*/manifest.json) y guarda
 ## <carpeta>_frames.tres al lado.
 
 const CHARACTERS_DIR := "res://assets/characters"
-const SOURCE_DIRS: Array[String] = ["res://assets/characters", "res://assets/bombs"]
+const SOURCE_DIRS: Array[String] = ["res://assets/characters", "res://assets/bombs", "res://assets/enemies"]
 
 
 func _initialize() -> void:
