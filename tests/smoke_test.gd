@@ -150,6 +150,10 @@ func _run() -> void:
 	var destruction: RefCounted = load("res://tests/destruction_test.gd").new()
 	await destruction.run(self)
 
+	print("== Arcade: enemigos del Mundo 1 (Fase 5)")
+	var enemies: RefCounted = load("res://tests/enemy_test.gd").new()
+	await enemies.run(self)
+
 	print("== Escena Main")
 	check(ProjectSettings.get_setting("application/run/main_scene") == "res://scenes/main/Main.tscn", "Main es la escena principal")
 	var main := (load("res://scenes/main/Main.tscn") as PackedScene).instantiate()

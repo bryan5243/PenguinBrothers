@@ -20,6 +20,9 @@ func run(test: Node) -> void:
 	arena = (load(StageManager.stage.screens[0]) as PackedScene).instantiate() as Arena
 	for item in arena.get_node("Items").get_children():
 		item.free()
+	# Sin enemigos: estas pruebas no deben depender de ellos (ver enemy_test.gd).
+	for sp in arena.get_node("Spawners").get_children():
+		sp.free()
 	t.get_tree().root.add_child(arena)
 	await t.wait_frames(10)
 	p1 = arena.players[0]
