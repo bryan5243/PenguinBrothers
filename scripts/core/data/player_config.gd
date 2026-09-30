@@ -44,7 +44,8 @@ extends Resource
 ## Tiempo que se ignoran las plataformas atravesables al bajar (abajo + saltar).
 @export var drop_through_time := 0.25
 @export var carry_speed_multiplier := 0.85
-@export var throw_force := Vector2(440.0, -380.0)
+## Lanzamiento arcade corto: la bomba cae a ~70 px (algo más si se lanza saltando) y se queda.
+@export var throw_force := Vector2(260.0, -300.0)
 
 @export_group("Bombas")
 ## Tipos de bomba disponibles, en el orden de «cambiar bomba» (R / Y).
@@ -61,14 +62,17 @@ extends Resource
 ## Distancia horizontal a los pies a la que se coloca una bomba (abajo + bomba).
 @export var bomb_place_distance := 26.0
 ## Lanzamiento mirando hacia arriba (arriba + bomba).
-@export var throw_up_force := Vector2(150.0, -660.0)
+@export var throw_up_force := Vector2(80.0, -660.0)
 ## Parte de la velocidad del jugador que hereda la bomba lanzada.
-@export_range(0.0, 1.0) var throw_inherit := 0.5
+@export_range(0.0, 1.0) var throw_inherit := 0.25
 ## Velocidad al soltar suavemente (abajo + interactuar/bomba con una bomba en la mano).
 @export var drop_velocity := Vector2(40.0, -40.0)
 ## Alcance para recoger una bomba con Interactuar.
 @export var pickup_range := 46.0
 ## Patada al caminar contra una bomba libre en el suelo.
+## Patear bombas al caminar contra ellas. Desactivado en el arcade: una bomba colocada se
+## queda donde se puso aunque pases por encima.
+@export var kick_enabled := false
 @export var kick_speed := 460.0
 @export var kick_min_speed := 120.0
 

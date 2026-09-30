@@ -39,12 +39,12 @@ extends Resource
 @export var gravity_scale := 1.8
 ## Fracción de velocidad vertical que conserva al botar (0 = no bota).
 @export_range(0.0, 1.0) var bounce := 0.35
-@export var max_bounces := 2
+@export var max_bounces := 1
 @export var min_bounce_speed := 160.0
-## Frenado al rodar por el suelo (px/s²).
-@export var ground_friction := 900.0
+## Frenado al tocar el suelo (px/s²): alto = se queda casi donde cae (arcade).
+@export var ground_friction := 4000.0
 ## Fracción de velocidad horizontal al rebotar en una pared.
-@export_range(0.0, 1.0) var wall_bounce := 0.4
+@export_range(0.0, 1.0) var wall_bounce := 0.3
 
 @export_group("Aspecto")
 ## Animaciones «fuse» (mecha encendida) y «explode» (explosión). Ver extract_bombs.py.

@@ -12,6 +12,7 @@ damage = 2
 explosion_radius = 80.0
 knockback = 440.0
 body_radius = 13.0
+bounce = 0.2
 frames = ExtResource("1_5lkbe")
 texture = ExtResource("2_pmyir")
 icon = ExtResource("2_pmyir")

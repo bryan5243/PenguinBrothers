@@ -176,9 +176,9 @@ func _configure_input() -> void:
 ## id, nombre, carpeta de sprites, daño, radio, mecha, empuje, radio del cuerpo, rebote, color del área.
 ## El primero es el que se lleva equipado al empezar.
 const BOMBS := [
-	["black", "Bomba normal", "black", 2, 80.0, 2.4, 440.0, 13.0, 0.35, Color(1.0, 0.6, 0.2)],
-	["blue", "Bomba azul (pequeña)", "blue", 1, 60.0, 1.8, 360.0, 11.0, 0.45, Color(0.35, 0.7, 1.0)],
-	["green", "Bomba verde (grande)", "green", 3, 104.0, 2.8, 520.0, 15.0, 0.25, Color(0.4, 1.0, 0.45)],
+	["black", "Bomba normal", "black", 2, 80.0, 2.4, 440.0, 13.0, 0.2, Color(1.0, 0.6, 0.2)],
+	["blue", "Bomba azul (pequeña)", "blue", 1, 60.0, 1.8, 360.0, 11.0, 0.25, Color(0.35, 0.7, 1.0)],
+	["green", "Bomba verde (grande)", "green", 3, 104.0, 2.8, 520.0, 15.0, 0.15, Color(0.4, 1.0, 0.45)],
 ]
 
 

@@ -164,6 +164,8 @@ func _update_warning(delta: float) -> void:
 
 
 func _check_kicks() -> void:
+	if not _kicks_enabled():
+		return
 	for body in kick_area.get_overlapping_bodies():
 		var p := body as Player
 		if p == null or not p.is_alive() or p.bombs.held_object != null or not p.is_on_floor():
@@ -210,3 +212,12 @@ func _go_to_pool() -> void:
 func _set_solid(solid: bool) -> void:
 	collision_layer = LAYER if solid else 0
 	collision_mask = MASK if solid else 0
+
+
+## Las patadas dependen del ajuste del jugador (PlayerConfig.kick_enabled).
+func _kicks_enabled() -> bool:
+	for node in get_tree().get_nodes_in_group(&"players"):
+		var p := node as Player
+		if p and p.config and p.config.kick_enabled:
+			return true
+	return false

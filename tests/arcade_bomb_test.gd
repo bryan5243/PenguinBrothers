@@ -29,6 +29,7 @@ func run(test: Node) -> void:
 	p2 = arena.players[1]
 	pool = arena.bomb_pool
 	await _controlled_physics()
+	await _placement_and_throw_distance()
 	await _platforms_and_visuals()
 	await _power_levels()
 	arena.queue_free()
@@ -58,6 +59,56 @@ func _controlled_physics() -> void:
 		await t.wait_frames(40)
 		p1.health.reset()
 	t.check(absf(landings[0] - landings[1]) < 1.0, "el mismo lanzamiento cae siempre en el mismo sitio (%.0f)" % landings[0])
+
+
+## Colocar deja la bomba quieta aunque se pase por encima; lanzarla la deja cerca y
+## lanzarla saltando, solo un poco más lejos.
+func _placement_and_throw_distance() -> void:
+	await _place(p1, Vector2(120, FLOOR_Y))
+	var placed := p1.bombs.place_bomb()
+	placed.fuse_left = 10.0
+	await t.wait_frames(10)
+	var x0 := placed.global_position.x
+	Input.action_press("p1_move_right")
+	await t.wait_frames(40)
+	Input.action_release("p1_move_right")
+	await t.wait_frames(10)
+	t.check(absf(placed.global_position.x - x0) < 2.0 and p1.global_position.x > x0 + 40.0,
+		"la bomba colocada se queda donde se puso aunque se pase por encima")
+	placed.detonate()
+	await t.wait_frames(40)
+	p1.health.reset()
+	await _place(p1, Vector2(120, FLOOR_Y))
+	await t.wait_frames(int(p1.config.invulnerability_time * 60.0))
+	var bomb := p1.bombs.throw_new_bomb()
+	bomb.fuse_left = 10.0
+	await t.wait_frames(60)
+	var standing := bomb.global_position.x - 120.0
+	t.check(standing > 40.0 and standing < 130.0 and is_zero_approx(bomb.velocity.x),
+		"lanzada de pie cae cerca y se queda (%.0f px)" % standing)
+	bomb.detonate()
+	await t.wait_frames(40)
+	p1.health.reset()
+	# Sin las plataformas de encima (la bomba lanzada en alto caería sobre ellas).
+	var platforms := arena.get_node("Platforms") as CollisionObject2D
+	var layer := platforms.collision_layer
+	platforms.collision_layer = 0
+	await _place(p1, Vector2(120, FLOOR_Y))
+	await t.wait_frames(int(p1.config.invulnerability_time * 60.0))
+	Input.action_press("p1_jump")
+	await t.wait_frames(14)
+	var jump_x := p1.global_position.x
+	bomb = p1.bombs.throw_new_bomb()
+	bomb.fuse_left = 10.0
+	Input.action_release("p1_jump")
+	await t.wait_frames(70)
+	var jumping := bomb.global_position.x - jump_x
+	t.check(jumping > standing and jumping < standing + 90.0,
+		"lanzada saltando cae solo un poco más lejos (%.0f px)" % jumping)
+	bomb.detonate()
+	await t.wait_frames(40)
+	p1.health.reset()
+	platforms.collision_layer = layer
 
 
 func _platforms_and_visuals() -> void:

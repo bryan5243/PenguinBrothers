@@ -61,7 +61,7 @@ func _throw_and_limit() -> void:
 		await _press("p1_bomb")
 	t.check(pool.count_active(0) == p.config.max_active_bombs, "límite de %d bombas en juego" % p.config.max_active_bombs)
 	await t.wait_frames(30)
-	t.check(bomb.global_position.x > 380.0 and bomb.global_position.y <= GROUND_Y, "la bomba vuela, cae y rueda con física")
+	t.check(bomb.global_position.x > 340.0 and bomb.global_position.y <= GROUND_Y, "la bomba vuela y cae delante (lanzamiento arcade corto)")
 
 
 func _explode_and_reuse() -> void:
@@ -107,6 +107,10 @@ func _place_pick_carry_throw() -> void:
 
 
 func _drop_and_kick() -> void:
+	# Patear está desactivado en el arcade; aquí se prueba activándolo.
+	var arcade_config := p.config
+	p.config = p.config.duplicate() as PlayerConfig
+	p.config.kick_enabled = true
 	await _place(p, Vector2(300, GROUND_Y))
 	var bomb := p.bombs.place_bomb()
 	await t.wait_frames(15)
@@ -127,8 +131,9 @@ func _drop_and_kick() -> void:
 			kicked = true
 			break
 	Input.action_release("p1_move_right")
-	t.check(kicked, "caminar contra una bomba la patea")
+	t.check(kicked, "con kick_enabled, caminar contra una bomba la patea")
 	await _clear_bombs()
+	p.config = arcade_config
 
 
 func _switch_type() -> void:
