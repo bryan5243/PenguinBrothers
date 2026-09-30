@@ -74,53 +74,125 @@ func _flip_up() -> void:
 		"aterriza en el piso de arriba (448)")
 
 
+func _wait_ready(r: RotatingPlatform) -> void:
+	for i in 240:
+		if r.is_ready():
+			return
+		await t.wait_frames(1)
+
+
 func _flip_down() -> void:
-	# Desde el piso de arriba, otra plataforma gira hacia abajo: quien va encima se queda
-	# pegado boca abajo unos segundos y luego cae al piso de abajo.
+	# Girar hacia abajo: el pingüino da la vuelta con el disco y cuelga boca abajo.
 	await _place(p1, rot_far.global_position)
-	await t.wait_frames(int(rot_far.data.cooldown * 60.0) + 2)
+	await _wait_ready(rot_far)
 	await _press("p1_crouch")
 	for i in 60:
-		if rot_far.state == RotatingPlatform.State.HANGING:
+		if rot_far.is_inverted():
 			break
 		await t.wait_frames(1)
-	t.check(rot_far.state == RotatingPlatform.State.HANGING and p1.is_stuck(),
-		"abajo sobre la plataforma: queda pegado boca abajo")
-	t.check(is_equal_approx(p1.animator.rotation, PI) and p1.global_position.y > rot_far.global_position.y + 10.0,
-		"boca abajo y bajo el disco")
+	t.check(rot_far.is_inverted() and p1.is_stuck(), "abajo sobre la plataforma: queda colgado boca abajo")
+	await t.wait_frames(4)
+	t.check(is_equal_approx(p1.animator.rotation, PI) or absf(p1.animator.rotation - PI) < 0.2,
+		"se ve boca abajo")
+	t.check(p1.global_position.y > rot_far.global_position.y + 10.0, "bajo el disco")
 	t.check(rot_far.disk.scale.y < 0.0, "la plataforma se queda boca abajo")
-	var y_stuck := p1.global_position.y
-	await t.wait_frames(int(rot_far.data.stick_time * 60.0 * 0.5))
-	t.check(p1.is_stuck() and absf(p1.global_position.y - y_stuck) < 1.0 and p1.velocity == Vector2.ZERO,
-		"sigue pegado mientras dura (no se mueve)")
+
+	# Se desplaza por debajo, con inercia y sin salirse del disco.
+	var lim := rot_far.data.width * 0.5 - rot_far.data.hang_margin
+	var x0 := p1.global_position.x
 	Input.action_press("p1_move_right")
-	Input.action_press("p1_jump")
-	await t.wait_frames(6)
-	Input.action_release("p1_move_right")
-	Input.action_release("p1_jump")
-	t.check(p1.is_stuck() and absf(p1.global_position.x - rot_far.global_position.x) < 1.0,
-		"pegado no puede moverse ni saltar")
-	await t.wait_frames(int(rot_far.data.stick_time * 60.0 * 0.5) + 30)
-	t.check(not p1.is_stuck() and is_zero_approx(p1.animator.rotation), "pasado el tiempo lo suelta derecho")
-	for i in 120:
-		if p1.is_on_floor():
-			break
+	var max_step := 0.0
+	var prev := x0
+	var first := 0.0
+	for i in 40:
 		await t.wait_frames(1)
-	t.check(p1.is_on_floor() and p1.global_position.y > rot_far.global_position.y + 50.0,
-		"y cae al piso de abajo")
-	t.check(rot_far.disk.scale.y > 0.0, "la plataforma se endereza al soltarlo")
-	# Un golpe lo suelta antes de tiempo.
-	await t.wait_frames(int(rot_far.data.cooldown * 60.0) + 20)
+		var step := p1.global_position.x - prev
+		if i == 1:
+			first = step
+		max_step = maxf(max_step, step)
+		prev = p1.global_position.x
+	t.check(p1.global_position.x > x0 + 20.0, "colgado se desplaza por debajo (derecha)")
+	t.check(max_step <= rot_far.data.hang_speed / 60.0 * 1.05, "sin pasar de su velocidad de colgado")
+	t.check(first < max_step * 0.6, "arranca con inercia (no de golpe)")
+	await t.wait_frames(60)
+	Input.action_release("p1_move_right")
+	t.check(absf(p1.global_position.x - (rot_far.global_position.x + lim)) < 1.5,
+		"no pasa del borde del disco")
+	Input.action_press("p1_move_left")
+	await t.wait_frames(30)
+	Input.action_release("p1_move_left")
+	t.check(p1.global_position.x < rot_far.global_position.x + lim - 15.0, "y vuelve hacia el otro lado")
+	t.check(p1.is_stuck() and p1.velocity == Vector2.ZERO, "sigue colgado (no cae mientras queda tiempo)")
+
+	# Volver arriba: la plataforma gira de vuelta y lo deja encima.
+	await _press("p1_up")
+	t.check(rot_far.state == RotatingPlatform.State.REVERT, "arriba: la plataforma empieza a girar de vuelta")
+	await t.wait_frames(int(rot_far.data.revert_time * 60.0) + 40)
+	t.check(not p1.is_stuck() and is_zero_approx(p1.animator.rotation), "vuelve a estar derecho")
+	t.check(p1.is_on_floor() and absf(p1.global_position.y - rot_far.global_position.y) < 3.0,
+		"y encima de la plataforma")
+	t.check(rot_far.disk.scale.y > 0.0, "la plataforma queda derecha")
+
+	# Puede volver a girar cuando quiera (tras la breve espera).
+	await _wait_ready(rot_far)
+	await _press("p1_up")
+	await t.wait_frames(int(rot_far.data.flip_time * 60.0) + 30)
+	t.check(p1.global_position.y < rot_far.global_position.y - 60.0 or p1.is_on_floor() and p1.global_position.y < 240.0,
+		"y otra vez hacia arriba cuando quiera")
 	await _place(p1, rot_far.global_position)
-	rot_far.start_flip(RotatingPlatform.DOWN)
+	await _wait_ready(rot_far)
+
+	# Si no hace nada, cae al acabarse el tiempo.
+	await _press("p1_crouch")
 	for i in 60:
 		if p1.is_stuck():
 			break
 		await t.wait_frames(1)
+	var hung := 0
+	while p1.is_stuck() and hung < 400:
+		await t.wait_frames(1)
+		hung += 1
+	t.check(hung / 60.0 > rot_far.data.hang_time - 0.3 and hung / 60.0 < rot_far.data.hang_time + 0.5,
+		"sin hacer nada, cae pasados %.1f s (%.2f s)" % [rot_far.data.hang_time, hung / 60.0])
+	await t.wait_frames(8)
+	for i in 160:
+		if p1.is_on_floor() and p1.global_position.y > rot_far.global_position.y + 50.0:
+			break
+		await t.wait_frames(1)
+	t.check(p1.is_on_floor() and p1.global_position.y > rot_far.global_position.y + 50.0 and is_zero_approx(p1.animator.rotation),
+		"cae derecho al piso de abajo")
+	await t.wait_frames(int((rot_far.data.revert_time + rot_far.data.cooldown) * 60.0) + 30)
+	t.check(rot_far.is_ready() and rot_far.disk.scale.y > 0.0, "la plataforma se endereza sola y queda lista")
+
+	# Abajo otra vez estando colgado: se suelta al momento.
+	await _place(p1, rot_far.global_position)
+	await _wait_ready(rot_far)
+	rot_far.start_flip(RotatingPlatform.DOWN)
+	for i in 80:
+		if rot_far.is_inverted():
+			break
+		await t.wait_frames(1)
+	await t.wait_frames(10)
+	await _press("p1_crouch")
+	await t.wait_frames(4)
+	t.check(not p1.is_stuck(), "abajo estando colgado: se suelta al momento")
+	for i in 120:
+		if p1.is_on_floor():
+			break
+		await t.wait_frames(1)
+	await _wait_ready(rot_far)
+
+	# Un golpe o la muerte lo sueltan.
+	await _place(p1, rot_far.global_position)
+	rot_far.start_flip(RotatingPlatform.DOWN)
+	for i in 80:
+		if rot_far.is_inverted():
+			break
+		await t.wait_frames(1)
 	p1.health.kill(null)
 	await t.wait_frames(6)
-	t.check(not p1.is_stuck() and is_zero_approx(p1.animator.rotation), "si muere pegado, se suelta")
-	await t.wait_frames(int((rot_far.data.stick_time + rot_far.data.cooldown) * 60.0) + 40)
+	t.check(not p1.is_stuck() and is_zero_approx(p1.animator.rotation), "si muere colgado, se suelta")
+	await t.wait_frames(int((rot_far.data.revert_time + rot_far.data.cooldown) * 60.0) + 40)
 	if not p1.is_alive():
 		p1.respawn()
 		await t.wait_frames(10)

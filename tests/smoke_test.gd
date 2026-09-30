@@ -154,6 +154,10 @@ func _run() -> void:
 	var enemies: RefCounted = load("res://tests/enemy_test.gd").new()
 	await enemies.run(self)
 
+	print("== Arcade: deslizamiento (inmunidad y empuje)")
+	var slide: RefCounted = load("res://tests/slide_test.gd").new()
+	await slide.run(self)
+
 	print("== Arcade: plataformas giratorias (Fase 6)")
 	var rotating: RefCounted = load("res://tests/rotating_platform_test.gd").new()
 	await rotating.run(self)
