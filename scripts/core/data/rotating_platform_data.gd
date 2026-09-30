@@ -16,10 +16,21 @@ extends Resource
 ## Amplitud del temblor de aviso (px).
 @export var shake_amplitude := 2.5
 
+@export_group("Boca abajo")
+## Al girar hacia ABAJO los de encima dan la vuelta con ella y quedan pegados boca abajo a la
+## parte de abajo durante este tiempo; luego caen. La plataforma sigue boca abajo ese tiempo.
+@export var stick_time := 2.0
+## Duración de la vuelta de regreso (la plataforma se endereza cuando los suelta).
+@export var revert_time := 0.25
+## Pies del pingüino respecto al origen de la plataforma cuando está pegado (bajo el disco).
+@export var stick_offset := Vector2(0.0, 20.0)
+## Separación horizontal entre dos pingüinos pegados a la vez.
+@export var stick_spread := 26.0
+
 @export_group("Lanzamiento")
 ## Altura (px sobre la superficie) que alcanzan los pies de quien sale lanzado hacia arriba.
 @export var launch_height := 150.0
-## Velocidad hacia abajo al girar hacia abajo (los de encima caen al piso inferior).
+## Velocidad hacia abajo con la que se suelta a los que estaban pegados.
 @export var drop_speed := 120.0
 ## Velocidad vertical de los objetos (bombas, barriles) que salen despedidos al girar (~90 px de altura).
 @export var object_launch_speed := 760.0

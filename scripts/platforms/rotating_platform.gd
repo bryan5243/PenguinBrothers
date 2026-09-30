@@ -2,11 +2,13 @@ class_name RotatingPlatform
 extends StaticBody2D
 ## Plataforma giratoria (disco de madera): la forma arcade de cambiar de piso.
 ##
-## Un pingüino encima pulsa ARRIBA → tiembla un instante, da media vuelta y lo lanza hacia
-## arriba (`launch_height`, ajustada al piso que le toca). ABAJO → al girar se abre y los de
-## encima caen al piso de abajo. Todo lo que esté encima al girar sale con ella: los dos
-## jugadores, bombas y barriles (los objetos salen despedidos). Mientras gira no se puede pisar
-## y después espera `cooldown` antes de poder usarse otra vez. Los enemigos no la activan.
+## Un pingüino encima pulsa ARRIBA → tiembla un instante, gira y lo lanza hacia arriba
+## (`launch_height`, ajustada al piso que le toca): así se sube de piso. ABAJO → los de encima
+## dan la vuelta con ella y quedan PEGADOS boca abajo a su parte de abajo `stick_time` segundos
+## (la plataforma se queda boca abajo); luego la plataforma se endereza y los suelta, que caen
+## al piso de abajo. Las bombas y barriles que están encima salen despedidos (arriba) o caen
+## (abajo). Mientras está girando o boca abajo no se puede pisar y después espera `cooldown`.
+## Los enemigos no la activan.
 ##
 ## El origen del nodo es el centro de la superficie en la que se pisa. Ajustes en
 ## RotatingPlatformData (data/platforms/).
@@ -14,7 +16,7 @@ extends StaticBody2D
 signal flip_started(direction: int)
 signal flip_finished
 
-enum State { READY, WINDUP, FLIP, COOLDOWN }
+enum State { READY, WINDUP, FLIP, HANGING, REVERT, COOLDOWN }
 
 const UP := -1
 const DOWN := 1
@@ -39,6 +41,7 @@ var _timer := 0.0
 var _time := 0.0
 var _disk_rest := Vector2.ZERO
 var _disk_scale := Vector2.ONE
+var _stuck: Array[Player] = []
 
 @onready var shape_node: CollisionShape2D = $Shape
 @onready var disk: Sprite2D = $Disk
@@ -120,9 +123,25 @@ func _physics_process(delta: float) -> void:
 		State.FLIP:
 			_timer -= delta
 			var t := clampf(1.0 - _timer / maxf(data.flip_time, 0.01), 0.0, 1.0)
-			# El disco se ve de canto: la media vuelta es un giro sobre su eje horizontal.
-			# El dibujo completa la vuelta para quedar derecho (no tiene cara de abajo).
-			disk.scale = Vector2(_disk_scale.x, _disk_scale.y * cos(TAU * t))
+			# El disco se ve de canto: girar es cambiar su alto con el coseno.
+			# Hacia arriba da la vuelta entera (termina derecho); hacia abajo, media vuelta
+			# (termina boca abajo).
+			var turn := PI if direction == DOWN else TAU
+			disk.scale = Vector2(_disk_scale.x, _disk_scale.y * cos(turn * t))
+			_keep_stuck()
+			if _timer <= 0.0:
+				_after_flip()
+		State.HANGING:
+			_timer -= delta
+			_keep_stuck()
+			if _timer <= 0.0 or _stuck.is_empty():
+				_release_stuck()
+				state = State.REVERT
+				_timer = data.revert_time
+		State.REVERT:
+			_timer -= delta
+			var back := clampf(1.0 - _timer / maxf(data.revert_time, 0.01), 0.0, 1.0)
+			disk.scale = Vector2(_disk_scale.x, lerpf(-_disk_scale.y, _disk_scale.y, back))
 			if _timer <= 0.0:
 				_finish()
 		State.COOLDOWN:
@@ -150,20 +169,57 @@ func _flip() -> void:
 	disk.position = _disk_rest
 	# Mientras gira no se puede pisar (y los de encima la atraviesan al caer).
 	shape_node.disabled = true
+	_stuck.clear()
 	for r in on_top:
 		if r is Player:
 			var p := r as Player
 			if direction == UP:
 				p.launch(Vector2(p.velocity.x, -sqrt(2.0 * p.config.gravity * get_launch_height())))
-			else:
-				p.position.y += 2.0
-				p.launch(Vector2(p.velocity.x, data.drop_speed))
+			elif p.stick_to(self, _stick_position(_stuck.size())):
+				_stuck.append(p)
 		elif r is CarryableBody:
 			var obj := r as CarryableBody
 			var vy := -data.object_launch_speed if direction == UP else data.drop_speed
 			obj.launch(Vector2(obj.velocity.x, vy))
 	AudioManager.play_sfx("platform_flip")
 	flip_started.emit(direction)
+
+
+## Terminó el giro: hacia arriba la plataforma queda lista; hacia abajo se queda boca abajo
+## mientras sujeta a alguien.
+func _after_flip() -> void:
+	if direction == DOWN and not _stuck.is_empty():
+		state = State.HANGING
+		_timer = data.stick_time
+		disk.scale = Vector2(_disk_scale.x, -_disk_scale.y)
+	elif direction == DOWN:
+		disk.scale = Vector2(_disk_scale.x, -_disk_scale.y)
+		state = State.REVERT
+		_timer = data.revert_time
+	else:
+		_finish()
+
+
+func _stick_position(index: int) -> Vector2:
+	# Cada pingüino pegado se coloca un poco a un lado del anterior (0, +1, -1, +2...).
+	var side := (index + 1) / 2 * (1 if index % 2 == 1 else -1)
+	if index == 0:
+		side = 0
+	return data.stick_offset + Vector2(side * data.stick_spread, 0.0)
+
+
+## Quita de la lista a los que dejaron de estar pegados (heridos, muertos...).
+func _keep_stuck() -> void:
+	for p in _stuck.duplicate():
+		if not is_instance_valid(p) or not p.is_stuck():
+			_stuck.erase(p)
+
+
+func _release_stuck() -> void:
+	for p in _stuck:
+		if is_instance_valid(p):
+			p.release_stuck(Vector2(0.0, data.drop_speed))
+	_stuck.clear()
 
 
 func _finish() -> void:

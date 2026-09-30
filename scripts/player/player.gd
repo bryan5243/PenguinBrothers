@@ -102,6 +102,9 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if stuck_to != null:
+		_stuck_step()
+		return
 	if _speed_timer > 0.0:
 		_speed_timer -= delta
 		if _speed_timer <= 0.0:
@@ -252,6 +255,59 @@ func can_slide() -> bool:
 		return false
 	var base := config.run_speed if config.run_enabled else config.move_speed
 	return absf(velocity.x) >= base * config.slide_trigger_ratio
+
+
+## Pegado boca abajo a un nodo (la parte de abajo de una plataforma giratoria): no se mueve ni
+## actúa hasta que quien lo sujeta lo suelta con release_stuck().
+var stuck_to: Node2D = null
+var stuck_offset := Vector2.ZERO
+
+
+func is_stuck() -> bool:
+	return stuck_to != null
+
+
+## Se engancha boca abajo a `anchor` (los pies en `anchor + offset`). Suelta lo que lleve.
+func stick_to(anchor: Node2D, offset: Vector2) -> bool:
+	if not is_alive() or stuck_to != null or state_machine.is_in(&"Climb") \
+			or state_machine.is_in(&"Hurt") or state_machine.is_in(&"Dead"):
+		return false
+	if is_carrying():
+		bombs.drop_held()
+	consume_jump()
+	if is_low:
+		set_low_profile(false)
+	stuck_to = anchor
+	stuck_offset = offset
+	velocity = Vector2.ZERO
+	animator.rotation = PI
+	animator.play_animation(PlayerAnimator.IDLE, true)
+	_stuck_step()
+	return true
+
+
+## Lo suelta y cae con `vel`.
+func release_stuck(vel := Vector2.ZERO) -> void:
+	if stuck_to == null:
+		return
+	stuck_to = null
+	animator.rotation = 0.0
+	velocity = vel
+	if is_alive():
+		state_machine.transition_to(&"Fall")
+
+
+func _stuck_step() -> void:
+	var broken := not is_instance_valid(stuck_to) or not is_alive() \
+		or state_machine.is_in(&"Hurt") or state_machine.is_in(&"Dead")
+	if broken:
+		# Herido o muerto: el estado que tomó el control sigue su curso.
+		stuck_to = null
+		animator.rotation = 0.0
+		return
+	global_position = stuck_to.global_position + stuck_offset
+	velocity = Vector2.ZERO
+	head_platform.global_position = global_position
 
 
 ## Sale despedido (plataforma giratoria, muelles...): pasa a estar en el aire con `vel`.
