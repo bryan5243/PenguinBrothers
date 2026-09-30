@@ -54,6 +54,7 @@ const SCREENS := {
 		"front_decor": [["fern", Vector2(40, 676), 0.8], ["flowers", Vector2(230, 676), 0.8],
 			["bush_flower", Vector2(760, 676), 0.8], ["rock_flat", Vector2(930, 678), 0.7]],
 		"p1": Vector2(120, 672), "p2": Vector2(840, 672),
+		"key_position": Vector2(560, 130),
 	},
 	"res://scenes/stages/world_01/World01_Stage01_B.tscn": {
 		"name": "World01_Stage01_B", "role": "B", "title": "1-1  PANTALLA B",
@@ -73,6 +74,8 @@ const SCREENS := {
 			["rock", Vector2(620, 336), 0.8]],
 		"front_decor": [["flowers", Vector2(300, 676), 0.8], ["fern", Vector2(690, 676), 0.8]],
 		"p1": Vector2(112, 672), "p2": Vector2(848, 672),
+		# Puerta de salida (centro de la base) en el piso más alto de la izquierda.
+		"door": Vector2(150, 224),
 	},
 }
 
@@ -91,6 +94,8 @@ func _build(path: String, d: Dictionary) -> bool:
 	arena_root.name = d["name"]
 	arena_root.set_script(load("res://scripts/arena/arena.gd"))
 	arena_root.set("screen_role", d["role"])
+	if d.has("key_position"):
+		arena_root.set("key_position", d["key_position"])
 
 	_background(d["title"])
 	_decor(d.get("decor", []), -5)
@@ -137,6 +142,12 @@ func _build(path: String, d: Dictionary) -> bool:
 		node.name = "%s%d" % [kind.to_pascal_case(), counts[kind]]
 		node.position = o[1]
 		_add(node, items)
+
+	if d.has("door"):
+		var door := (load("res://scenes/objects/ExitDoor.tscn") as PackedScene).instantiate(PackedScene.GEN_EDIT_STATE_INSTANCE)
+		door.name = "ExitDoor"
+		door.position = d["door"]
+		_add(door, items)
 
 	var spawners := Node2D.new()
 	spawners.name = "Spawners"
