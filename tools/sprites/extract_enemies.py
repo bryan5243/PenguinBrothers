@@ -81,8 +81,9 @@ ENEMIES = {
 }
 
 
-def cut(cell: np.ndarray) -> np.ndarray:
-    """Máscara booleana del personaje dentro de la celda."""
+def cut(cell: np.ndarray, keep_all: bool = False) -> np.ndarray:
+    """Máscara booleana del personaje dentro de la celda. `keep_all` conserva todas las
+    piezas grandes (objetos formados por partes separadas: palmera, puerta con arco...)."""
     h, w = cell.shape[:2]
     border = np.concatenate([cell[0], cell[-1], cell[:, 0], cell[:, -1]]).astype(float)
     bg = np.median(border, axis=0)
@@ -111,7 +112,8 @@ def cut(cell: np.ndarray) -> np.ndarray:
         if i == main or stats[i, cv2.CC_STAT_AREA] < 40:
             continue
         cx, cy, cw, ch = stats[i, :4]
-        if cx >= x - 2 and cy >= y - 2 and cx + cw <= x + bw + 2 and cy + ch <= y + bh + 2:
+        inside = cx >= x - 2 and cy >= y - 2 and cx + cw <= x + bw + 2 and cy + ch <= y + bh + 2
+        if inside or (keep_all and stats[i, cv2.CC_STAT_AREA] >= 150):
             keep |= lab == i
     # Huecos interiores (ojos, brillos) que se parecían al fondo.
     # Solo son huecos las zonas vacías que NO tocan el borde de la celda.

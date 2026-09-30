@@ -1,0 +1,271 @@
+{
+  "source": "assets/references/worlds/world_01_tileset_isla_palmera.png",
+  "pieces": {
+    "plank": {
+      "size": [
+        146,
+        30
+      ],
+      "use": "plataforma atravesable (tablón con musgo)"
+    },
+    "plank_short": {
+      "size": [
+        67,
+        30
+      ],
+      "use": "plataforma corta"
+    },
+    "ground": {
+      "size": [
+        79,
+        64
+      ],
+      "use": "suelo de arena con hierba"
+    },
+    "ground_rock": {
+      "size": [
+        76,
+        64
+      ],
+      "use": "suelo de roca"
+    },
+    "stone_tile": {
+      "size": [
+        60,
+        59
+      ],
+      "use": "bloque de piedra (muros)"
+    },
+    "rock_block": {
+      "size": [
+        56,
+        44
+      ],
+      "use": "roca sólida (obstáculo)"
+    },
+    "stone_blocks": {
+      "size": [
+        59,
+        43
+      ],
+      "use": "bloques de piedra (destruible duro)"
+    },
+    "post_rope": {
+      "size": [
+        23,
+        54
+      ],
+      "use": "poste con cuerda"
+    },
+    "post_log": {
+      "size": [
+        31,
+        93
+      ],
+      "use": "tronco con cuerdas"
+    },
+    "stone_pillar": {
+      "size": [
+        39,
+        50
+      ],
+      "use": "columna de piedra"
+    },
+    "barrel": {
+      "size": [
+        53,
+        53
+      ],
+      "use": "barril"
+    },
+    "barrel_red": {
+      "size": [
+        54,
+        62
+      ],
+      "use": "barril rojo"
+    },
+    "crate": {
+      "size": [
+        53,
+        59
+      ],
+      "use": "caja"
+    },
+    "crate_big": {
+      "size": [
+        59,
+        64
+      ],
+      "use": "caja grande"
+    },
+    "barrel_broken": {
+      "size": [
+        56,
+        63
+      ],
+      "use": "barril roto (efecto)"
+    },
+    "rotating_disk": {
+      "size": [
+        112,
+        45
+      ],
+      "use": "disco de la plataforma giratoria"
+    },
+    "rotating_platform": {
+      "size": [
+        112,
+        48
+      ],
+      "use": "plataforma giratoria con pie"
+    },
+    "palm": {
+      "size": [
+        111,
+        200
+      ],
+      "use": "palmera grande"
+    },
+    "palm_2": {
+      "size": [
+        107,
+        148
+      ],
+      "use": "palmera"
+    },
+    "bush": {
+      "size": [
+        73,
+        52
+      ],
+      "use": "arbusto"
+    },
+    "fern": {
+      "size": [
+        43,
+        44
+      ],
+      "use": "helecho"
+    },
+    "rock": {
+      "size": [
+        45,
+        48
+      ],
+      "use": "roca"
+    },
+    "bush_flower": {
+      "size": [
+        68,
+        61
+      ],
+      "use": "arbusto con flor"
+    },
+    "rock_flat": {
+      "size": [
+        59,
+        32
+      ],
+      "use": "roca plana"
+    },
+    "flowers": {
+      "size": [
+        37,
+        28
+      ],
+      "use": "flores"
+    },
+    "plant": {
+      "size": [
+        36,
+        54
+      ],
+      "use": "planta"
+    },
+    "sandcastle": {
+      "size": [
+        80,
+        91
+      ],
+      "use": "castillo de arena"
+    },
+    "spike_fence": {
+      "size": [
+        120,
+        92
+      ],
+      "use": "valla de pinchos (peligro)"
+    },
+    "skull_sign": {
+      "size": [
+        61,
+        56
+      ],
+      "use": "cartel de calavera"
+    },
+    "sign_arrow": {
+      "size": [
+        89,
+        52
+      ],
+      "use": "cartel de flecha"
+    },
+    "flag": {
+      "size": [
+        91,
+        83
+      ],
+      "use": "bandera"
+    },
+    "ladder": {
+      "size": [
+        69,
+        201
+      ],
+      "use": "escalera de madera"
+    },
+    "rope_ladder": {
+      "size": [
+        48,
+        196
+      ],
+      "use": "escalera de cuerda"
+    },
+    "rope_bridge": {
+      "size": [
+        98,
+        71
+      ],
+      "use": "puente de cuerda"
+    },
+    "key": {
+      "size": [
+        50,
+        87
+      ],
+      "use": "llave"
+    },
+    "door": {
+      "size": [
+        79,
+        101
+      ],
+      "use": "puerta de madera (cerrada)"
+    },
+    "door_portal": {
+      "size": [
+        77,
+        100
+      ],
+      "use": "puerta portal (abierta)"
+    }
+  },
+  "background": {
+    "size": [
+      960,
+      720
+    ],
+    "use": "fondo de las arenas (isla, mar y playa)"
+  }
+}
