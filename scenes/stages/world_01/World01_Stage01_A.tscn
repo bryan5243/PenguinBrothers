@@ -1,308 +1,528 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://scripts/arena/arena.gd" id="1_o73ch"]
-[ext_resource type="Script" path="res://scripts/bombs/bomb_pool.gd" id="2_lwiiq"]
-[ext_resource type="Script" path="res://scripts/arena/enemy_manager.gd" id="3_noojk"]
-[ext_resource type="PackedScene" path="res://scenes/objects/Barrel.tscn" id="4_itxvd"]
-[ext_resource type="PackedScene" path="res://scenes/objects/Destructible.tscn" id="5_4eur0"]
-[ext_resource type="Resource" path="res://data/destructibles/stone_block.tres" id="6_6kdmb"]
-[ext_resource type="Script" path="res://scripts/enemies/enemy_spawner.gd" id="7_g2fun"]
-[ext_resource type="Resource" path="res://data/enemies/small_crab.tres" id="8_oroke"]
-[ext_resource type="Resource" path="res://data/enemies/seagull.tres" id="9_vsyy1"]
-[ext_resource type="Resource" path="res://data/enemies/hermit_crab.tres" id="10_s54pk"]
-[ext_resource type="Resource" path="res://data/enemies/small_octopus.tres" id="11_bibs5"]
-[ext_resource type="Script" path="res://scripts/worlds/player_spawner.gd" id="12_g8qxr"]
-[ext_resource type="Script" path="res://scripts/arena/arcade_camera.gd" id="13_nyoye"]
-[ext_resource type="Script" path="res://scripts/arena/arcade_hud.gd" id="14_m12w6"]
+[ext_resource type="Script" path="res://scripts/arena/arena.gd" id="1_scp8u"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/background.png" id="2_8bqtc"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/palm.png" id="3_ji5rd"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/palm_2.png" id="4_mamym"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/sandcastle.png" id="5_jcae4"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/flag.png" id="6_s370f"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/bush.png" id="7_k3pqv"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/stone_tile.png" id="8_ur3he"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/ground.png" id="9_x5a7i"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/rock_block.png" id="10_0lwof"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/post_rope.png" id="11_fdxel"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/plank.png" id="12_r7uoi"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/fern.png" id="13_bv2t5"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/flowers.png" id="14_e35kc"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/bush_flower.png" id="15_tdxow"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/rock_flat.png" id="16_al5t5"]
+[ext_resource type="Script" path="res://scripts/bombs/bomb_pool.gd" id="17_4vqn1"]
+[ext_resource type="Script" path="res://scripts/arena/enemy_manager.gd" id="18_ii5dy"]
+[ext_resource type="PackedScene" path="res://scenes/objects/Barrel.tscn" id="19_qcb16"]
+[ext_resource type="PackedScene" path="res://scenes/objects/Destructible.tscn" id="20_r87xk"]
+[ext_resource type="Resource" path="res://data/destructibles/stone_block.tres" id="21_fugi1"]
+[ext_resource type="Script" path="res://scripts/enemies/enemy_spawner.gd" id="22_ub4jv"]
+[ext_resource type="Resource" path="res://data/enemies/small_crab.tres" id="23_c60of"]
+[ext_resource type="Resource" path="res://data/enemies/seagull.tres" id="24_sgbt5"]
+[ext_resource type="Resource" path="res://data/enemies/hermit_crab.tres" id="25_shnnm"]
+[ext_resource type="Resource" path="res://data/enemies/small_octopus.tres" id="26_ckp5o"]
+[ext_resource type="Script" path="res://scripts/worlds/player_spawner.gd" id="27_qdv70"]
+[ext_resource type="Script" path="res://scripts/arena/arcade_camera.gd" id="28_x30sw"]
+[ext_resource type="Script" path="res://scripts/arena/arcade_hud.gd" id="29_pqjx4"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_q4v83"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jt1k7"]
 size = Vector2(960, 16)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_scp8u"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7pshv"]
 size = Vector2(24, 672)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8bqtc"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p4elk"]
 size = Vector2(24, 672)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ji5rd"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o6hke"]
 size = Vector2(960, 48)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_mamym"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s0kuu"]
 size = Vector2(56, 48)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_jcae4"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qrqmo"]
 size = Vector2(276, 16)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_s370f"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kf0at"]
 size = Vector2(276, 16)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_k3pqv"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3srpd"]
 size = Vector2(300, 16)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ur3he"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ikd0n"]
 size = Vector2(236, 16)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_x5a7i"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ctfx6"]
 size = Vector2(236, 16)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0lwof"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_et46b"]
 size = Vector2(400, 16)
 
-[node name="World01_Stage01_A" type="Node2D" unique_id=389457482]
-script = ExtResource("1_o73ch")
+[node name="World01_Stage01_A" type="Node2D" unique_id=529608249]
+script = ExtResource("1_scp8u")
 
-[node name="Background" type="Node2D" parent="." unique_id=851485966]
+[node name="Background" type="Node2D" parent="." unique_id=394308293]
 z_index = -10
 
-[node name="@Polygon2D@2" type="Polygon2D" parent="Background" unique_id=36621888]
-color = Color(0.53, 0.82, 0.97, 1)
-polygon = PackedVector2Array(0, 0, 960, 0, 960, 720, 0, 720)
+[node name="Island" type="Sprite2D" parent="Background" unique_id=1757185970]
+texture = ExtResource("2_8bqtc")
+centered = false
 
-[node name="@Polygon2D@3" type="Polygon2D" parent="Background" unique_id=2131580021]
-color = Color(0.16, 0.55, 0.85, 1)
-polygon = PackedVector2Array(0, 470, 960, 470, 960, 720, 0, 720)
-
-[node name="@Polygon2D@4" type="Polygon2D" parent="Background" unique_id=1867157527]
-color = Color(1, 0.93, 0.6, 1)
-polygon = PackedVector2Array(858, 150, 856.7052, 159.83513, 852.90894, 169, 846.87006, 176.87006, 839, 182.90897, 829.83514, 186.70518, 820, 188, 810.16486, 186.70518, 801, 182.90897, 793.12994, 176.87006, 787.09106, 169, 783.2948, 159.83513, 782, 150, 783.2948, 140.16487, 787.09106, 131, 793.12994, 123.129944, 801, 117.091034, 810.16486, 113.294815, 820, 112, 829.83514, 113.294815, 839, 117.091034, 846.87006, 123.12994, 852.90894, 131, 856.7052, 140.16489)
-
-[node name="@Polygon2D@5" type="Polygon2D" parent="Background" unique_id=1273186216]
-color = Color(0.55, 0.38, 0.2, 1)
-polygon = PackedVector2Array(143, 470, 157, 470, 157, 672, 143, 672)
-
-[node name="@Polygon2D@6" type="Polygon2D" parent="Background" unique_id=1257117613]
-color = Color(0.2, 0.6, 0.25, 1)
-polygon = PackedVector2Array(80, 480, 150, 450, 220, 480, 180, 470, 150, 462, 120, 470)
-
-[node name="@Polygon2D@7" type="Polygon2D" parent="Background" unique_id=172985999]
-color = Color(0.55, 0.38, 0.2, 1)
-polygon = PackedVector2Array(793, 470, 807, 470, 807, 672, 793, 672)
-
-[node name="@Polygon2D@8" type="Polygon2D" parent="Background" unique_id=705647331]
-color = Color(0.2, 0.6, 0.25, 1)
-polygon = PackedVector2Array(730, 480, 800, 450, 870, 480, 830, 470, 800, 462, 770, 470)
-
-[node name="@Label@9" type="Label" parent="Background" unique_id=510220089]
+[node name="@Label@2" type="Label" parent="Background" unique_id=1704025145]
 offset_left = 36.0
 offset_top = 70.0
 offset_right = 36.0
 offset_bottom = 70.0
 theme_override_font_sizes/font_size = 16
-theme_override_colors/font_color = Color(0.1, 0.2, 0.35, 0.6)
+theme_override_colors/font_color = Color(1, 1, 1, 0.75)
+theme_override_colors/font_outline_color = Color(0.05, 0.1, 0.2, 0.8)
+theme_override_constants/outline_size = 4
 text = "1-1  PANTALLA A"
 
-[node name="Geometry" type="StaticBody2D" parent="." unique_id=1323096719]
+[node name="Decor" type="Node2D" parent="." unique_id=1562516053]
+z_index = -5
+
+[node name="@Sprite2D@3" type="Sprite2D" parent="Decor" unique_id=499130296]
+position = Vector2(70, 672)
+scale = Vector2(1.3, 1.3)
+texture = ExtResource("3_ji5rd")
+centered = false
+offset = Vector2(-55.5, -200)
+
+[node name="@Sprite2D@4" type="Sprite2D" parent="Decor" unique_id=1230635199]
+position = Vector2(905, 672)
+scale = Vector2(1.3, 1.3)
+texture = ExtResource("4_mamym")
+centered = false
+offset = Vector2(-53.5, -148)
+flip_h = true
+
+[node name="@Sprite2D@5" type="Sprite2D" parent="Decor" unique_id=1010830817]
+position = Vector2(600, 672)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("5_jcae4")
+centered = false
+offset = Vector2(-40, -91)
+
+[node name="@Sprite2D@6" type="Sprite2D" parent="Decor" unique_id=2015726557]
+position = Vector2(890, 336)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("6_s370f")
+centered = false
+offset = Vector2(-45.5, -83)
+
+[node name="@Sprite2D@7" type="Sprite2D" parent="Decor" unique_id=1811017949]
+position = Vector2(470, 224)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("7_k3pqv")
+centered = false
+offset = Vector2(-36.5, -52)
+
+[node name="Geometry" type="StaticBody2D" parent="." unique_id=1796223775]
 collision_mask = 0
 
-[node name="@CollisionShape2D@10" type="CollisionShape2D" parent="Geometry" unique_id=1789154036]
+[node name="@CollisionShape2D@8" type="CollisionShape2D" parent="Geometry" unique_id=1947652630]
 position = Vector2(480, 56)
-shape = SubResource("RectangleShape2D_q4v83")
+shape = SubResource("RectangleShape2D_jt1k7")
 
-[node name="@Polygon2D@11" type="Polygon2D" parent="Geometry" unique_id=1810356416]
-color = Color(0.45, 0.44, 0.5, 1)
-polygon = PackedVector2Array(0, 48, 960, 48, 960, 64, 0, 64)
+[node name="@TextureRect@9" type="TextureRect" parent="Geometry" unique_id=1182481191]
+offset_top = 48.0
+offset_right = 3540.0
+offset_bottom = 107.0
+scale = Vector2(0.27118644, 0.27118644)
+mouse_filter = 2
+texture = ExtResource("8_ur3he")
+stretch_mode = 1
 
-[node name="@CollisionShape2D@12" type="CollisionShape2D" parent="Geometry" unique_id=681464262]
+[node name="@CollisionShape2D@10" type="CollisionShape2D" parent="Geometry" unique_id=1105476123]
 position = Vector2(12, 384)
-shape = SubResource("RectangleShape2D_scp8u")
+shape = SubResource("RectangleShape2D_7pshv")
 
-[node name="@Polygon2D@13" type="Polygon2D" parent="Geometry" unique_id=844109092]
-color = Color(0.45, 0.44, 0.5, 1)
-polygon = PackedVector2Array(0, 48, 24, 48, 24, 720, 0, 720)
+[node name="@TextureRect@11" type="TextureRect" parent="Geometry" unique_id=1848544108]
+offset_top = 48.0
+offset_right = 60.0
+offset_bottom = 1700.0
+scale = Vector2(0.40677965, 0.40677965)
+mouse_filter = 2
+texture = ExtResource("8_ur3he")
+stretch_mode = 1
 
-[node name="@CollisionShape2D@14" type="CollisionShape2D" parent="Geometry" unique_id=569747563]
+[node name="@CollisionShape2D@12" type="CollisionShape2D" parent="Geometry" unique_id=1173656951]
 position = Vector2(948, 384)
-shape = SubResource("RectangleShape2D_8bqtc")
+shape = SubResource("RectangleShape2D_p4elk")
 
-[node name="@Polygon2D@15" type="Polygon2D" parent="Geometry" unique_id=500615539]
-color = Color(0.45, 0.44, 0.5, 1)
-polygon = PackedVector2Array(936, 48, 960, 48, 960, 720, 936, 720)
+[node name="@TextureRect@13" type="TextureRect" parent="Geometry" unique_id=1877678490]
+offset_left = 936.0
+offset_top = 48.0
+offset_right = 996.0
+offset_bottom = 1700.0
+scale = Vector2(0.40677965, 0.40677965)
+mouse_filter = 2
+texture = ExtResource("8_ur3he")
+stretch_mode = 1
 
-[node name="@CollisionShape2D@16" type="CollisionShape2D" parent="Geometry" unique_id=1357284538]
+[node name="@CollisionShape2D@14" type="CollisionShape2D" parent="Geometry" unique_id=425311864]
 position = Vector2(480, 696)
-shape = SubResource("RectangleShape2D_ji5rd")
+shape = SubResource("RectangleShape2D_o6hke")
 
-[node name="@Polygon2D@17" type="Polygon2D" parent="Geometry" unique_id=1998732782]
-color = Color(0.9, 0.78, 0.52, 1)
-polygon = PackedVector2Array(0, 672, 960, 672, 960, 720, 0, 720)
+[node name="@NinePatchRect@15" type="NinePatchRect" parent="Geometry" unique_id=1249918294]
+offset_top = 660.0
+offset_right = 960.0
+offset_bottom = 720.0
+texture = ExtResource("9_x5a7i")
+patch_margin_left = 14
+patch_margin_right = 14
+axis_stretch_horizontal = 2
 
-[node name="@Polygon2D@18" type="Polygon2D" parent="Geometry" unique_id=526607741]
-color = Color(0.78, 0.64, 0.4, 1)
-polygon = PackedVector2Array(24, 672, 936, 672, 936, 680, 24, 680)
-
-[node name="@CollisionShape2D@19" type="CollisionShape2D" parent="Geometry" unique_id=1806134259]
+[node name="@CollisionShape2D@16" type="CollisionShape2D" parent="Geometry" unique_id=254609624]
 position = Vector2(480, 648)
-shape = SubResource("RectangleShape2D_mamym")
+shape = SubResource("RectangleShape2D_s0kuu")
 
-[node name="@Polygon2D@20" type="Polygon2D" parent="Geometry" unique_id=1232981955]
-color = Color(0.45, 0.44, 0.5, 1)
-polygon = PackedVector2Array(452, 624, 508, 624, 508, 672, 452, 672)
+[node name="@TextureRect@17" type="TextureRect" parent="Geometry" unique_id=437574763]
+offset_left = 448.0
+offset_top = 618.0
+offset_right = 512.0
+offset_bottom = 672.0
+mouse_filter = 2
+texture = ExtResource("10_0lwof")
+expand_mode = 1
 
-[node name="Platforms" type="StaticBody2D" parent="." unique_id=1460808255]
+[node name="Supports" type="Node2D" parent="." unique_id=1392468456]
+z_index = -6
+
+[node name="@TextureRect@18" type="TextureRect" parent="Supports" unique_id=1432115799]
+offset_left = 33.0
+offset_top = 580.0
+offset_right = 56.0
+offset_bottom = 697.55554
+scale = Vector2(0.7826087, 0.7826087)
+mouse_filter = 2
+texture = ExtResource("11_fdxel")
+stretch_mode = 1
+
+[node name="@TextureRect@19" type="TextureRect" parent="Supports" unique_id=2051363736]
+offset_left = 273.0
+offset_top = 580.0
+offset_right = 296.0
+offset_bottom = 697.55554
+scale = Vector2(0.7826087, 0.7826087)
+mouse_filter = 2
+texture = ExtResource("11_fdxel")
+stretch_mode = 1
+
+[node name="@TextureRect@20" type="TextureRect" parent="Supports" unique_id=1474722145]
+offset_left = 669.0
+offset_top = 580.0
+offset_right = 692.0
+offset_bottom = 697.55554
+scale = Vector2(0.7826087, 0.7826087)
+mouse_filter = 2
+texture = ExtResource("11_fdxel")
+stretch_mode = 1
+
+[node name="@TextureRect@21" type="TextureRect" parent="Supports" unique_id=665429508]
+offset_left = 909.0
+offset_top = 580.0
+offset_right = 932.0
+offset_bottom = 697.55554
+scale = Vector2(0.7826087, 0.7826087)
+mouse_filter = 2
+texture = ExtResource("11_fdxel")
+stretch_mode = 1
+
+[node name="@TextureRect@22" type="TextureRect" parent="Supports" unique_id=2012623622]
+offset_left = 339.0
+offset_top = 468.0
+offset_right = 362.0
+offset_bottom = 728.6666
+scale = Vector2(0.7826087, 0.7826087)
+mouse_filter = 2
+texture = ExtResource("11_fdxel")
+stretch_mode = 1
+
+[node name="@TextureRect@23" type="TextureRect" parent="Supports" unique_id=1442860765]
+offset_left = 603.0
+offset_top = 468.0
+offset_right = 626.0
+offset_bottom = 728.6666
+scale = Vector2(0.7826087, 0.7826087)
+mouse_filter = 2
+texture = ExtResource("11_fdxel")
+stretch_mode = 1
+
+[node name="@TextureRect@24" type="TextureRect" parent="Supports" unique_id=1536421704]
+offset_left = 33.0
+offset_top = 356.0
+offset_right = 56.0
+offset_bottom = 616.6666
+scale = Vector2(0.7826087, 0.7826087)
+mouse_filter = 2
+texture = ExtResource("11_fdxel")
+stretch_mode = 1
+
+[node name="@TextureRect@25" type="TextureRect" parent="Supports" unique_id=2004662175]
+offset_left = 233.0
+offset_top = 356.0
+offset_right = 256.0
+offset_bottom = 616.6666
+scale = Vector2(0.7826087, 0.7826087)
+mouse_filter = 2
+texture = ExtResource("11_fdxel")
+stretch_mode = 1
+
+[node name="@TextureRect@26" type="TextureRect" parent="Supports" unique_id=1453595113]
+offset_left = 709.0
+offset_top = 356.0
+offset_right = 732.0
+offset_bottom = 616.6666
+scale = Vector2(0.7826087, 0.7826087)
+mouse_filter = 2
+texture = ExtResource("11_fdxel")
+stretch_mode = 1
+
+[node name="@TextureRect@27" type="TextureRect" parent="Supports" unique_id=1871283881]
+offset_left = 909.0
+offset_top = 356.0
+offset_right = 932.0
+offset_bottom = 616.6666
+scale = Vector2(0.7826087, 0.7826087)
+mouse_filter = 2
+texture = ExtResource("11_fdxel")
+stretch_mode = 1
+
+[node name="@TextureRect@28" type="TextureRect" parent="Supports" unique_id=1788105407]
+offset_left = 289.0
+offset_top = 244.0
+offset_right = 312.0
+offset_bottom = 647.7778
+scale = Vector2(0.7826087, 0.7826087)
+mouse_filter = 2
+texture = ExtResource("11_fdxel")
+stretch_mode = 1
+
+[node name="@TextureRect@29" type="TextureRect" parent="Supports" unique_id=783917579]
+offset_left = 653.0
+offset_top = 244.0
+offset_right = 676.0
+offset_bottom = 647.7778
+scale = Vector2(0.7826087, 0.7826087)
+mouse_filter = 2
+texture = ExtResource("11_fdxel")
+stretch_mode = 1
+
+[node name="Platforms" type="StaticBody2D" parent="." unique_id=1260318566]
 collision_layer = 32
 collision_mask = 0
 
-[node name="@CollisionShape2D@21" type="CollisionShape2D" parent="Platforms" unique_id=1341519874]
+[node name="@CollisionShape2D@30" type="CollisionShape2D" parent="Platforms" unique_id=810292405]
 position = Vector2(162, 568)
-shape = SubResource("RectangleShape2D_jcae4")
+shape = SubResource("RectangleShape2D_qrqmo")
 one_way_collision = true
 
-[node name="@Polygon2D@22" type="Polygon2D" parent="Platforms" unique_id=405324559]
-color = Color(0.6, 0.4, 0.2, 1)
-polygon = PackedVector2Array(24, 560, 300, 560, 300, 576, 24, 576)
+[node name="@NinePatchRect@31" type="NinePatchRect" parent="Platforms" unique_id=1046744956]
+offset_left = 24.0
+offset_top = 557.0
+offset_right = 300.0
+offset_bottom = 587.0
+texture = ExtResource("12_r7uoi")
+patch_margin_left = 14
+patch_margin_right = 14
+axis_stretch_horizontal = 2
 
-[node name="@Polygon2D@23" type="Polygon2D" parent="Platforms" unique_id=1528050732]
-color = Color(0.42, 0.26, 0.12, 1)
-polygon = PackedVector2Array(24, 572, 300, 572, 300, 576, 24, 576)
-
-[node name="@CollisionShape2D@24" type="CollisionShape2D" parent="Platforms" unique_id=1759069601]
+[node name="@CollisionShape2D@32" type="CollisionShape2D" parent="Platforms" unique_id=176136153]
 position = Vector2(798, 568)
-shape = SubResource("RectangleShape2D_s370f")
+shape = SubResource("RectangleShape2D_kf0at")
 one_way_collision = true
 
-[node name="@Polygon2D@25" type="Polygon2D" parent="Platforms" unique_id=1309193996]
-color = Color(0.6, 0.4, 0.2, 1)
-polygon = PackedVector2Array(660, 560, 936, 560, 936, 576, 660, 576)
+[node name="@NinePatchRect@33" type="NinePatchRect" parent="Platforms" unique_id=1207133765]
+offset_left = 660.0
+offset_top = 557.0
+offset_right = 936.0
+offset_bottom = 587.0
+texture = ExtResource("12_r7uoi")
+patch_margin_left = 14
+patch_margin_right = 14
+axis_stretch_horizontal = 2
 
-[node name="@Polygon2D@26" type="Polygon2D" parent="Platforms" unique_id=1584199865]
-color = Color(0.42, 0.26, 0.12, 1)
-polygon = PackedVector2Array(660, 572, 936, 572, 936, 576, 660, 576)
-
-[node name="@CollisionShape2D@27" type="CollisionShape2D" parent="Platforms" unique_id=2041046656]
+[node name="@CollisionShape2D@34" type="CollisionShape2D" parent="Platforms" unique_id=1224978424]
 position = Vector2(480, 456)
-shape = SubResource("RectangleShape2D_k3pqv")
+shape = SubResource("RectangleShape2D_3srpd")
 one_way_collision = true
 
-[node name="@Polygon2D@28" type="Polygon2D" parent="Platforms" unique_id=178317766]
-color = Color(0.6, 0.4, 0.2, 1)
-polygon = PackedVector2Array(330, 448, 630, 448, 630, 464, 330, 464)
+[node name="@NinePatchRect@35" type="NinePatchRect" parent="Platforms" unique_id=502806814]
+offset_left = 330.0
+offset_top = 445.0
+offset_right = 630.0
+offset_bottom = 475.0
+texture = ExtResource("12_r7uoi")
+patch_margin_left = 14
+patch_margin_right = 14
+axis_stretch_horizontal = 2
 
-[node name="@Polygon2D@29" type="Polygon2D" parent="Platforms" unique_id=573201272]
-color = Color(0.42, 0.26, 0.12, 1)
-polygon = PackedVector2Array(330, 460, 630, 460, 630, 464, 330, 464)
-
-[node name="@CollisionShape2D@30" type="CollisionShape2D" parent="Platforms" unique_id=400054890]
+[node name="@CollisionShape2D@36" type="CollisionShape2D" parent="Platforms" unique_id=739996978]
 position = Vector2(142, 344)
-shape = SubResource("RectangleShape2D_ur3he")
+shape = SubResource("RectangleShape2D_ikd0n")
 one_way_collision = true
 
-[node name="@Polygon2D@31" type="Polygon2D" parent="Platforms" unique_id=1168392868]
-color = Color(0.6, 0.4, 0.2, 1)
-polygon = PackedVector2Array(24, 336, 260, 336, 260, 352, 24, 352)
+[node name="@NinePatchRect@37" type="NinePatchRect" parent="Platforms" unique_id=647683387]
+offset_left = 24.0
+offset_top = 333.0
+offset_right = 260.0
+offset_bottom = 363.0
+texture = ExtResource("12_r7uoi")
+patch_margin_left = 14
+patch_margin_right = 14
+axis_stretch_horizontal = 2
 
-[node name="@Polygon2D@32" type="Polygon2D" parent="Platforms" unique_id=112176364]
-color = Color(0.42, 0.26, 0.12, 1)
-polygon = PackedVector2Array(24, 348, 260, 348, 260, 352, 24, 352)
-
-[node name="@CollisionShape2D@33" type="CollisionShape2D" parent="Platforms" unique_id=1757715373]
+[node name="@CollisionShape2D@38" type="CollisionShape2D" parent="Platforms" unique_id=477184050]
 position = Vector2(818, 344)
-shape = SubResource("RectangleShape2D_x5a7i")
+shape = SubResource("RectangleShape2D_ctfx6")
 one_way_collision = true
 
-[node name="@Polygon2D@34" type="Polygon2D" parent="Platforms" unique_id=213209766]
-color = Color(0.6, 0.4, 0.2, 1)
-polygon = PackedVector2Array(700, 336, 936, 336, 936, 352, 700, 352)
+[node name="@NinePatchRect@39" type="NinePatchRect" parent="Platforms" unique_id=667981030]
+offset_left = 700.0
+offset_top = 333.0
+offset_right = 936.0
+offset_bottom = 363.0
+texture = ExtResource("12_r7uoi")
+patch_margin_left = 14
+patch_margin_right = 14
+axis_stretch_horizontal = 2
 
-[node name="@Polygon2D@35" type="Polygon2D" parent="Platforms" unique_id=1089585153]
-color = Color(0.42, 0.26, 0.12, 1)
-polygon = PackedVector2Array(700, 348, 936, 348, 936, 352, 700, 352)
-
-[node name="@CollisionShape2D@36" type="CollisionShape2D" parent="Platforms" unique_id=363854876]
+[node name="@CollisionShape2D@40" type="CollisionShape2D" parent="Platforms" unique_id=790216177]
 position = Vector2(480, 232)
-shape = SubResource("RectangleShape2D_0lwof")
+shape = SubResource("RectangleShape2D_et46b")
 one_way_collision = true
 
-[node name="@Polygon2D@37" type="Polygon2D" parent="Platforms" unique_id=727378249]
-color = Color(0.6, 0.4, 0.2, 1)
-polygon = PackedVector2Array(280, 224, 680, 224, 680, 240, 280, 240)
+[node name="@NinePatchRect@41" type="NinePatchRect" parent="Platforms" unique_id=199793231]
+offset_left = 280.0
+offset_top = 221.0
+offset_right = 680.0
+offset_bottom = 251.0
+texture = ExtResource("12_r7uoi")
+patch_margin_left = 14
+patch_margin_right = 14
+axis_stretch_horizontal = 2
 
-[node name="@Polygon2D@38" type="Polygon2D" parent="Platforms" unique_id=1882938528]
-color = Color(0.42, 0.26, 0.12, 1)
-polygon = PackedVector2Array(280, 236, 680, 236, 680, 240, 280, 240)
+[node name="FrontDecor" type="Node2D" parent="." unique_id=725293198]
+z_index = 4
 
-[node name="BombPool" type="Node2D" parent="." unique_id=111479711]
-script = ExtResource("2_lwiiq")
+[node name="@Sprite2D@42" type="Sprite2D" parent="FrontDecor" unique_id=1600611743]
+position = Vector2(40, 676)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("13_bv2t5")
+centered = false
+offset = Vector2(-21.5, -44)
 
-[node name="Enemies" type="Node2D" parent="." unique_id=180375444]
-script = ExtResource("3_noojk")
+[node name="@Sprite2D@43" type="Sprite2D" parent="FrontDecor" unique_id=1201601238]
+position = Vector2(230, 676)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("14_e35kc")
+centered = false
+offset = Vector2(-18.5, -28)
 
-[node name="Items" type="Node2D" parent="." unique_id=1721920976]
+[node name="@Sprite2D@44" type="Sprite2D" parent="FrontDecor" unique_id=1716245856]
+position = Vector2(760, 676)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("15_tdxow")
+centered = false
+offset = Vector2(-34, -61)
 
-[node name="Barrel1" parent="Items" unique_id=1409312074 instance=ExtResource("4_itxvd")]
+[node name="@Sprite2D@45" type="Sprite2D" parent="FrontDecor" unique_id=1484118376]
+position = Vector2(930, 678)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("16_al5t5")
+centered = false
+offset = Vector2(-29.5, -32)
+
+[node name="BombPool" type="Node2D" parent="." unique_id=758707416]
+script = ExtResource("17_4vqn1")
+
+[node name="Enemies" type="Node2D" parent="." unique_id=1347468481]
+script = ExtResource("18_ii5dy")
+
+[node name="Items" type="Node2D" parent="." unique_id=1129867998]
+
+[node name="Barrel1" parent="Items" unique_id=911308784 instance=ExtResource("19_qcb16")]
 position = Vector2(330, 652)
 
-[node name="Barrel2" parent="Items" unique_id=896670192 instance=ExtResource("4_itxvd")]
+[node name="Barrel2" parent="Items" unique_id=1360125530 instance=ExtResource("19_qcb16")]
 position = Vector2(820, 540)
 
-[node name="Crate1" parent="Items" unique_id=2089306692 instance=ExtResource("5_4eur0")]
+[node name="Crate1" parent="Items" unique_id=1443622916 instance=ExtResource("20_r87xk")]
 position = Vector2(250, 560)
 
-[node name="Crate2" parent="Items" unique_id=431565550 instance=ExtResource("5_4eur0")]
+[node name="Crate2" parent="Items" unique_id=66620420 instance=ExtResource("20_r87xk")]
 position = Vector2(140, 336)
 
-[node name="StoneBlock1" parent="Items" unique_id=1411026578 instance=ExtResource("5_4eur0")]
+[node name="StoneBlock1" parent="Items" unique_id=873281004 instance=ExtResource("20_r87xk")]
 position = Vector2(480, 224)
-data = ExtResource("6_6kdmb")
+data = ExtResource("21_fugi1")
 
-[node name="Spawners" type="Node2D" parent="." unique_id=542325505]
+[node name="Spawners" type="Node2D" parent="." unique_id=1752541867]
 
-[node name="Spawner1_SmallCrab" type="Marker2D" parent="Spawners" unique_id=1683223654]
+[node name="Spawner1_SmallCrab" type="Marker2D" parent="Spawners" unique_id=1957984932]
 position = Vector2(0, 672)
-script = ExtResource("7_g2fun")
-enemy_type = ExtResource("8_oroke")
+script = ExtResource("22_ub4jv")
+enemy_type = ExtResource("23_c60of")
 entry = 1
 spawn_delay = 1.5
 interval = 5.0
 count = 2
 max_enemies = 1
 
-[node name="Spawner2_SmallCrab" type="Marker2D" parent="Spawners" unique_id=304412047]
+[node name="Spawner2_SmallCrab" type="Marker2D" parent="Spawners" unique_id=1159396579]
 position = Vector2(960, 672)
-script = ExtResource("7_g2fun")
-enemy_type = ExtResource("8_oroke")
+script = ExtResource("22_ub4jv")
+enemy_type = ExtResource("23_c60of")
 entry = 2
 spawn_delay = 3.0
 interval = 5.0
 count = 2
 max_enemies = 1
 
-[node name="Spawner3_Seagull" type="Marker2D" parent="Spawners" unique_id=426502345]
+[node name="Spawner3_Seagull" type="Marker2D" parent="Spawners" unique_id=1186806779]
 position = Vector2(480, 150)
-script = ExtResource("7_g2fun")
-enemy_type = ExtResource("9_vsyy1")
+script = ExtResource("22_ub4jv")
+enemy_type = ExtResource("24_sgbt5")
 spawn_delay = 4.0
 interval = 6.0
 max_enemies = 1
 
-[node name="Spawner4_HermitCrab" type="Marker2D" parent="Spawners" unique_id=320167064]
+[node name="Spawner4_HermitCrab" type="Marker2D" parent="Spawners" unique_id=2006149926]
 position = Vector2(480, 0)
-script = ExtResource("7_g2fun")
-enemy_type = ExtResource("10_s54pk")
+script = ExtResource("22_ub4jv")
+enemy_type = ExtResource("25_shnnm")
 entry = 3
 interval = 4.0
 max_enemies = 1
 wave = 2
 
-[node name="Spawner5_SmallOctopus" type="Marker2D" parent="Spawners" unique_id=1182969774]
+[node name="Spawner5_SmallOctopus" type="Marker2D" parent="Spawners" unique_id=654914141]
 position = Vector2(820, 336)
-script = ExtResource("7_g2fun")
-enemy_type = ExtResource("11_bibs5")
+script = ExtResource("22_ub4jv")
+enemy_type = ExtResource("26_ckp5o")
 spawn_delay = 2.0
 interval = 4.0
 max_enemies = 1
 wave = 2
 
-[node name="PlayerSpawner" type="Node2D" parent="." unique_id=71534458]
-script = ExtResource("12_g8qxr")
+[node name="PlayerSpawner" type="Node2D" parent="." unique_id=299603229]
+script = ExtResource("27_qdv70")
 
-[node name="P1" type="Marker2D" parent="PlayerSpawner" unique_id=573801744]
+[node name="P1" type="Marker2D" parent="PlayerSpawner" unique_id=1652758232]
 position = Vector2(120, 672)
 
-[node name="P2" type="Marker2D" parent="PlayerSpawner" unique_id=1366072773]
+[node name="P2" type="Marker2D" parent="PlayerSpawner" unique_id=1244403497]
 position = Vector2(840, 672)
 
-[node name="ArcadeCamera" type="Camera2D" parent="." unique_id=332082510]
-script = ExtResource("13_nyoye")
+[node name="ArcadeCamera" type="Camera2D" parent="." unique_id=590352046]
+script = ExtResource("28_x30sw")
 
-[node name="HUD" type="CanvasLayer" parent="." unique_id=116267686]
-script = ExtResource("14_m12w6")
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1252434149]
+script = ExtResource("29_pqjx4")

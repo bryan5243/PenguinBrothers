@@ -261,13 +261,13 @@ func _create_items() -> void:
 	var crate := DestructibleData.new()
 	crate.id = &"crate"
 	crate.display_name = "Caja"
-	crate.texture = load("res://assets/objects/crate.png")
+	crate.texture = load("res://assets/worlds/world_01/crate.png")
 	crate.drop_table = tables["crate_drops"]
 	_save(crate, "res://data/destructibles/crate.tres")
 	var block := DestructibleData.new()
 	block.id = &"stone_block"
 	block.display_name = "Bloque de piedra"
-	block.texture = load("res://assets/objects/stone_block.png")
+	block.texture = load("res://assets/worlds/world_01/stone_blocks.png")
 	block.max_health = 2
 	block.hardness = 2
 	block.points = 150
@@ -276,7 +276,7 @@ func _create_items() -> void:
 	var barrel := BarrelData.new()
 	barrel.id = &"barrel"
 	barrel.display_name = "Barril"
-	barrel.texture = load("res://assets/objects/barrel.png")
+	barrel.texture = load("res://assets/worlds/world_01/barrel.png")
 	barrel.size = Vector2(44, 40)
 	barrel.drop_table = tables["barrel_drops"]
 	_save(barrel, "res://data/destructibles/barrel.tres")
