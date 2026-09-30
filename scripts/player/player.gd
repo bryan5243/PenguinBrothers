@@ -254,6 +254,23 @@ func can_slide() -> bool:
 	return absf(velocity.x) >= base * config.slide_trigger_ratio
 
 
+## Sale despedido (plataforma giratoria, muelles...): pasa a estar en el aire con `vel`.
+## Solo si está vivo y en un estado normal (no trepando, herido ni muerto).
+func launch(vel: Vector2) -> bool:
+	if not is_alive() or state_machine.is_in(&"Climb") or state_machine.is_in(&"Hurt") \
+			or state_machine.is_in(&"Dead"):
+		return false
+	consume_jump()
+	if is_low:
+		set_low_profile(false)
+	velocity = vel
+	state_machine.transition_to(&"Fall")
+	if vel.y < 0.0:
+		animator.play_animation(PlayerAnimator.JUMP, true)
+		animator.squash(Vector2(0.82, 1.2))
+	return true
+
+
 # ---------------------------------------------------------------- escaleras
 func get_overlapping_ladder() -> Ladder:
 	for area in ladder_detector.get_overlapping_areas():
