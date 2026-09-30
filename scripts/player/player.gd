@@ -257,18 +257,17 @@ func can_slide() -> bool:
 	return absf(velocity.x) >= base * config.slide_trigger_ratio
 
 
-## Pegado boca abajo a un nodo (la parte de abajo de una plataforma giratoria): no se mueve ni
-## actúa hasta que quien lo sujeta lo suelta con release_stuck().
+## Colgado boca abajo de un nodo (la parte de abajo de una plataforma giratoria). Mientras
+## dura, `stuck_to.drive_rider(player, delta)` decide su posición, su pose y cuándo se suelta.
 var stuck_to: Node2D = null
-var stuck_offset := Vector2.ZERO
 
 
 func is_stuck() -> bool:
 	return stuck_to != null
 
 
-## Se engancha boca abajo a `anchor` (los pies en `anchor + offset`). Suelta lo que lleve.
-func stick_to(anchor: Node2D, offset: Vector2) -> bool:
+## Se engancha a `anchor` (debe tener `drive_rider(player, delta)`). Suelta lo que lleve.
+func stick_to(anchor: Node2D) -> bool:
 	if not is_alive() or stuck_to != null or state_machine.is_in(&"Climb") \
 			or state_machine.is_in(&"Hurt") or state_machine.is_in(&"Dead"):
 		return false
@@ -278,10 +277,7 @@ func stick_to(anchor: Node2D, offset: Vector2) -> bool:
 	if is_low:
 		set_low_profile(false)
 	stuck_to = anchor
-	stuck_offset = offset
 	velocity = Vector2.ZERO
-	animator.rotation = PI
-	animator.play_animation(PlayerAnimator.IDLE, true)
 	_stuck_step()
 	return true
 
@@ -292,20 +288,28 @@ func release_stuck(vel := Vector2.ZERO) -> void:
 		return
 	stuck_to = null
 	animator.rotation = 0.0
+	animator.set_facing(facing)
+	animator.set_playback_speed(1.0)
+	animator.set_blinking(false)
 	velocity = vel
 	if is_alive():
 		state_machine.transition_to(&"Fall")
 
 
 func _stuck_step() -> void:
+	input.update()
 	var broken := not is_instance_valid(stuck_to) or not is_alive() \
 		or state_machine.is_in(&"Hurt") or state_machine.is_in(&"Dead")
 	if broken:
 		# Herido o muerto: el estado que tomó el control sigue su curso.
 		stuck_to = null
 		animator.rotation = 0.0
+		animator.set_facing(facing)
+		animator.set_blinking(false)
 		return
-	global_position = stuck_to.global_position + stuck_offset
+	stuck_to.call(&"drive_rider", self, get_physics_process_delta_time())
+	if stuck_to == null:
+		return
 	velocity = Vector2.ZERO
 	head_platform.global_position = global_position
 
@@ -353,7 +357,19 @@ func is_carrying() -> bool:
 	return carried_object != null and is_instance_valid(carried_object)
 
 
+## ¿Se está deslizando? (inmune a los ataques de enemigos).
+func is_sliding() -> bool:
+	return state_machine.is_in(&"Slide")
+
+
+## ¿`source` es un enemigo o un ataque suyo (proyectil)? Las bombas no cuentan.
+static func is_enemy_source(source: Node) -> bool:
+	return source != null and (source.is_in_group(&"enemies") or source.is_in_group(&"enemy_attacks"))
+
+
 func take_damage(amount: int, source: Node = null) -> bool:
+	if config.slide_immune_to_enemies and is_sliding() and is_enemy_source(source):
+		return false
 	if armor_hits > 0 and not health.is_invulnerable() and not health.is_dead:
 		# La armadura absorbe el golpe y se gasta.
 		armor_hits -= 1
