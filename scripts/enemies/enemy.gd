@@ -39,6 +39,9 @@ var turn_timer := 0.0
 var rng := RandomNumberGenerator.new()
 var _drop_timer := 0.0
 var _gravity := 1750.0
+## Empujón externo (p. ej. un pingüino deslizándose): se suma a su movimiento y se apaga solo.
+var shove_velocity := 0.0
+const SHOVE_FRICTION := 900.0
 
 @onready var visual_root: Node2D = $VisualRoot
 @onready var animator: AnimatedSprite2D = $VisualRoot/Animator
@@ -100,6 +103,9 @@ func _physics_process(delta: float) -> void:
 		spawn_grace -= delta
 		animator.visible = int(spawn_grace * 16.0) % 2 == 0 or spawn_grace <= 0.0
 	state_machine.physics_update(delta)
+	if not is_zero_approx(shove_velocity):
+		velocity.x += shove_velocity
+		shove_velocity = move_toward(shove_velocity, 0.0, SHOVE_FRICTION * delta)
 	move_and_slide()
 	if spawn_grace <= 0.0 and data.contact_damage and is_alive() and behavior.deals_contact_damage():
 		_contact_damage()
@@ -191,6 +197,15 @@ func drop_through() -> void:
 	set_collision_mask_value(PLATFORM_LAYER, false)
 	_drop_timer = 0.3
 	position.y += 2.0
+
+
+## Lo apartan sin dañarlo (empujón de un deslizamiento): velocidad horizontal extra que se
+## apaga sola en unas décimas. Nunca lo frena si ya se mueve más rápido en ese sentido.
+func shove(speed_x: float) -> void:
+	if not is_alive() or data == null:
+		return
+	if absf(speed_x) > absf(shove_velocity) or signf(speed_x) != signf(shove_velocity):
+		shove_velocity = speed_x
 
 
 # ------------------------------------------------------------------ daño

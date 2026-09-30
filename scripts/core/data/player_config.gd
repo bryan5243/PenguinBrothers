@@ -35,9 +35,25 @@ extends Resource
 @export_group("Acciones")
 ## Deslizarse: agacharse mientras se camina (o corre) lanza al pingüino sobre el vientre.
 @export var slide_enabled := true
-@export var slide_speed := 520.0
-@export var slide_duration := 0.5
-@export var slide_friction := 700.0
+## Velocidad de salida del deslizamiento (si ya iba más rápido, conserva esa).
+@export var slide_speed := 380.0
+## Tiempo máximo deslizando; antes termina si la velocidad baja de `slide_min_speed`.
+@export var slide_duration := 0.6
+## Frenado: una parte fija (px/s²) y otra proporcional a la velocidad (1/s). Da un resbalón
+## que empieza rápido y se va apagando, sin llegar a ser exagerado (~100 px).
+@export var slide_friction := 260.0
+@export var slide_drag := 3.2
+@export var slide_min_speed := 70.0
+## Tiempo (s) en llegar de la velocidad con la que entra a `slide_speed` (arranque suave).
+@export var slide_ramp_time := 0.07
+@export_subgroup("Empujar enemigos")
+## Mientras se desliza es inmune a los ataques de los enemigos (contacto, pinza, picado,
+## tinta) y empuja a los que toca sin dañarlos. Las bombas siguen haciendo daño.
+@export var slide_immune_to_enemies := true
+## El enemigo empujado sale a esta fracción de la velocidad del pingüino.
+@export_range(0.0, 1.5) var slide_shove_ratio := 0.85
+## Frenado extra (px/s²) que nota el pingüino mientras empuja a un enemigo.
+@export var slide_shove_drag := 450.0
 ## Velocidad mínima para deslizarse, como fracción de la velocidad de marcha (`run_speed` si
 ## correr está activado, si no `move_speed`).
 @export_range(0.0, 1.0) var slide_trigger_ratio := 0.85

@@ -11,6 +11,10 @@ var texture: Texture2D
 var _travelled := 0.0
 
 
+func _init() -> void:
+	add_to_group(&"enemy_attacks")
+
+
 func _ready() -> void:
 	collision_layer = 0
 	collision_mask = (1 << 1) | 1   # jugadores y mundo
@@ -38,6 +42,9 @@ func _physics_process(delta: float) -> void:
 
 func _on_body_entered(body: Node) -> void:
 	if body is Player:
+		# Un pingüino deslizándose es inmune: la tinta pasa sin tocarlo.
+		if (body as Player).config.slide_immune_to_enemies and (body as Player).is_sliding():
+			return
 		if (body as Player).is_alive():
 			(body as Player).take_damage(damage, self)
 		queue_free()
