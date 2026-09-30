@@ -230,7 +230,45 @@ animación y datos de escala/colisión/GroundPoint. Teclas: 1 idle · 2 caminar 
 Las pruebas automáticas (`tests/sprite_normalization_test.gd`) comprueban lienzo común, pies en la
 línea base, escala/offset/colisión/posición constantes al cambiar de animación y flip_h.
 
-## Bombas (Fase 4 · implementado)
+## Bombas arcade (Fase 3)
+
+Controles iguales que antes (Bomba lanza, abajo + Bomba coloca, Interactuar recoge/lanza, abajo +
+Interactuar suelta, Cambiar bomba cambia de tipo). Cambios del formato arcade:
+
+- **Física controlada** (`CarryableBody`, parámetros en `BombData`): gravedad fija, `max_bounces`
+  botes con `bounce` fijo, `ground_friction` al rodar, `wall_bounce` en paredes. Siempre igual.
+- **Tipos** (`data/bombs/`):
+
+  | Tipo | Daño | Radio base | Mecha |
+  |---|---|---|---|
+  | Negra (normal) | 2 | 80 | 2,4 s |
+  | Azul (pequeña) | 1 | 60 | 1,8 s |
+  | Verde (grande) | 3 | 104 | 2,8 s |
+
+- **Área visible**: al explotar se dibuja el círculo del alcance real (color del tipo) y la animación de
+  la explosión escalada a ese radio.
+- **BOMB LEVEL 1–4**: el alcance se multiplica por ×1 / ×1,35 / ×1,7 / ×2 (`bomb_power_radius`). El
+  nivel 4 es el **poder especial**: anillo dorado, daño y poder de destrucción extra
+  (`special_damage_bonus`, `special_break_bonus`). Sube con el power-up de fuego y se pierde al morir.
+- **Fuego amigo**: afecta a todos (`hurts_players`), también a quien la puso.
+- Lo alcanzado reacciona con `apply_explosion(info: ExplosionInfo)` o `take_damage()`.
+
+## Barriles, destrucción y power-ups (Fase 4)
+
+| Objeto | Cómo se usa | Se rompe con | Botín |
+|---|---|---|---|
+| Barril (`Barrel.tscn`) | Interactuar para recoger, lanzar rasante: rueda y golpea (daño 2) | Explosiones, golpear a un enemigo, estrellarse fuerte contra una pared | `barrel_drops` (90 %) |
+| Caja (`Destructible`, `crate`) | Obstáculo sólido | Cualquier explosión | `crate_drops` (60 %, frutas) |
+| Bloque de piedra (`stone_block`) | Obstáculo sólido, dureza 2 | Solo BOMB LEVEL 4 | — |
+
+Power-ups (`data/powerups/`): cereza 100, banana 200, naranja 300, manzana 500, uva 800, sandía
+1000, piña 1500, melón 2000 (puntos) · pastel y 1UP (+1 vida) · armadura (absorbe un golpe, aura
+visible) · botas (×1,4 de velocidad 10 s) · fuego (+1 nivel de bomba). Aparecen, caen al suelo y
+parpadean antes de desaparecer (10 s).
+
+<details><summary>Sistema de bombas de la etapa 1 (referencia)</summary>
+
+### Bombas (etapa 1)
 
 | Acción | Cómo |
 |---|---|
@@ -284,6 +322,9 @@ Explosion.apply_to_area(): círculo de radio `explosion_radius` sobre capas 2–
   `body_radius`) y `assets/effects/explosion/` (5 fases), extraídos con
   `python3 tools/sprites/extract_bombs.py` de la hoja general. La bomba «normal» también se extrajo
   para un futuro tipo.
+
+
+</details>
 
 ## Vida y daño (Fase 2+)
 

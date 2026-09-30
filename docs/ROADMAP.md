@@ -14,9 +14,9 @@ que siga al jugador.** Referencia de diseño: `docs/GAME_DESIGN.md`.
 |---|---|---|
 | 1 | Arquitectura arcade (4:3, StageManager, ScoreManager, Arena, cámara fija, HUD, título, GAME OVER/CONTINUE, victoria) | ✅ Completada |
 | 2 | Player 1 y Player 2 en la arena (movimiento arcade, bloqueo/empuje, fuego amigo, reaparición) | ✅ Completada |
-| 3 | Bombas arcade (física controlada, área visible, niveles de poder 1–4) | Siguiente |
-| 4 | Barriles y destrucción del escenario (`Barrel.tscn`, destructibles con drop_table) | Pendiente |
-| 5 | Enemigos (base con IDLE/PATROL/CHASE/ATTACK/HURT/DEAD, `EnemySpawner`) | Pendiente |
+| 3 | Bombas arcade (física controlada, área visible, niveles de poder 1–4) | ✅ Completada |
+| 4 | Barriles y destrucción del escenario (`Barrel.tscn`, destructibles con drop_table) | ✅ Completada |
+| 5 | Enemigos (base con IDLE/PATROL/CHASE/ATTACK/HURT/DEAD, `EnemySpawner`) | Siguiente |
 | 6 | Plataformas giratorias (`RotatingPlatform.tscn`, giro de 180°) | Pendiente |
 | 7 | Llave y puerta (`KeyItem.tscn`, `ExitDoor.tscn`) | Pendiente |
 | 8 | Pantalla 1 (World01_Stage01_A completa) | Pendiente |
@@ -51,6 +51,34 @@ que siga al jugador.** Referencia de diseño: `docs/GAME_DESIGN.md`.
 - Fuego amigo: las bombas dañan a cualquiera (`BombData.hurts_players`, activo por defecto).
 - Reaparición arcade en el punto de inicio con invulnerabilidad.
 - Pruebas: 224 comprobaciones (45 nuevas de arquitectura arcade y dos jugadores).
+
+### Fase 3 (arcade) – Bombas (completada)
+
+- Sprites nuevos de `blue_penguin_moves_and_bombs.png`: más fotogramas del pingüino azul (idle, caminar,
+  correr, saltar, deslizarse, agacharse) y, por bomba (negra, azul, verde), mecha animada y explosión
+  propia (`assets/bombs/<tipo>/`, `extract_bombs.py`).
+- `CarryableBody`: física **controlada** (no realista): gravedad fija, botes limitados, frenado en el
+  suelo, rebote en paredes. `Bomb` se apoya en él; cualquier objeto cargable se recoge igual.
+- Tipos rehechos: negra = normal (daño 2, radio 80), azul = pequeña (1, 60), verde = grande (3, 104).
+- `ExplosionInfo` + área **visible**: círculo del alcance real, animación del tipo escalada a ese radio,
+  partículas y temblor. Las explosiones no distinguen jugador/enemigo/objeto.
+- **BOMB LEVEL 1–4** (`PlayerConfig.bomb_power_radius` = ×1, ×1,35, ×1,7, ×2): el nivel 4 es el
+  poder especial (anillo dorado, +daño y +poder de destrucción). Se ve en el HUD y se pierde al morir.
+- Pruebas: 239 comprobaciones.
+
+### Fase 4 (arcade) – Barriles, destrucción y power-ups (completada)
+
+- `Barrel.tscn` (`BarrelData`): se recoge, se lleva, se lanza **rasante** para que ruede por el piso y
+  golpee a los enemigos (se rompe al golpear), se rompe con explosiones o al estrellarse contra una pared.
+- `Destructible.tscn` (`DestructibleData`: `max_health`, `destructible`, `hardness`, `points`,
+  `drop_table`, efecto de restos): caja (se rompe con cualquier bomba) y bloque de piedra (dureza 2:
+  solo BOMB LEVEL 4). No todo se destruye.
+- `DropTable`: botín por pesos y probabilidad (reproducible con semilla).
+- `PowerUp.tscn` (`PowerUpData`) con iconos de la hoja general: frutas (puntos), pastel/1UP (vida),
+  armadura (protección visual que absorbe un golpe), botas (velocidad temporal), fuego (sube el nivel
+  de bomba). Salen del botín, caen al suelo, parpadean y desaparecen si nadie los recoge.
+- Pantallas A y B con barriles, cajas y bloques (`tools/build_arenas.gd`).
+- Pruebas: 267 comprobaciones (28 nuevas).
 
 ## Historial: etapa 1 (formato plataformas con scroll, sustituido)
 
