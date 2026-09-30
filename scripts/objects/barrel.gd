@@ -27,6 +27,7 @@ var _hit_targets: Array[Node] = []
 func _ready() -> void:
 	collision_layer = LAYER
 	collision_mask = MASK
+	carry_style = &"barrel"
 	rng.randomize()
 	hit_area.collision_layer = 0
 	hit_area.collision_mask = ENEMY_LAYER
@@ -41,6 +42,10 @@ func _ready() -> void:
 		(hit_area.get_node("Shape") as CollisionShape2D).shape = rect
 		if data.texture:
 			sprite.scale = Vector2.ONE * (data.size.x / data.texture.get_width())
+
+
+func set_art_visible(shown: bool) -> void:
+	sprite.visible = shown
 
 
 func can_be_picked_up() -> bool:

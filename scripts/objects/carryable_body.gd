@@ -31,6 +31,9 @@ var max_fall_speed := 950.0
 ## Lanzamiento propio (x hacia donde mira el jugador). ZERO = el del jugador (PlayerConfig).
 var throw_force := Vector2.ZERO
 
+## Estilo para las animaciones de quien lo lleva (&"barrel": el pingüino azul lo lleva
+## dibujado en sus propias animaciones y el objeto se oculta mientras tanto).
+var carry_style := &""
 ## Quién lo lleva (PlayerBombs), o null.
 var holder: Node = null
 var _bounces_left := 0
@@ -60,6 +63,12 @@ func can_be_picked_up() -> bool:
 	return holder == null and visible
 
 
+## Muestra u oculta el dibujo del objeto (lo oculta quien lo lleva dibujado en su sprite).
+## Las subclases con sprite propio lo redefinen.
+func set_art_visible(_shown: bool) -> void:
+	pass
+
+
 func hold(by: Node) -> void:
 	holder = by
 	velocity = Vector2.ZERO
@@ -69,6 +78,7 @@ func hold(by: Node) -> void:
 
 ## Suelta con una velocidad (lanzar o dejar caer). Reinicia los botes.
 func release(initial_velocity: Vector2) -> void:
+	set_art_visible(true)
 	holder = null
 	z_index = 0
 	_set_carried_collision(false)

@@ -76,12 +76,53 @@ PROFILES = {
         "sheets": {
             "full": "assets/references/characters/blue_penguin_full_animations.png",
             "moves": "assets/references/characters/blue_penguin_moves_and_bombs.png",
+            "carry": "assets/references/characters/blue_penguin_carry_barrel.png",
         },
+        # Hojas cuyo fondo NO es transparente (paneles oscuros opacos): se recorta cada celda con
+        # rembg y se añade la madera del barril por color (rembg a veces lo descarta).
+        "cutout_sheets": ["carry"],
         "base_sheet": "moves",
         # Fotograma de cada hoja que se usa para igualar la escala entre hojas.
-        "sheet_reference": {"full": "idle_1", "moves": "mv_idle_1"},
+        "sheet_reference": {"full": "idle_1", "moves": "mv_idle_1", "carry": "cb_ref"},
         "reference": "mv_idle_1",
         "frames": {
+            # --- hoja "carry" (blue_penguin_carry_barrel.png): llevar un barril (va en el dibujo)
+            "cb_ref": ((820, 45, 935, 185), [], "carry"),
+            "cb_lift_1": ((155, 45, 290, 185), [], "carry"),
+            "cb_lift_2": ((308, 45, 460, 185), [], "carry"),
+            "cb_lift_3": ((466, 45, 625, 185), [], "carry"),
+            "cb_lift_4": ((636, 45, 780, 185), [], "carry"),
+            "cb_idle_1": ((820, 45, 935, 185), [], "carry"),
+            "cb_idle_2": ((982, 45, 1102, 185), [], "carry"),
+            "cb_idle_3": ((1122, 45, 1243, 185), [], "carry"),
+            "cb_idle_4": ((1252, 45, 1378, 185), [], "carry"),
+            "cb_idle_5": ((1392, 45, 1500, 185), [], "carry"),
+            "cb_walk_1": ((32, 238, 168, 378), [], "carry"),
+            "cb_walk_2": ((172, 238, 302, 378), [], "carry"),
+            "cb_walk_3": ((303, 238, 432, 378), [], "carry"),
+            "cb_walk_4": ((437, 238, 557, 378), [], "carry"),
+            "cb_walk_5": ((550, 238, 667, 378), [], "carry"),
+            "cb_walk_6": ((663, 238, 787, 378), [], "carry"),
+            "cb_run_1": ((838, 238, 977, 378), [], "carry"),
+            "cb_run_2": ((985, 238, 1112, 378), [], "carry"),
+            "cb_run_3": ((1116, 238, 1242, 378), [], "carry"),
+            "cb_run_4": ((1246, 238, 1376, 378), [], "carry"),
+            "cb_run_5": ((1376, 238, 1502, 378), [], "carry"),
+            "cb_jump_1": ((38, 425, 162, 575), [], "carry"),
+            "cb_jump_2": ((172, 425, 302, 575), [], "carry"),
+            "cb_jump_3": ((302, 425, 437, 575), [], "carry"),
+            "cb_jump_4": ((442, 425, 572, 575), [], "carry"),
+            "cb_jump_5": ((595, 425, 732, 575), [], "carry"),
+            "cb_crouch_1": ((818, 455, 972, 585), [], "carry"),
+            "cb_crouch_2": ((988, 455, 1142, 585), [], "carry"),
+            "cb_crouch_3": ((1152, 455, 1312, 585), [], "carry"),
+            "cb_crouch_4": ((1328, 455, 1492, 585), [], "carry"),
+            "cb_throw_1": ((22, 622, 145, 760), [], "carry"),
+            "cb_throw_2": ((152, 622, 272, 760), [], "carry"),
+            "cb_throw_3": ((278, 622, 418, 760), [], "carry"),
+            "cb_throw_4": ((428, 622, 562, 760), [], "carry"),
+            "cb_drop_1": ((946, 622, 1082, 760), [], "carry"),
+            "cb_drop_2": ((1284, 622, 1398, 760), [], "carry"),
             # --- hoja "moves" (blue_penguin_moves_and_bombs.png)
             "mv_idle_1": ((15, 38, 97, 148), [], "moves"),
             "mv_idle_2": ((114, 38, 195, 148), [], "moves"),
@@ -238,9 +279,20 @@ PROFILES = {
             "victory": {"frames": ["victory_1", "victory_2", "victory_3", "victory_4"], "fps": 6, "loop": True},
             "attack": {"frames": ["attack_1", "attack_2", "attack_3", "attack_4"], "fps": 12, "loop": False},
             "fire_attack": {"frames": ["fire_attack_1"], "fps": 1, "loop": False},
+            # Llevando un barril (el barril va dibujado; el objeto se oculta mientras se lleva).
+            "carry_barrel_lift": {"frames": ["cb_lift_2", "cb_lift_3", "cb_lift_4"], "fps": 10, "loop": False},
+            "carry_barrel_idle": {"frames": ["cb_idle_1", "cb_idle_2", "cb_idle_3", "cb_idle_4", "cb_idle_5"], "fps": 6, "loop": True},
+            "carry_barrel_walk": {"frames": ["cb_walk_%d" % i for i in range(1, 7)], "fps": 10, "loop": True},
+            "carry_barrel_run": {"frames": ["cb_run_1", "cb_run_2", "cb_run_3", "cb_run_5"], "fps": 12, "loop": True},
+            "carry_barrel_jump": {"frames": ["cb_jump_2", "cb_jump_3", "cb_jump_4"], "fps": 8, "loop": False},
+            "carry_barrel_land": {"frames": ["cb_jump_5"], "fps": 10, "loop": False},
+            "carry_barrel_crouch": {"frames": ["cb_crouch_1", "cb_crouch_2", "cb_crouch_3", "cb_crouch_4"], "fps": 12, "loop": False},
+            "carry_barrel_throw": {"frames": ["cb_throw_1", "cb_throw_2", "cb_throw_3", "cb_throw_4"], "fps": 14, "loop": False},
+            "carry_barrel_drop": {"frames": ["cb_drop_2"], "fps": 6, "loop": False},
         },
         # Secciones de la hoja que no se extraen (motivo documentado).
         "skipped": {
+            "carry_barrel (hoja carry)": "lanzar 5–7 y soltar 3–4 muestran el barril ya separado: el objeto real se dibuja aparte; direcciones/vistas no se usan",
             "swim": "el agua y las burbujas están fundidas con el personaje; hace falta arte sin fondo",
             "fire_attack_2": "las llamas envuelven al personaje",
             "bomb_wait / explosion_reaction": "poses de apoyo; no las usa ningún estado todavía",
@@ -252,6 +304,39 @@ PROFILES = {
 
 
 # ---------------------------------------------------------------- procesamiento
+_REMBG_SESSION = None
+_CUTOUT_CACHE = {}
+
+
+def cutout_alpha(rgb: np.ndarray) -> np.ndarray:
+    """Alfa para hojas con fondo opaco: rembg (a 2x) + la madera del barril por color, cerrada
+    para unir los aros metálicos. Se cachea por contenido (el mismo recorte se pide varias veces)."""
+    global _REMBG_SESSION
+    key = hash(rgb.tobytes())
+    if key in _CUTOUT_CACHE:
+        return _CUTOUT_CACHE[key]
+    from rembg import new_session, remove
+    if _REMBG_SESSION is None:
+        _REMBG_SESSION = new_session("u2net")
+    img = Image.fromarray(rgb)
+    big = img.resize((img.width * 2, img.height * 2), Image.LANCZOS)
+    alpha = np.array(remove(big, session=_REMBG_SESSION).resize(img.size, Image.LANCZOS))[..., 3]
+    hsv = cv2.cvtColor(rgb, cv2.COLOR_RGB2HSV).astype(int)
+    wood = (hsv[..., 0] >= 5) & (hsv[..., 0] <= 25) & (hsv[..., 1] > 110) & (hsv[..., 2] > 80)
+    wood = cv2.morphologyEx(wood.astype(np.uint8), cv2.MORPH_CLOSE, np.ones((7, 7), np.uint8)) > 0
+    # Solo la madera que toca (o casi) lo que rembg ya encontró: evita manchas sueltas del fondo.
+    near = cv2.dilate((alpha > 128).astype(np.uint8), np.ones((9, 9), np.uint8)) > 0
+    n, lab, stats, _ = cv2.connectedComponentsWithStats(wood.astype(np.uint8), 8)
+    add = np.zeros_like(wood)
+    for i in range(1, n):
+        comp = lab == i
+        if stats[i, cv2.CC_STAT_AREA] > 150 and (comp & near).any():
+            add |= comp
+    out = np.where((alpha > 128) | add, 255, 0).astype(np.uint8)
+    _CUTOUT_CACHE[key] = out
+    return out
+
+
 def isolate(cell: np.ndarray, erase_ops: list, origin: tuple) -> np.ndarray:
     """Devuelve la máscara booleana del personaje dentro de la celda.
     Si un borrado tiene "fill", rellena (en `cell`, por inpainting) el hueco que el
@@ -335,11 +420,15 @@ def main(name: str) -> None:
     (out / "source").mkdir(parents=True, exist_ok=True)
     (out / "processed").mkdir(parents=True, exist_ok=True)
 
+    cutout_sheets = profile.get("cutout_sheets", [])
+
     def cut(entry):
         box, ops = entry[0], entry[1]
         sheet_key = entry[2] if len(entry) > 2 else default_sheet
         x0, y0, x1, y1 = box
         cell = sheets[sheet_key][y0:y1, x0:x1].copy()
+        if sheet_key in cutout_sheets:
+            cell[..., 3] = cutout_alpha(cell[..., :3])
         return sheet_key, cell, isolate(cell, ops, (x0, y0))
 
     # Un factor de escala por hoja (igualar el idle de referencia de cada hoja al de la base).

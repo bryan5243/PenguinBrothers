@@ -2,14 +2,16 @@
   "character": "blue_penguin",
   "source": {
     "full": "assets/references/characters/blue_penguin_full_animations.png",
-    "moves": "assets/references/characters/blue_penguin_moves_and_bombs.png"
+    "moves": "assets/references/characters/blue_penguin_moves_and_bombs.png",
+    "carry": "assets/references/characters/blue_penguin_carry_barrel.png"
   },
   "sheet_scales": {
     "full": 1.0408,
-    "moves": 1.0
+    "moves": 1.0,
+    "carry": 0.8293
   },
   "canvas": [
-    162,
+    172,
     132
   ],
   "anchor": "pies en el borde inferior, centro del cuerpo en la mitad horizontal",
@@ -184,731 +186,1141 @@
       ],
       "fps": 1,
       "loop": false
+    },
+    "carry_barrel_lift": {
+      "frames": [
+        "processed/cb_lift_2.png",
+        "processed/cb_lift_3.png",
+        "processed/cb_lift_4.png"
+      ],
+      "fps": 10,
+      "loop": false
+    },
+    "carry_barrel_idle": {
+      "frames": [
+        "processed/cb_idle_1.png",
+        "processed/cb_idle_2.png",
+        "processed/cb_idle_3.png",
+        "processed/cb_idle_4.png",
+        "processed/cb_idle_5.png"
+      ],
+      "fps": 6,
+      "loop": true
+    },
+    "carry_barrel_walk": {
+      "frames": [
+        "processed/cb_walk_1.png",
+        "processed/cb_walk_2.png",
+        "processed/cb_walk_3.png",
+        "processed/cb_walk_4.png",
+        "processed/cb_walk_5.png",
+        "processed/cb_walk_6.png"
+      ],
+      "fps": 10,
+      "loop": true
+    },
+    "carry_barrel_run": {
+      "frames": [
+        "processed/cb_run_1.png",
+        "processed/cb_run_2.png",
+        "processed/cb_run_3.png",
+        "processed/cb_run_5.png"
+      ],
+      "fps": 12,
+      "loop": true
+    },
+    "carry_barrel_jump": {
+      "frames": [
+        "processed/cb_jump_2.png",
+        "processed/cb_jump_3.png",
+        "processed/cb_jump_4.png"
+      ],
+      "fps": 8,
+      "loop": false
+    },
+    "carry_barrel_land": {
+      "frames": [
+        "processed/cb_jump_5.png"
+      ],
+      "fps": 10,
+      "loop": false
+    },
+    "carry_barrel_crouch": {
+      "frames": [
+        "processed/cb_crouch_1.png",
+        "processed/cb_crouch_2.png",
+        "processed/cb_crouch_3.png",
+        "processed/cb_crouch_4.png"
+      ],
+      "fps": 12,
+      "loop": false
+    },
+    "carry_barrel_throw": {
+      "frames": [
+        "processed/cb_throw_1.png",
+        "processed/cb_throw_2.png",
+        "processed/cb_throw_3.png",
+        "processed/cb_throw_4.png"
+      ],
+      "fps": 14,
+      "loop": false
+    },
+    "carry_barrel_drop": {
+      "frames": [
+        "processed/cb_drop_2.png"
+      ],
+      "fps": 6,
+      "loop": false
     }
   },
   "frames": {
+    "cb_ref": {
+      "sheet": "carry",
+      "visible": [
+        45,
+        30,
+        135,
+        132
+      ]
+    },
+    "cb_lift_1": {
+      "sheet": "carry",
+      "visible": [
+        49,
+        31,
+        159,
+        132
+      ]
+    },
+    "cb_lift_2": {
+      "sheet": "carry",
+      "visible": [
+        48,
+        50,
+        166,
+        132
+      ]
+    },
+    "cb_lift_3": {
+      "sheet": "carry",
+      "visible": [
+        53,
+        34,
+        167,
+        132
+      ]
+    },
+    "cb_lift_4": {
+      "sheet": "carry",
+      "visible": [
+        50,
+        29,
+        159,
+        132
+      ]
+    },
+    "cb_idle_1": {
+      "sheet": "carry",
+      "visible": [
+        45,
+        30,
+        135,
+        132
+      ]
+    },
+    "cb_idle_2": {
+      "sheet": "carry",
+      "visible": [
+        54,
+        31,
+        149,
+        132
+      ]
+    },
+    "cb_idle_3": {
+      "sheet": "carry",
+      "visible": [
+        58,
+        34,
+        146,
+        132
+      ]
+    },
+    "cb_idle_4": {
+      "sheet": "carry",
+      "visible": [
+        57,
+        32,
+        150,
+        132
+      ]
+    },
+    "cb_idle_5": {
+      "sheet": "carry",
+      "visible": [
+        59,
+        28,
+        142,
+        132
+      ]
+    },
+    "cb_walk_1": {
+      "sheet": "carry",
+      "visible": [
+        50,
+        34,
+        152,
+        132
+      ]
+    },
+    "cb_walk_2": {
+      "sheet": "carry",
+      "visible": [
+        49,
+        30,
+        150,
+        132
+      ]
+    },
+    "cb_walk_3": {
+      "sheet": "carry",
+      "visible": [
+        51,
+        29,
+        148,
+        132
+      ]
+    },
+    "cb_walk_4": {
+      "sheet": "carry",
+      "visible": [
+        55,
+        30,
+        148,
+        132
+      ]
+    },
+    "cb_walk_5": {
+      "sheet": "carry",
+      "visible": [
+        58,
+        33,
+        147,
+        132
+      ]
+    },
+    "cb_walk_6": {
+      "sheet": "carry",
+      "visible": [
+        53,
+        31,
+        148,
+        132
+      ]
+    },
+    "cb_run_1": {
+      "sheet": "carry",
+      "visible": [
+        43,
+        31,
+        148,
+        132
+      ]
+    },
+    "cb_run_2": {
+      "sheet": "carry",
+      "visible": [
+        42,
+        26,
+        145,
+        132
+      ]
+    },
+    "cb_run_3": {
+      "sheet": "carry",
+      "visible": [
+        48,
+        35,
+        146,
+        132
+      ]
+    },
+    "cb_run_4": {
+      "sheet": "carry",
+      "visible": [
+        45,
+        30,
+        149,
+        132
+      ]
+    },
+    "cb_run_5": {
+      "sheet": "carry",
+      "visible": [
+        45,
+        27,
+        149,
+        132
+      ]
+    },
+    "cb_jump_1": {
+      "sheet": "carry",
+      "visible": [
+        49,
+        39,
+        141,
+        132
+      ]
+    },
+    "cb_jump_2": {
+      "sheet": "carry",
+      "visible": [
+        54,
+        29,
+        153,
+        132
+      ]
+    },
+    "cb_jump_3": {
+      "sheet": "carry",
+      "visible": [
+        49,
+        24,
+        154,
+        132
+      ]
+    },
+    "cb_jump_4": {
+      "sheet": "carry",
+      "visible": [
+        48,
+        32,
+        149,
+        132
+      ]
+    },
+    "cb_jump_5": {
+      "sheet": "carry",
+      "visible": [
+        45,
+        38,
+        157,
+        132
+      ]
+    },
+    "cb_crouch_1": {
+      "sheet": "carry",
+      "visible": [
+        41,
+        47,
+        161,
+        132
+      ]
+    },
+    "cb_crouch_2": {
+      "sheet": "carry",
+      "visible": [
+        43,
+        50,
+        165,
+        132
+      ]
+    },
+    "cb_crouch_3": {
+      "sheet": "carry",
+      "visible": [
+        41,
+        43,
+        167,
+        132
+      ]
+    },
+    "cb_crouch_4": {
+      "sheet": "carry",
+      "visible": [
+        45,
+        46,
+        169,
+        132
+      ]
+    },
+    "cb_throw_1": {
+      "sheet": "carry",
+      "visible": [
+        50,
+        37,
+        143,
+        132
+      ]
+    },
+    "cb_throw_2": {
+      "sheet": "carry",
+      "visible": [
+        55,
+        37,
+        147,
+        132
+      ]
+    },
+    "cb_throw_3": {
+      "sheet": "carry",
+      "visible": [
+        50,
+        25,
+        159,
+        132
+      ]
+    },
+    "cb_throw_4": {
+      "sheet": "carry",
+      "visible": [
+        34,
+        43,
+        134,
+        132
+      ]
+    },
+    "cb_drop_1": {
+      "sheet": "carry",
+      "visible": [
+        46,
+        37,
+        151,
+        132
+      ]
+    },
+    "cb_drop_2": {
+      "sheet": "carry",
+      "visible": [
+        50,
+        31,
+        132,
+        132
+      ]
+    },
     "mv_idle_1": {
       "sheet": "moves",
       "visible": [
-        44,
+        49,
         30,
-        121,
+        126,
         132
       ]
     },
     "mv_idle_2": {
       "sheet": "moves",
       "visible": [
-        48,
+        53,
         29,
-        122,
+        127,
         132
       ]
     },
     "mv_idle_3": {
       "sheet": "moves",
       "visible": [
-        46,
+        51,
         30,
-        124,
+        129,
         132
       ]
     },
     "mv_idle_4": {
       "sheet": "moves",
       "visible": [
-        40,
+        45,
         27,
-        123,
+        128,
         132
       ]
     },
     "mv_walk_1": {
       "sheet": "moves",
       "visible": [
-        45,
+        50,
         38,
-        122,
+        127,
         132
       ]
     },
     "mv_walk_2": {
       "sheet": "moves",
       "visible": [
-        45,
+        50,
         37,
-        123,
+        128,
         132
       ]
     },
     "mv_walk_3": {
       "sheet": "moves",
       "visible": [
-        45,
+        50,
         37,
-        122,
+        127,
         132
       ]
     },
     "mv_walk_4": {
       "sheet": "moves",
       "visible": [
-        45,
+        50,
         37,
-        122,
+        127,
         132
       ]
     },
     "mv_walk_5": {
       "sheet": "moves",
       "visible": [
-        46,
+        51,
         35,
-        122,
+        127,
         132
       ]
     },
     "mv_walk_6": {
       "sheet": "moves",
       "visible": [
-        46,
+        51,
         37,
-        122,
+        127,
         132
       ]
     },
     "mv_walk_7": {
       "sheet": "moves",
       "visible": [
-        47,
+        52,
         34,
-        124,
+        129,
         132
       ]
     },
     "mv_walk_8": {
       "sheet": "moves",
       "visible": [
+        41,
         36,
-        36,
-        126,
+        131,
         132
       ]
     },
     "mv_walk_9": {
       "sheet": "moves",
       "visible": [
-        35,
+        40,
         37,
-        126,
+        131,
         132
       ]
     },
     "mv_land_1": {
       "sheet": "moves",
       "visible": [
-        28,
+        33,
         44,
-        130,
+        135,
         132
       ]
     },
     "mv_land_2": {
       "sheet": "moves",
       "visible": [
-        34,
+        39,
         40,
-        129,
+        134,
         132
       ]
     },
     "mv_land_3": {
       "sheet": "moves",
       "visible": [
-        36,
+        41,
         37,
-        132,
+        137,
         132
       ]
     },
     "mv_jump_1": {
       "sheet": "moves",
       "visible": [
-        34,
+        39,
         2,
-        141,
+        146,
         132
       ]
     },
     "mv_jump_2": {
       "sheet": "moves",
       "visible": [
-        41,
+        46,
         12,
-        140,
+        145,
         132
       ]
     },
     "mv_fall_1": {
       "sheet": "moves",
       "visible": [
-        39,
+        44,
         22,
-        140,
+        145,
         132
       ]
     },
     "mv_fall_2": {
       "sheet": "moves",
       "visible": [
-        39,
+        44,
         34,
-        126,
+        131,
         132
       ]
     },
     "mv_slide_1": {
       "sheet": "moves",
       "visible": [
-        17,
+        22,
         46,
-        135,
+        140,
         132
       ]
     },
     "mv_slide_2": {
       "sheet": "moves",
       "visible": [
-        8,
+        13,
         59,
-        142,
+        147,
         132
       ]
     },
     "mv_slide_3": {
       "sheet": "moves",
       "visible": [
-        10,
+        15,
         58,
-        144,
+        149,
         132
       ]
     },
     "mv_slide_4": {
       "sheet": "moves",
       "visible": [
-        5,
+        10,
         55,
-        144,
+        149,
         132
       ]
     },
     "mv_crouch_1": {
       "sheet": "moves",
       "visible": [
-        33,
+        38,
         51,
-        127,
+        132,
         132
       ]
     },
     "mv_crouch_2": {
       "sheet": "moves",
       "visible": [
-        31,
+        36,
         50,
-        125,
+        130,
         132
       ]
     },
     "mv_crouch_3": {
       "sheet": "moves",
       "visible": [
-        33,
+        38,
         47,
-        129,
+        134,
         132
       ]
     },
     "idle_1": {
       "sheet": "full",
       "visible": [
-        50,
+        55,
         30,
-        120,
+        125,
         132
       ]
     },
     "idle_2": {
       "sheet": "full",
       "visible": [
-        55,
+        60,
         31,
-        119,
+        124,
         132
       ]
     },
     "idle_3": {
       "sheet": "full",
       "visible": [
-        55,
+        60,
         29,
-        120,
+        125,
         132
       ]
     },
     "idle_4": {
       "sheet": "full",
       "visible": [
-        55,
+        60,
         33,
-        117,
+        122,
         132
       ]
     },
     "walk_1": {
       "sheet": "full",
       "visible": [
-        54,
+        59,
         31,
-        118,
+        123,
         132
       ]
     },
     "walk_2": {
       "sheet": "full",
       "visible": [
-        52,
+        57,
         31,
-        115,
+        120,
         132
       ]
     },
     "walk_3": {
       "sheet": "full",
       "visible": [
-        54,
+        59,
         31,
-        119,
+        124,
         132
       ]
     },
     "run_1": {
       "sheet": "full",
       "visible": [
-        51,
+        56,
         28,
-        120,
+        125,
         132
       ]
     },
     "run_2": {
       "sheet": "full",
       "visible": [
-        47,
+        52,
         32,
-        120,
+        125,
         132
       ]
     },
     "run_3": {
       "sheet": "full",
       "visible": [
-        50,
+        55,
         30,
-        119,
+        124,
         132
       ]
     },
     "run_4": {
       "sheet": "full",
       "visible": [
-        47,
+        52,
         35,
-        119,
+        124,
         132
       ]
     },
     "jump_1": {
       "sheet": "full",
       "visible": [
-        56,
+        61,
         46,
-        116,
+        121,
         132
       ]
     },
     "jump_2": {
       "sheet": "full",
       "visible": [
-        57,
+        62,
         41,
-        118,
+        123,
         132
       ]
     },
     "jump_3": {
       "sheet": "full",
       "visible": [
-        50,
+        55,
         40,
-        119,
+        124,
         132
       ]
     },
     "fall_1": {
       "sheet": "full",
       "visible": [
-        51,
+        56,
         31,
-        117,
+        122,
         132
       ]
     },
     "fall_2": {
       "sheet": "full",
       "visible": [
-        55,
+        60,
         38,
-        112,
+        117,
         132
       ]
     },
     "land_1": {
       "sheet": "full",
       "visible": [
-        47,
+        52,
         37,
-        115,
+        120,
         132
       ]
     },
     "land_2": {
       "sheet": "full",
       "visible": [
-        45,
+        50,
         52,
-        112,
+        117,
         132
       ]
     },
     "land_3": {
       "sheet": "full",
       "visible": [
-        48,
+        53,
         56,
-        116,
+        121,
         132
       ]
     },
     "crouch_1": {
       "sheet": "full",
       "visible": [
-        54,
+        59,
         60,
-        111,
+        116,
         132
       ]
     },
     "crouch_2": {
       "sheet": "full",
       "visible": [
-        52,
+        57,
         60,
-        113,
+        118,
         132
       ]
     },
     "slide_1": {
       "sheet": "full",
       "visible": [
-        35,
+        40,
         60,
-        130,
+        135,
         132
       ]
     },
     "slide_2": {
       "sheet": "full",
       "visible": [
-        28,
+        33,
         62,
-        128,
+        133,
         132
       ]
     },
     "slide_3": {
       "sheet": "full",
       "visible": [
-        31,
+        36,
         71,
-        132,
+        137,
         132
       ]
     },
     "climb_1": {
       "sheet": "full",
       "visible": [
-        58,
+        63,
         50,
-        109,
+        114,
         132
       ]
     },
     "climb_2": {
       "sheet": "full",
       "visible": [
-        54,
+        59,
         37,
-        106,
+        111,
         132
       ]
     },
     "climb_3": {
       "sheet": "full",
       "visible": [
-        57,
+        62,
         37,
-        107,
+        112,
         132
       ]
     },
     "climb_4": {
       "sheet": "full",
       "visible": [
-        52,
+        57,
         41,
-        111,
+        116,
         132
       ]
     },
     "lift_1": {
       "sheet": "full",
       "visible": [
-        43,
+        48,
         39,
-        126,
+        131,
         132
       ]
     },
     "lift_2": {
       "sheet": "full",
       "visible": [
-        43,
+        48,
         30,
-        119,
+        124,
         132
       ]
     },
     "carry_1": {
       "sheet": "full",
       "visible": [
-        48,
+        53,
         34,
-        120,
+        125,
         132
       ]
     },
     "carry_2": {
       "sheet": "full",
       "visible": [
-        55,
+        60,
         28,
-        122,
+        127,
         132
       ]
     },
     "throw_1": {
       "sheet": "full",
       "visible": [
-        31,
+        36,
         47,
-        132,
+        137,
         132
       ]
     },
     "throw_2": {
       "sheet": "full",
       "visible": [
-        40,
+        45,
         52,
-        119,
+        124,
         132
       ]
     },
     "place_bomb_1": {
       "sheet": "full",
       "visible": [
-        43,
+        48,
         39,
-        120,
+        125,
         132
       ]
     },
     "place_bomb_2": {
       "sheet": "full",
       "visible": [
-        47,
+        52,
         38,
-        118,
+        123,
         132
       ]
     },
     "place_bomb_3": {
       "sheet": "full",
       "visible": [
-        50,
+        55,
         38,
-        117,
+        122,
         132
       ]
     },
     "attack_1": {
       "sheet": "full",
       "visible": [
-        44,
+        49,
         29,
-        123,
+        128,
         132
       ]
     },
     "attack_2": {
       "sheet": "full",
       "visible": [
-        51,
+        56,
         32,
-        132,
+        137,
         132
       ]
     },
     "attack_3": {
       "sheet": "full",
       "visible": [
-        49,
+        54,
         28,
-        121,
+        126,
         132
       ]
     },
     "attack_4": {
       "sheet": "full",
       "visible": [
-        49,
+        54,
         35,
-        118,
+        123,
         132
       ]
     },
     "fire_attack_1": {
       "sheet": "full",
       "visible": [
-        45,
+        50,
         30,
-        126,
+        131,
         132
       ]
     },
     "hurt_1": {
       "sheet": "full",
       "visible": [
-        39,
+        44,
         34,
-        125,
+        130,
         132
       ]
     },
     "hurt_2": {
       "sheet": "full",
       "visible": [
-        45,
+        50,
         29,
-        126,
+        131,
         132
       ]
     },
     "hurt_3": {
       "sheet": "full",
       "visible": [
-        54,
+        59,
         31,
-        132,
+        137,
         132
       ]
     },
     "hurt_4": {
       "sheet": "full",
       "visible": [
-        56,
+        61,
         27,
-        121,
+        126,
         132
       ]
     },
     "death_1": {
       "sheet": "full",
       "visible": [
-        31,
+        36,
         60,
-        143,
+        148,
         132
       ]
     },
     "death_2": {
       "sheet": "full",
       "visible": [
-        25,
+        30,
         55,
-        137,
+        142,
         132
       ]
     },
     "death_3": {
       "sheet": "full",
       "visible": [
-        42,
+        47,
         61,
-        159,
+        164,
         132
       ]
     },
     "victory_1": {
       "sheet": "full",
       "visible": [
-        37,
+        42,
         20,
-        124,
+        129,
         132
       ]
     },
     "victory_2": {
       "sheet": "full",
       "visible": [
-        24,
+        29,
         19,
-        124,
+        129,
         132
       ]
     },
     "victory_3": {
       "sheet": "full",
       "visible": [
-        41,
+        46,
         19,
-        134,
+        139,
         132
       ]
     },
     "victory_4": {
       "sheet": "full",
       "visible": [
-        38,
+        43,
         20,
-        134,
+        139,
         132
       ]
     }
   },
   "skipped": {
+    "carry_barrel (hoja carry)": "lanzar 5–7 y soltar 3–4 muestran el barril ya separado: el objeto real se dibuja aparte; direcciones/vistas no se usan",
     "swim": "el agua y las burbujas están fundidas con el personaje; hace falta arte sin fondo",
     "fire_attack_2": "las llamas envuelven al personaje",
     "bomb_wait / explosion_reaction": "poses de apoyo; no las usa ningún estado todavía",

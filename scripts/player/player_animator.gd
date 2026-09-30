@@ -31,9 +31,17 @@ const VICTORY := &"victory"
 const SWIM := &"swim"
 const ATTACK := &"attack"
 const FIRE_ATTACK := &"fire_attack"
+const DROP := &"drop"
 
 ## Con algo en las manos, estas animaciones se sustituyen por `carry`.
 const CARRY_VARIANTS: Array[StringName] = [&"idle", &"walk", &"run", &"land"]
+## Animaciones «llevando un objeto con estilo» (p. ej. barril dibujado en el sprite):
+## nombre estándar -> sufijo de `carry_<estilo>_<sufijo>`. Si el SpriteFrames no las tiene
+## (pingüino rosa), se usa `carry` normal y el objeto se sigue dibujando aparte.
+const STYLED_CARRY := {
+	&"idle": &"idle", &"walk": &"walk", &"run": &"run", &"land": &"land", &"jump": &"jump",
+	&"fall": &"jump", &"crouch": &"crouch", &"lift": &"lift", &"throw": &"throw", &"drop": &"drop",
+}
 ## Estas interrumpen cualquier acción de una sola vez en curso.
 const PRIORITY: Array[StringName] = [&"hurt", &"death", &"climb", &"slide", &"victory"]
 ## Duración máxima de una acción de una sola vez (por si la animación fuera en bucle).
@@ -67,6 +75,8 @@ var carrying := false:
 		carrying = value
 		if _oneshot == &"" and _requested != &"":
 			play_animation(_requested)
+## Estilo del objeto que lleva (&"barrel"...). Con animaciones propias el objeto va dibujado.
+var carry_style := &""
 ## Animación de acción de una sola vez (lanzar, colocar, recoger) que se superpone a la del
 ## estado; al terminar vuelve a la última animación pedida por el estado.
 var _oneshot := &""
@@ -141,7 +151,10 @@ func get_visual_rect() -> Rect2:
 
 func play_animation(anim: StringName, restart := false) -> void:
 	_requested = anim
-	if carrying and CARRY_VARIANTS.has(anim):
+	var styled := styled_carry(anim, carry_style) if carrying else &""
+	if styled != &"":
+		anim = styled
+	elif carrying and CARRY_VARIANTS.has(anim):
 		anim = CARRY
 	if _oneshot != &"":
 		if not PRIORITY.has(anim):
@@ -155,9 +168,32 @@ func play_animation(anim: StringName, restart := false) -> void:
 		play(resolved)
 
 
-## Reproduce una acción corta (THROW, PLACE_BOMB, LIFT) por encima de la animación del estado.
-func play_oneshot(anim: StringName) -> void:
-	var resolved := resolve(anim)
+## ¿Tiene este personaje animaciones propias para llevar objetos de ese estilo?
+func has_styled_carry(style: StringName) -> bool:
+	return style != &"" and sprite_frames != null \
+		and sprite_frames.has_animation(StringName("carry_%s_idle" % style))
+
+
+## Animación «carry_<estilo>_…» equivalente a `anim`, o vacío si no existe.
+func styled_carry(anim: StringName, style: StringName) -> StringName:
+	if style == &"" or sprite_frames == null or not STYLED_CARRY.has(anim):
+		return &""
+	var name := StringName("carry_%s_%s" % [style, STYLED_CARRY[anim]])
+	if sprite_frames.has_animation(name):
+		return name
+	# Sin versión propia de correr/aterrizar/saltar: la de andar o la de quieto.
+	for alt in [&"walk", &"idle"]:
+		var fallback := StringName("carry_%s_%s" % [style, alt])
+		if anim in [&"run", &"land", &"jump", &"fall"] and sprite_frames.has_animation(fallback):
+			return fallback
+	return &""
+
+
+## Reproduce una acción corta (THROW, PLACE_BOMB, LIFT, DROP) por encima de la animación del
+## estado. `style`: estilo del objeto (lanzar/soltar un barril usa sus propias animaciones).
+func play_oneshot(anim: StringName, style := &"") -> void:
+	var styled := styled_carry(anim, style if style != &"" else (carry_style if carrying else &""))
+	var resolved := styled if styled != &"" else resolve(anim)
 	if resolved == &"":
 		return
 	_oneshot = resolved
@@ -226,6 +262,7 @@ func reset_visual() -> void:
 	rotation = 0.0
 	_oneshot = &""
 	carrying = false
+	carry_style = &""
 	_squash = Vector2.ONE
 	_flash_time = 0.0
 	_blinking = false

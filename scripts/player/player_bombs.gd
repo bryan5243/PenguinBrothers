@@ -192,7 +192,10 @@ func try_pick_up() -> CarryableBody:
 	best.hold(self)
 	held_object = best
 	player.carried_object = best
+	player.animator.carry_style = best.carry_style
 	player.animator.carrying = true
+	# Si el personaje lo lleva dibujado (animaciones carry_<estilo>_*), se oculta el objeto.
+	best.set_art_visible(not player.animator.has_styled_carry(best.carry_style))
 	player.animator.play_oneshot(PlayerAnimator.LIFT)
 	update_held()
 	AudioManager.play_sfx("pickup")
@@ -207,7 +210,7 @@ func throw_held(high := false) -> void:
 	obj.release(_throw_velocity(high or player.input.up_held, obj))
 	if obj.has_method(&"on_thrown"):
 		obj.on_thrown(player.player_index)
-	player.animator.play_oneshot(PlayerAnimator.THROW)
+	player.animator.play_oneshot(PlayerAnimator.THROW, obj.carry_style)
 	AudioManager.play_sfx("bomb_throw")
 
 
@@ -219,6 +222,7 @@ func drop_held() -> void:
 	_clear_held()
 	var v := player.config.drop_velocity
 	obj.release(Vector2(v.x * player.facing + player.velocity.x * 0.5, v.y))
+	player.animator.play_oneshot(PlayerAnimator.DROP, obj.carry_style)
 
 
 ## Lo que llevaba explotó o se rompió en las manos.
@@ -253,6 +257,9 @@ func _throw_velocity(high: bool, obj: CarryableBody = null) -> Vector2:
 
 
 func _clear_held() -> void:
+	if held_object and is_instance_valid(held_object):
+		held_object.set_art_visible(true)
 	held_object = null
 	player.carried_object = null
 	player.animator.carrying = false
+	player.animator.carry_style = &""
