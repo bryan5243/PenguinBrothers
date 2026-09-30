@@ -33,8 +33,10 @@ const WOOD_EDGE := Color(0.42, 0.26, 0.12)
 const SCREENS := {
 	"res://scenes/stages/world_01/World01_Stage01_A.tscn": {
 		"name": "World01_Stage01_A", "role": "A", "title": "1-1  PANTALLA A",
-		"platforms": [[24, 300, 560], [660, 936, 560], [330, 630, 448],
+		"platforms": [[24, 300, 560], [660, 936, 560], [330, 556, 448],
 			[24, 260, 336], [700, 936, 336], [280, 680, 224]],
+		# Plataformas giratorias: posición de la superficie, altura de lanzamiento y si puede abrirse.
+		"rotators": [[Vector2(352, 560), 150.0, true], [Vector2(608, 448), 240.0, true]],
 		"blocks": [Rect2(452, 624, 56, 48)],
 		"objects": [["barrel", Vector2(330, 652)], ["barrel", Vector2(820, 540)], ["crate", Vector2(250, 560)],
 			["crate", Vector2(140, 336)], ["stone_block", Vector2(480, 224)]],
@@ -58,6 +60,7 @@ const SCREENS := {
 		"platforms": [[250, 710, 560], [24, 330, 448], [630, 936, 448],
 			[330, 630, 336], [24, 250, 224], [710, 936, 224]],
 		"blocks": [Rect2(24, 624, 64, 48), Rect2(872, 624, 64, 48)],
+		"rotators": [[Vector2(200, 672), 240.0, false], [Vector2(740, 672), 240.0, false]],
 		"objects": [["barrel", Vector2(480, 540)], ["crate", Vector2(120, 448)], ["crate", Vector2(840, 448)],
 			["stone_block", Vector2(480, 336)]],
 		"spawners": [
@@ -69,7 +72,7 @@ const SCREENS := {
 			["sign_arrow", Vector2(700, 224), 0.6], ["plant", Vector2(480, 560), 0.7],
 			["rock", Vector2(620, 336), 0.8]],
 		"front_decor": [["flowers", Vector2(300, 676), 0.8], ["fern", Vector2(690, 676), 0.8]],
-		"p1": Vector2(150, 672), "p2": Vector2(810, 672),
+		"p1": Vector2(112, 672), "p2": Vector2(848, 672),
 	},
 }
 
@@ -105,6 +108,7 @@ func _build(path: String, d: Dictionary) -> bool:
 	for p in d["platforms"]:
 		_platform(platforms, Rect2(p[0], p[2], p[1] - p[0], PLATFORM_H))
 	_decor(d.get("front_decor", []), 4)
+	_rotators(d.get("rotators", []))
 
 	var pool := Node2D.new()
 	pool.name = "BombPool"
@@ -236,6 +240,38 @@ func _decor(items: Array, z: int) -> void:
 		spr.offset = Vector2(-spr.texture.get_width() * 0.5, -spr.texture.get_height())
 		spr.position = it[1]
 		_add(spr, layer)
+
+
+## Plataformas giratorias: [posición de la superficie, altura de lanzamiento, ¿puede abrirse hacia abajo?].
+## Las que no están a ras de suelo llevan un poste debajo.
+func _rotators(list: Array) -> void:
+	if list.is_empty():
+		return
+	var layer := Node2D.new()
+	layer.name = "Rotators"
+	_add(layer, arena_root)
+	var post := load(ART + "post_rope.png") as Texture2D
+	var n := 0
+	for r in list:
+		n += 1
+		var node := (load("res://scenes/platforms/RotatingPlatform.tscn") as PackedScene).instantiate(PackedScene.GEN_EDIT_STATE_INSTANCE)
+		node.name = "RotatingPlatform%d" % n
+		node.position = r[0]
+		node.set("launch_height", r[1])
+		node.set("can_flip_down", r[2])
+		_add(node, layer)
+		var h: float = FLOOR_Y - (r[0].y + 14.0)
+		if h > 20.0:
+			var tr := TextureRect.new()
+			tr.texture = post
+			tr.stretch_mode = TextureRect.STRETCH_TILE
+			var sc := 18.0 / post.get_width()
+			tr.scale = Vector2(sc, sc)
+			tr.size = Vector2(post.get_width(), h / sc)
+			tr.position = Vector2(r[0].x - 9.0, r[0].y + 14.0)
+			tr.z_index = -6
+			tr.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			_add(tr, layer)
 
 
 ## Postes bajo los extremos de las plataformas que no tienen nada debajo (andamios).
