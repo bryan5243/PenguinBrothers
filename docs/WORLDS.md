@@ -42,7 +42,7 @@ Las pantallas de la 1-1 usan las piezas de `world_01_tileset_isla_palmera.png`, 
 
 | Elemento | Pieza | Cómo se usa |
 |---|---|---|
-| Fondo | `background.png` | Isla, mar y playa a pantalla completa (960×720), algo atenuado |
+| Fondo | `backdrop/` (`AnimatedBackdrop`) | Isla, mar y playa animados: base fija escalada a la pantalla + franja del mar que funde entre fotogramas (shader `sea_crossfade`). `background.png` queda como fondo estático de respaldo |
 | Plataformas atravesables | `plank.png` | NinePatch: extremos fijos y centro en mosaico, al ancho de cada plataforma |
 | Suelo | `ground.png` | NinePatch a lo ancho; la hierba asoma sobre el borde de colisión |
 | Techo y paredes | `stone_tile.png` | Mosaico de piedra |
@@ -54,3 +54,14 @@ Las pantallas de la 1-1 usan las piezas de `world_01_tileset_isla_palmera.png`, 
 
 La colisión nunca depende del dibujo: las arenas siguen siendo rectángulos exactos definidos en
 `tools/build_arenas.gd` (plataformas, bloques, decoración por pantalla en `decor` / `front_decor`).
+
+## Fondo animado
+
+`python3 tools/sprites/extract_background_frames.py` corta la cuadrícula de
+`assets/references/worlds/world_01_background_frames.png` (30 fotogramas) en
+`assets/worlds/world_01/backdrop/`: `base.png` (fotograma de referencia), `frame_XX.png`,
+`sea_mask.png` (zona del mar con borde suavizado) y `manifest.json`. `tools/build_arenas.gd` crea
+`Background/Backdrop` con `scripts/arena/animated_backdrop.gd`: el cielo/degradado de arriba, la
+base cubriendo la pantalla y, encima, solo la franja del mar fundiendo entre fotogramas
+(`frame_time`). Los fotogramas de la hoja no son un bucle continuo (el encuadre varía), por eso no
+se reproducen enteros.

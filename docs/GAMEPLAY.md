@@ -293,6 +293,11 @@ enemigo o recibir su ataque quita vida; bombas y barriles lanzados los derrotan 
   herido ni muerto). Al recibir daño, subir a una escalera o morir se suelta la bomba.
 - Llevar una bomba reduce la velocidad (`carry_speed_multiplier`) y muestra `carry`; la bomba va
   en las manos (`bomb_hold_offset`) y su mecha sigue ardiendo: si explota en las manos se pierde.
+- **Llevar con estilo propio**: cada `CarryableBody` tiene `carry_style` (el barril usa `barrel`).
+  Si el personaje tiene animaciones `carry_<estilo>_<anim>` (`idle, walk, run, jump, land, crouch,
+  lift, throw, drop`), `PlayerAnimator` las usa (con respaldo a `walk`/`idle` si falta alguna) y
+  el objeto oculta su sprite (`set_art_visible(false)`) porque ya va dibujado en el fotograma; al
+  lanzarlo o soltarlo vuelve a verse. Sin esas animaciones se usa `carry` con el objeto visible.
 - Límite de bombas propias en juego: `max_active_bombs` (3). Munición por tipo: `BombData.ammo`
   (-1 = infinita).
 

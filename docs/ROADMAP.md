@@ -101,6 +101,16 @@ que siga al jugador.** Referencia de diseño: `docs/GAME_DESIGN.md`.
 - Pantallas A y B de la 1-1 con el arte de la hoja de tiles del Mundo 1 (`docs/WORLDS.md`).
 - Pruebas: 296 comprobaciones.
 
+### Llevar barriles con sprites propios + fondo animado
+
+- Pingüino azul: animaciones `carry_barrel_*` (levantar, quieto, caminar, correr, saltar,
+  agacharse, lanzar, soltar) extraídas de `blue_penguin_carry_barrel.png`. Mientras las usa, el
+  sprite del barril se oculta (el barril va dibujado en los fotogramas). El rosa, sin esa hoja,
+  sigue mostrando el barril real encima de `carry`.
+- Fondo del Mundo 1 animado (`AnimatedBackdrop`): base fija + franja del mar que funde entre los
+  fotogramas de `world_01_background_frames.png`.
+- Pruebas: 300 comprobaciones.
+
 ## Historial: etapa 1 (formato plataformas con scroll, sustituido)
 
 Se conserva todo lo construido; el nivel largo con cámara que sigue queda como «laboratorio de
@@ -204,4 +214,8 @@ movimiento» (Controles → Laboratorio) y no es el formato del juego.
 - **Opción 16:9** (paneles decorativos a los lados en vez de barras negras): prevista, no hecha.
 - **Arte de las arenas**: la geometría de las pantallas es provisional (colores planos) hasta la
   fase del Mundo 1; los tiles saldrán de `worlds_01_to_06_sceneries.png`.
+- **Fondo animado**: los 30 fotogramas de referencia no forman un bucle continuo (cambian el
+  encuadre), así que solo se anima la franja del mar con fundidos. Para animar nubes, palmeras u
+  olas enteras haría falta una secuencia en bucle o capas separadas.
+- **Pingüino rosa**: sin hoja de llevar barril; usa el barril visible como respaldo.
 - **Correr/deslizarse**: siguen en el código (`run_enabled`) pero desactivados en el ajuste arcade.
