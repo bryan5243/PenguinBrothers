@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PowerUpData" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/items/orange.png" id="1_auj58"]
+[ext_resource type="Script" path="res://scripts/core/data/power_up_data.gd" id="2_kdw2i"]
+
+[resource]
+script = ExtResource("2_kdw2i")
+id = &"orange"
+display_name = "Naranja"
+score_value = 300
+icon = ExtResource("1_auj58")

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PowerUpData" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/items/cherry.png" id="1_sn0du"]
+[ext_resource type="Script" path="res://scripts/core/data/power_up_data.gd" id="2_tbfpo"]
+
+[resource]
+script = ExtResource("2_tbfpo")
+id = &"cherry"
+display_name = "Cereza"
+score_value = 100
+icon = ExtResource("1_sn0du")

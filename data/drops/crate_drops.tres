@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="DropTable" format=3]
+
+[ext_resource type="Script" path="res://scripts/core/data/power_up_data.gd" id="1_syeud"]
+[ext_resource type="Resource" path="res://data/powerups/cherry.tres" id="2_qf3hd"]
+[ext_resource type="Resource" path="res://data/powerups/banana.tres" id="3_7uw70"]
+[ext_resource type="Resource" path="res://data/powerups/orange.tres" id="4_4akwg"]
+[ext_resource type="Resource" path="res://data/powerups/apple.tres" id="5_u0vig"]
+[ext_resource type="Script" path="res://scripts/core/data/drop_table.gd" id="6_8357a"]
+
+[resource]
+script = ExtResource("6_8357a")
+items = Array[ExtResource("1_syeud")]([ExtResource("2_qf3hd"), ExtResource("3_7uw70"), ExtResource("4_4akwg"), ExtResource("5_u0vig")])
+weights = Array[float]([3.0, 2.0, 1.5, 1.0])
+drop_chance = 0.6

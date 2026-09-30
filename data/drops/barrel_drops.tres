@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="DropTable" format=3]
+
+[ext_resource type="Script" path="res://scripts/core/data/power_up_data.gd" id="1_p12vf"]
+[ext_resource type="Resource" path="res://data/powerups/cherry.tres" id="2_lo8qh"]
+[ext_resource type="Resource" path="res://data/powerups/apple.tres" id="3_3wqo1"]
+[ext_resource type="Resource" path="res://data/powerups/watermelon.tres" id="4_fhdu1"]
+[ext_resource type="Resource" path="res://data/powerups/fire.tres" id="5_71tiw"]
+[ext_resource type="Resource" path="res://data/powerups/boots.tres" id="6_g7sx7"]
+[ext_resource type="Resource" path="res://data/powerups/armor.tres" id="7_rnnoo"]
+[ext_resource type="Resource" path="res://data/powerups/one_up.tres" id="8_02w31"]
+[ext_resource type="Script" path="res://scripts/core/data/drop_table.gd" id="9_vygl1"]
+
+[resource]
+script = ExtResource("9_vygl1")
+items = Array[ExtResource("1_p12vf")]([ExtResource("2_lo8qh"), ExtResource("3_3wqo1"), ExtResource("4_fhdu1"), ExtResource("5_71tiw"), ExtResource("6_g7sx7"), ExtResource("7_rnnoo"), ExtResource("8_02w31")])
+weights = Array[float]([2.0, 1.5, 1.0, 2.0, 1.0, 1.0, 0.3])
+drop_chance = 0.9

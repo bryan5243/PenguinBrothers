@@ -102,3 +102,5 @@ extends Resource
 ## Si cae por debajo de esta altura muere (el nivel puede sobrescribirlo).
 @export var fall_death_y := 1400.0
 @export var respawn_delay := 1.5
+## Invulnerabilidad breve cuando la armadura absorbe un golpe.
+@export var armor_break_invulnerability := 0.8

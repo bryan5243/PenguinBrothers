@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PowerUpData" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/items/boots.png" id="1_qet4r"]
+[ext_resource type="Script" path="res://scripts/core/data/power_up_data.gd" id="2_3eo2x"]
+
+[resource]
+script = ExtResource("2_3eo2x")
+id = &"boots"
+display_name = "Botas de velocidad"
+category = 2
+duration = 10.0
+effect_value = 1.4
+icon = ExtResource("1_qet4r")

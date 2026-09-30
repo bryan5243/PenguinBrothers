@@ -38,6 +38,11 @@ var facing := 1:
 var spawn_position := Vector2.ZERO
 ## Objeto cargado sobre la cabeza (barril, bomba). Lo gestionan los estados de carga (Fase 5).
 var carried_object: Node2D = null
+## Power-ups activos: multiplicador de velocidad (botas) y golpes que absorbe la armadura.
+var speed_multiplier := 1.0
+var armor_hits := 0
+var _speed_timer := 0.0
+var _armor_visual: ArmorVisual
 ## Altura bajo la cual el jugador muere. Se inicializa desde config; el nivel puede cambiarla.
 var fall_death_y := 1400.0
 var is_low := false
@@ -83,6 +88,9 @@ func _ready() -> void:
 	animator.setup(character)
 	_apply_visual_scale()
 	bombs.setup(self)
+	_armor_visual = ArmorVisual.new()
+	_armor_visual.position = Vector2(0.0, -config.body_height * 0.5)
+	add_child(_armor_visual)
 	add_collision_exception_with(head_platform)
 	# La plataforma de la cabeza se mueve a mano (top_level): un AnimatableBody2D sincronizado
 	# con la física solo sigue sus propios movimientos, y así el motor calcula su velocidad
@@ -94,6 +102,10 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if _speed_timer > 0.0:
+		_speed_timer -= delta
+		if _speed_timer <= 0.0:
+			speed_multiplier = 1.0
 	input.update()
 	_update_timers(delta)
 	state_machine.physics_update(delta)
@@ -114,6 +126,7 @@ func apply_gravity(delta: float, multiplier := 1.0) -> void:
 
 ## Acelera o frena hacia `target_speed` (px/s, con signo). Actualiza la orientación.
 func apply_horizontal(delta: float, target_speed: float) -> void:
+	target_speed *= speed_multiplier
 	if carried_object:
 		target_speed *= config.carry_speed_multiplier
 	var on_floor := is_on_floor()
@@ -257,7 +270,45 @@ func is_carrying() -> bool:
 
 
 func take_damage(amount: int, source: Node = null) -> bool:
+	if armor_hits > 0 and not health.is_invulnerable() and not health.is_dead:
+		# La armadura absorbe el golpe y se gasta.
+		armor_hits -= 1
+		_armor_visual.set_hits(armor_hits)
+		health.start_invulnerability(config.armor_break_invulnerability)
+		animator.flash()
+		AudioManager.play_sfx("hit")
+		return false
 	return health.take_damage(amount, source)
+
+
+## Aplica un power-up recogido. Devuelve false si no tuvo efecto (no se consume).
+func apply_power_up(data: PowerUpData) -> bool:
+	match data.category:
+		PowerUpData.Category.SCORE:
+			return true
+		PowerUpData.Category.EXTRA_LIFE:
+			GameManager.change_lives(player_index, 1)
+			return true
+		PowerUpData.Category.BOMB_POWER:
+			bombs.level_up()
+			return true
+		PowerUpData.Category.SPEED:
+			speed_multiplier = maxf(1.0, data.effect_value)
+			_speed_timer = data.duration
+			return true
+		PowerUpData.Category.ARMOR:
+			armor_hits = maxi(armor_hits, int(data.effect_value))
+			_armor_visual.set_hits(armor_hits)
+			return true
+	return false
+
+
+func clear_power_ups() -> void:
+	speed_multiplier = 1.0
+	_speed_timer = 0.0
+	armor_hits = 0
+	if _armor_visual:
+		_armor_visual.set_hits(0)
 
 
 ## Dónde reaparecer: junto a un compañero vivo y apoyado (cooperativo) o en el punto de inicio.
@@ -368,4 +419,5 @@ func _on_died() -> void:
 	EventBus.player_died.emit(player_index)
 	if config.reset_bomb_power_on_death:
 		bombs.reset_power()
+	clear_power_ups()
 	state_machine.transition_to(&"Dead")

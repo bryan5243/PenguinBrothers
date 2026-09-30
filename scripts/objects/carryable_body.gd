@@ -28,6 +28,8 @@ var ground_friction := 900.0
 ## Fracción de la velocidad horizontal que conserva al chocar con una pared (sale rebotado).
 var wall_bounce := 0.4
 var max_fall_speed := 950.0
+## Lanzamiento propio (x hacia donde mira el jugador). ZERO = el del jugador (PlayerConfig).
+var throw_force := Vector2.ZERO
 
 ## Quién lo lleva (PlayerBombs), o null.
 var holder: Node = null

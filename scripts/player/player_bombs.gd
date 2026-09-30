@@ -204,7 +204,7 @@ func throw_held(high := false) -> void:
 		return
 	var obj := held_object
 	_clear_held()
-	obj.release(_throw_velocity(high or player.input.up_held))
+	obj.release(_throw_velocity(high or player.input.up_held, obj))
 	if obj.has_method(&"on_thrown"):
 		obj.on_thrown(player.player_index)
 	player.animator.play_oneshot(PlayerAnimator.THROW)
@@ -244,9 +244,11 @@ func _spawn(pos: Vector2, velocity := Vector2.ZERO) -> Bomb:
 	return bomb
 
 
-func _throw_velocity(high: bool) -> Vector2:
+func _throw_velocity(high: bool, obj: CarryableBody = null) -> Vector2:
 	var cfg := player.config
 	var f := cfg.throw_up_force if high else cfg.throw_force
+	if not high and obj and obj.throw_force != Vector2.ZERO:
+		f = obj.throw_force
 	return Vector2(f.x * player.facing + player.velocity.x * cfg.throw_inherit, f.y)
 
 

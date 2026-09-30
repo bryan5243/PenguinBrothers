@@ -182,7 +182,85 @@ const BOMBS := [
 ]
 
 
+## Power-ups: id, nombre, icono, categoría, valor del efecto, duración, puntos.
+const POWER_UPS := [
+	["cherry", "Cereza", "cherry", PowerUpData.Category.SCORE, 0.0, 0.0, 100],
+	["banana", "Banana", "banana", PowerUpData.Category.SCORE, 0.0, 0.0, 200],
+	["orange", "Naranja", "orange", PowerUpData.Category.SCORE, 0.0, 0.0, 300],
+	["apple", "Manzana", "apple", PowerUpData.Category.SCORE, 0.0, 0.0, 500],
+	["grape", "Uva", "grape", PowerUpData.Category.SCORE, 0.0, 0.0, 800],
+	["watermelon", "Sandía", "watermelon", PowerUpData.Category.SCORE, 0.0, 0.0, 1000],
+	["pineapple", "Piña", "pineapple", PowerUpData.Category.SCORE, 0.0, 0.0, 1500],
+	["melon", "Melón", "melon", PowerUpData.Category.SCORE, 0.0, 0.0, 2000],
+	["cake", "Pastel (vida extra)", "cake", PowerUpData.Category.EXTRA_LIFE, 1.0, 0.0, 0],
+	["one_up", "1UP", "one_up", PowerUpData.Category.EXTRA_LIFE, 1.0, 0.0, 0],
+	["armor", "Armadura", "armor", PowerUpData.Category.ARMOR, 1.0, 0.0, 0],
+	["boots", "Botas de velocidad", "boots", PowerUpData.Category.SPEED, 1.4, 10.0, 0],
+	["fire", "Fuego (poder de bomba)", "fire", PowerUpData.Category.BOMB_POWER, 1.0, 0.0, 0],
+]
+## Botín: id, objetos y pesos, probabilidad de soltar algo.
+const DROPS := [
+	["crate_drops", [["cherry", 3.0], ["banana", 2.0], ["orange", 1.5], ["apple", 1.0]], 0.6],
+	["barrel_drops", [["cherry", 2.0], ["apple", 1.5], ["watermelon", 1.0], ["fire", 2.0],
+		["boots", 1.0], ["armor", 1.0], ["one_up", 0.3]], 0.9],
+]
+
+
+func _create_items() -> void:
+	var by_id := {}
+	for p in POWER_UPS:
+		var d := PowerUpData.new()
+		d.id = StringName(p[0])
+		d.display_name = p[1]
+		d.icon = load("res://assets/items/%s.png" % p[2])
+		d.category = p[3]
+		d.effect_value = p[4]
+		d.duration = p[5]
+		d.score_value = p[6]
+		var path := "res://data/powerups/%s.tres" % p[0]
+		_save(d, path)
+		by_id[p[0]] = load(path)
+	var tables := {}
+	for t in DROPS:
+		var table := DropTable.new()
+		var items: Array[PowerUpData] = []
+		var weights: Array[float] = []
+		for entry in t[1]:
+			items.append(by_id[entry[0]])
+			weights.append(entry[1])
+		table.items = items
+		table.weights = weights
+		table.drop_chance = t[2]
+		var path := "res://data/drops/%s.tres" % t[0]
+		DirAccess.make_dir_recursive_absolute(path.get_base_dir())
+		_save(table, path)
+		tables[t[0]] = load(path)
+	var crate := DestructibleData.new()
+	crate.id = &"crate"
+	crate.display_name = "Caja"
+	crate.texture = load("res://assets/objects/crate.png")
+	crate.drop_table = tables["crate_drops"]
+	_save(crate, "res://data/destructibles/crate.tres")
+	var block := DestructibleData.new()
+	block.id = &"stone_block"
+	block.display_name = "Bloque de piedra"
+	block.texture = load("res://assets/objects/stone_block.png")
+	block.max_health = 2
+	block.hardness = 2
+	block.points = 150
+	block.debris_color = Color(0.55, 0.55, 0.6)
+	_save(block, "res://data/destructibles/stone_block.tres")
+	var barrel := BarrelData.new()
+	barrel.id = &"barrel"
+	barrel.display_name = "Barril"
+	barrel.texture = load("res://assets/objects/barrel.png")
+	barrel.size = Vector2(44, 40)
+	barrel.drop_table = tables["barrel_drops"]
+	_save(barrel, "res://data/destructibles/barrel.tres")
+
+
 func _create_data() -> void:
+	_create_items()
 	var bomb_types: Array[BombData] = []
 	for b in BOMBS:
 		var data := BombData.new()

@@ -1,84 +1,87 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://scripts/arena/arena.gd" id="1_yymes"]
-[ext_resource type="Script" path="res://scripts/bombs/bomb_pool.gd" id="2_2w5l7"]
-[ext_resource type="Script" path="res://scripts/arena/enemy_manager.gd" id="3_ewlgi"]
-[ext_resource type="Script" path="res://scripts/worlds/player_spawner.gd" id="4_57csx"]
-[ext_resource type="Script" path="res://scripts/arena/arcade_camera.gd" id="5_n533p"]
-[ext_resource type="Script" path="res://scripts/arena/arcade_hud.gd" id="6_bst6e"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4u5ww"]
-size = Vector2(960, 16)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_phd2x"]
-size = Vector2(24, 672)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_1axmj"]
-size = Vector2(24, 672)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_6hs2l"]
-size = Vector2(960, 48)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_tpuwk"]
-size = Vector2(64, 48)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_aehqo"]
-size = Vector2(64, 48)
+[ext_resource type="Script" path="res://scripts/arena/arena.gd" id="1_57csx"]
+[ext_resource type="Script" path="res://scripts/bombs/bomb_pool.gd" id="2_n533p"]
+[ext_resource type="Script" path="res://scripts/arena/enemy_manager.gd" id="3_bst6e"]
+[ext_resource type="PackedScene" path="res://scenes/objects/Barrel.tscn" id="4_4u5ww"]
+[ext_resource type="PackedScene" path="res://scenes/objects/Destructible.tscn" id="5_phd2x"]
+[ext_resource type="Resource" path="res://data/destructibles/stone_block.tres" id="6_1axmj"]
+[ext_resource type="Script" path="res://scripts/worlds/player_spawner.gd" id="7_6hs2l"]
+[ext_resource type="Script" path="res://scripts/arena/arcade_camera.gd" id="8_tpuwk"]
+[ext_resource type="Script" path="res://scripts/arena/arcade_hud.gd" id="9_aehqo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3t8bt"]
-size = Vector2(460, 16)
+size = Vector2(960, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eaqtv"]
-size = Vector2(306, 16)
+size = Vector2(24, 672)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ma0fr"]
-size = Vector2(306, 16)
+size = Vector2(24, 672)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_roc58"]
-size = Vector2(300, 16)
+size = Vector2(960, 48)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_muo6x"]
-size = Vector2(226, 16)
+size = Vector2(64, 48)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uncbt"]
+size = Vector2(64, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ut404"]
+size = Vector2(460, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ggm8j"]
+size = Vector2(306, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1nsqq"]
+size = Vector2(306, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dbl3o"]
+size = Vector2(300, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rns8l"]
 size = Vector2(226, 16)
 
-[node name="World01_Stage01_B" type="Node2D" unique_id=498983106]
-script = ExtResource("1_yymes")
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s4o6q"]
+size = Vector2(226, 16)
+
+[node name="World01_Stage01_B" type="Node2D" unique_id=2145938973]
+script = ExtResource("1_57csx")
 screen_role = "B"
 
-[node name="Background" type="Node2D" parent="." unique_id=915950462]
+[node name="Background" type="Node2D" parent="." unique_id=687997823]
 z_index = -10
 
-[node name="@Polygon2D@39" type="Polygon2D" parent="Background" unique_id=347199885]
+[node name="@Polygon2D@39" type="Polygon2D" parent="Background" unique_id=958136171]
 color = Color(0.53, 0.82, 0.97, 1)
 polygon = PackedVector2Array(0, 0, 960, 0, 960, 720, 0, 720)
 
-[node name="@Polygon2D@40" type="Polygon2D" parent="Background" unique_id=1072612857]
+[node name="@Polygon2D@40" type="Polygon2D" parent="Background" unique_id=1114226904]
 color = Color(0.16, 0.55, 0.85, 1)
 polygon = PackedVector2Array(0, 470, 960, 470, 960, 720, 0, 720)
 
-[node name="@Polygon2D@41" type="Polygon2D" parent="Background" unique_id=54189371]
+[node name="@Polygon2D@41" type="Polygon2D" parent="Background" unique_id=610772679]
 color = Color(1, 0.93, 0.6, 1)
 polygon = PackedVector2Array(858, 150, 856.7052, 159.83513, 852.90894, 169, 846.87006, 176.87006, 839, 182.90897, 829.83514, 186.70518, 820, 188, 810.16486, 186.70518, 801, 182.90897, 793.12994, 176.87006, 787.09106, 169, 783.2948, 159.83513, 782, 150, 783.2948, 140.16487, 787.09106, 131, 793.12994, 123.129944, 801, 117.091034, 810.16486, 113.294815, 820, 112, 829.83514, 113.294815, 839, 117.091034, 846.87006, 123.12994, 852.90894, 131, 856.7052, 140.16489)
 
-[node name="@Polygon2D@42" type="Polygon2D" parent="Background" unique_id=1975339514]
+[node name="@Polygon2D@42" type="Polygon2D" parent="Background" unique_id=1759960425]
 color = Color(0.55, 0.38, 0.2, 1)
 polygon = PackedVector2Array(143, 470, 157, 470, 157, 672, 143, 672)
 
-[node name="@Polygon2D@43" type="Polygon2D" parent="Background" unique_id=1358104138]
+[node name="@Polygon2D@43" type="Polygon2D" parent="Background" unique_id=1966527135]
 color = Color(0.2, 0.6, 0.25, 1)
 polygon = PackedVector2Array(80, 480, 150, 450, 220, 480, 180, 470, 150, 462, 120, 470)
 
-[node name="@Polygon2D@44" type="Polygon2D" parent="Background" unique_id=539542544]
+[node name="@Polygon2D@44" type="Polygon2D" parent="Background" unique_id=2134482930]
 color = Color(0.55, 0.38, 0.2, 1)
 polygon = PackedVector2Array(793, 470, 807, 470, 807, 672, 793, 672)
 
-[node name="@Polygon2D@45" type="Polygon2D" parent="Background" unique_id=527012863]
+[node name="@Polygon2D@45" type="Polygon2D" parent="Background" unique_id=698862]
 color = Color(0.2, 0.6, 0.25, 1)
 polygon = PackedVector2Array(730, 480, 800, 450, 870, 480, 830, 470, 800, 462, 770, 470)
 
-[node name="@Label@46" type="Label" parent="Background" unique_id=1049367370]
+[node name="@Label@46" type="Label" parent="Background" unique_id=601364847]
 offset_left = 36.0
 offset_top = 70.0
 offset_right = 36.0
@@ -87,162 +90,175 @@ theme_override_font_sizes/font_size = 16
 theme_override_colors/font_color = Color(0.1, 0.2, 0.35, 0.6)
 text = "1-1  PANTALLA B"
 
-[node name="Geometry" type="StaticBody2D" parent="." unique_id=198798167]
+[node name="Geometry" type="StaticBody2D" parent="." unique_id=1037270164]
 collision_mask = 0
 
-[node name="@CollisionShape2D@47" type="CollisionShape2D" parent="Geometry" unique_id=938660440]
+[node name="@CollisionShape2D@47" type="CollisionShape2D" parent="Geometry" unique_id=771508446]
 position = Vector2(480, 56)
-shape = SubResource("RectangleShape2D_4u5ww")
+shape = SubResource("RectangleShape2D_3t8bt")
 
-[node name="@Polygon2D@48" type="Polygon2D" parent="Geometry" unique_id=925297174]
+[node name="@Polygon2D@48" type="Polygon2D" parent="Geometry" unique_id=82610316]
 color = Color(0.45, 0.44, 0.5, 1)
 polygon = PackedVector2Array(0, 48, 960, 48, 960, 64, 0, 64)
 
-[node name="@CollisionShape2D@49" type="CollisionShape2D" parent="Geometry" unique_id=1669507771]
+[node name="@CollisionShape2D@49" type="CollisionShape2D" parent="Geometry" unique_id=1465937369]
 position = Vector2(12, 384)
-shape = SubResource("RectangleShape2D_phd2x")
+shape = SubResource("RectangleShape2D_eaqtv")
 
-[node name="@Polygon2D@50" type="Polygon2D" parent="Geometry" unique_id=203081522]
+[node name="@Polygon2D@50" type="Polygon2D" parent="Geometry" unique_id=474756588]
 color = Color(0.45, 0.44, 0.5, 1)
 polygon = PackedVector2Array(0, 48, 24, 48, 24, 720, 0, 720)
 
-[node name="@CollisionShape2D@51" type="CollisionShape2D" parent="Geometry" unique_id=1768449903]
+[node name="@CollisionShape2D@51" type="CollisionShape2D" parent="Geometry" unique_id=1128515262]
 position = Vector2(948, 384)
-shape = SubResource("RectangleShape2D_1axmj")
+shape = SubResource("RectangleShape2D_ma0fr")
 
-[node name="@Polygon2D@52" type="Polygon2D" parent="Geometry" unique_id=1598789340]
+[node name="@Polygon2D@52" type="Polygon2D" parent="Geometry" unique_id=1425832793]
 color = Color(0.45, 0.44, 0.5, 1)
 polygon = PackedVector2Array(936, 48, 960, 48, 960, 720, 936, 720)
 
-[node name="@CollisionShape2D@53" type="CollisionShape2D" parent="Geometry" unique_id=129318255]
+[node name="@CollisionShape2D@53" type="CollisionShape2D" parent="Geometry" unique_id=1966474781]
 position = Vector2(480, 696)
-shape = SubResource("RectangleShape2D_6hs2l")
+shape = SubResource("RectangleShape2D_roc58")
 
-[node name="@Polygon2D@54" type="Polygon2D" parent="Geometry" unique_id=1265925735]
+[node name="@Polygon2D@54" type="Polygon2D" parent="Geometry" unique_id=1721655367]
 color = Color(0.9, 0.78, 0.52, 1)
 polygon = PackedVector2Array(0, 672, 960, 672, 960, 720, 0, 720)
 
-[node name="@Polygon2D@55" type="Polygon2D" parent="Geometry" unique_id=1334433780]
+[node name="@Polygon2D@55" type="Polygon2D" parent="Geometry" unique_id=643638945]
 color = Color(0.78, 0.64, 0.4, 1)
 polygon = PackedVector2Array(24, 672, 936, 672, 936, 680, 24, 680)
 
-[node name="@CollisionShape2D@56" type="CollisionShape2D" parent="Geometry" unique_id=1217459817]
+[node name="@CollisionShape2D@56" type="CollisionShape2D" parent="Geometry" unique_id=865308622]
 position = Vector2(56, 648)
-shape = SubResource("RectangleShape2D_tpuwk")
+shape = SubResource("RectangleShape2D_muo6x")
 
-[node name="@Polygon2D@57" type="Polygon2D" parent="Geometry" unique_id=420996296]
+[node name="@Polygon2D@57" type="Polygon2D" parent="Geometry" unique_id=375744829]
 color = Color(0.45, 0.44, 0.5, 1)
 polygon = PackedVector2Array(24, 624, 88, 624, 88, 672, 24, 672)
 
-[node name="@CollisionShape2D@58" type="CollisionShape2D" parent="Geometry" unique_id=1068485720]
+[node name="@CollisionShape2D@58" type="CollisionShape2D" parent="Geometry" unique_id=465628393]
 position = Vector2(904, 648)
-shape = SubResource("RectangleShape2D_aehqo")
+shape = SubResource("RectangleShape2D_uncbt")
 
-[node name="@Polygon2D@59" type="Polygon2D" parent="Geometry" unique_id=1444081000]
+[node name="@Polygon2D@59" type="Polygon2D" parent="Geometry" unique_id=1811995448]
 color = Color(0.45, 0.44, 0.5, 1)
 polygon = PackedVector2Array(872, 624, 936, 624, 936, 672, 872, 672)
 
-[node name="Platforms" type="StaticBody2D" parent="." unique_id=1719814982]
+[node name="Platforms" type="StaticBody2D" parent="." unique_id=713368658]
 collision_layer = 32
 collision_mask = 0
 
-[node name="@CollisionShape2D@60" type="CollisionShape2D" parent="Platforms" unique_id=587639102]
+[node name="@CollisionShape2D@60" type="CollisionShape2D" parent="Platforms" unique_id=1446706357]
 position = Vector2(480, 568)
-shape = SubResource("RectangleShape2D_3t8bt")
+shape = SubResource("RectangleShape2D_ut404")
 one_way_collision = true
 
-[node name="@Polygon2D@61" type="Polygon2D" parent="Platforms" unique_id=776500505]
+[node name="@Polygon2D@61" type="Polygon2D" parent="Platforms" unique_id=511188650]
 color = Color(0.6, 0.4, 0.2, 1)
 polygon = PackedVector2Array(250, 560, 710, 560, 710, 576, 250, 576)
 
-[node name="@Polygon2D@62" type="Polygon2D" parent="Platforms" unique_id=74162017]
+[node name="@Polygon2D@62" type="Polygon2D" parent="Platforms" unique_id=1090145873]
 color = Color(0.42, 0.26, 0.12, 1)
 polygon = PackedVector2Array(250, 572, 710, 572, 710, 576, 250, 576)
 
-[node name="@CollisionShape2D@63" type="CollisionShape2D" parent="Platforms" unique_id=71698006]
+[node name="@CollisionShape2D@63" type="CollisionShape2D" parent="Platforms" unique_id=1528195299]
 position = Vector2(177, 456)
-shape = SubResource("RectangleShape2D_eaqtv")
+shape = SubResource("RectangleShape2D_ggm8j")
 one_way_collision = true
 
-[node name="@Polygon2D@64" type="Polygon2D" parent="Platforms" unique_id=1816171225]
+[node name="@Polygon2D@64" type="Polygon2D" parent="Platforms" unique_id=698304759]
 color = Color(0.6, 0.4, 0.2, 1)
 polygon = PackedVector2Array(24, 448, 330, 448, 330, 464, 24, 464)
 
-[node name="@Polygon2D@65" type="Polygon2D" parent="Platforms" unique_id=1712112580]
+[node name="@Polygon2D@65" type="Polygon2D" parent="Platforms" unique_id=222898314]
 color = Color(0.42, 0.26, 0.12, 1)
 polygon = PackedVector2Array(24, 460, 330, 460, 330, 464, 24, 464)
 
-[node name="@CollisionShape2D@66" type="CollisionShape2D" parent="Platforms" unique_id=521720138]
+[node name="@CollisionShape2D@66" type="CollisionShape2D" parent="Platforms" unique_id=1736221871]
 position = Vector2(783, 456)
-shape = SubResource("RectangleShape2D_ma0fr")
+shape = SubResource("RectangleShape2D_1nsqq")
 one_way_collision = true
 
-[node name="@Polygon2D@67" type="Polygon2D" parent="Platforms" unique_id=1740182565]
+[node name="@Polygon2D@67" type="Polygon2D" parent="Platforms" unique_id=26861603]
 color = Color(0.6, 0.4, 0.2, 1)
 polygon = PackedVector2Array(630, 448, 936, 448, 936, 464, 630, 464)
 
-[node name="@Polygon2D@68" type="Polygon2D" parent="Platforms" unique_id=1179176666]
+[node name="@Polygon2D@68" type="Polygon2D" parent="Platforms" unique_id=910499026]
 color = Color(0.42, 0.26, 0.12, 1)
 polygon = PackedVector2Array(630, 460, 936, 460, 936, 464, 630, 464)
 
-[node name="@CollisionShape2D@69" type="CollisionShape2D" parent="Platforms" unique_id=567308424]
+[node name="@CollisionShape2D@69" type="CollisionShape2D" parent="Platforms" unique_id=1735623236]
 position = Vector2(480, 344)
-shape = SubResource("RectangleShape2D_roc58")
+shape = SubResource("RectangleShape2D_dbl3o")
 one_way_collision = true
 
-[node name="@Polygon2D@70" type="Polygon2D" parent="Platforms" unique_id=1124963219]
+[node name="@Polygon2D@70" type="Polygon2D" parent="Platforms" unique_id=1783513551]
 color = Color(0.6, 0.4, 0.2, 1)
 polygon = PackedVector2Array(330, 336, 630, 336, 630, 352, 330, 352)
 
-[node name="@Polygon2D@71" type="Polygon2D" parent="Platforms" unique_id=701996488]
+[node name="@Polygon2D@71" type="Polygon2D" parent="Platforms" unique_id=1883314080]
 color = Color(0.42, 0.26, 0.12, 1)
 polygon = PackedVector2Array(330, 348, 630, 348, 630, 352, 330, 352)
 
-[node name="@CollisionShape2D@72" type="CollisionShape2D" parent="Platforms" unique_id=324379791]
+[node name="@CollisionShape2D@72" type="CollisionShape2D" parent="Platforms" unique_id=761250620]
 position = Vector2(137, 232)
-shape = SubResource("RectangleShape2D_muo6x")
+shape = SubResource("RectangleShape2D_rns8l")
 one_way_collision = true
 
-[node name="@Polygon2D@73" type="Polygon2D" parent="Platforms" unique_id=372875043]
+[node name="@Polygon2D@73" type="Polygon2D" parent="Platforms" unique_id=1436318337]
 color = Color(0.6, 0.4, 0.2, 1)
 polygon = PackedVector2Array(24, 224, 250, 224, 250, 240, 24, 240)
 
-[node name="@Polygon2D@74" type="Polygon2D" parent="Platforms" unique_id=1114736246]
+[node name="@Polygon2D@74" type="Polygon2D" parent="Platforms" unique_id=417388398]
 color = Color(0.42, 0.26, 0.12, 1)
 polygon = PackedVector2Array(24, 236, 250, 236, 250, 240, 24, 240)
 
-[node name="@CollisionShape2D@75" type="CollisionShape2D" parent="Platforms" unique_id=87947134]
+[node name="@CollisionShape2D@75" type="CollisionShape2D" parent="Platforms" unique_id=779321185]
 position = Vector2(823, 232)
-shape = SubResource("RectangleShape2D_uncbt")
+shape = SubResource("RectangleShape2D_s4o6q")
 one_way_collision = true
 
-[node name="@Polygon2D@76" type="Polygon2D" parent="Platforms" unique_id=1861421864]
+[node name="@Polygon2D@76" type="Polygon2D" parent="Platforms" unique_id=170807107]
 color = Color(0.6, 0.4, 0.2, 1)
 polygon = PackedVector2Array(710, 224, 936, 224, 936, 240, 710, 240)
 
-[node name="@Polygon2D@77" type="Polygon2D" parent="Platforms" unique_id=180342156]
+[node name="@Polygon2D@77" type="Polygon2D" parent="Platforms" unique_id=718697923]
 color = Color(0.42, 0.26, 0.12, 1)
 polygon = PackedVector2Array(710, 236, 936, 236, 936, 240, 710, 240)
 
-[node name="BombPool" type="Node2D" parent="." unique_id=1565944869]
-script = ExtResource("2_2w5l7")
+[node name="BombPool" type="Node2D" parent="." unique_id=1919183198]
+script = ExtResource("2_n533p")
 
-[node name="Enemies" type="Node2D" parent="." unique_id=1028166811]
-script = ExtResource("3_ewlgi")
+[node name="Enemies" type="Node2D" parent="." unique_id=1451449878]
+script = ExtResource("3_bst6e")
 
-[node name="Items" type="Node2D" parent="." unique_id=124816089]
+[node name="Items" type="Node2D" parent="." unique_id=747662770]
 
-[node name="PlayerSpawner" type="Node2D" parent="." unique_id=725072080]
-script = ExtResource("4_57csx")
+[node name="Barrel1" parent="Items" unique_id=749619754 instance=ExtResource("4_4u5ww")]
+position = Vector2(480, 540)
 
-[node name="P1" type="Marker2D" parent="PlayerSpawner" unique_id=370015237]
+[node name="Crate1" parent="Items" unique_id=595204899 instance=ExtResource("5_phd2x")]
+position = Vector2(120, 448)
+
+[node name="Crate2" parent="Items" unique_id=1322075215 instance=ExtResource("5_phd2x")]
+position = Vector2(840, 448)
+
+[node name="StoneBlock1" parent="Items" unique_id=1487410919 instance=ExtResource("5_phd2x")]
+position = Vector2(480, 336)
+data = ExtResource("6_1axmj")
+
+[node name="PlayerSpawner" type="Node2D" parent="." unique_id=1801776581]
+script = ExtResource("7_6hs2l")
+
+[node name="P1" type="Marker2D" parent="PlayerSpawner" unique_id=2002822935]
 position = Vector2(150, 672)
 
-[node name="P2" type="Marker2D" parent="PlayerSpawner" unique_id=244365636]
+[node name="P2" type="Marker2D" parent="PlayerSpawner" unique_id=2122666572]
 position = Vector2(810, 672)
 
-[node name="ArcadeCamera" type="Camera2D" parent="." unique_id=810058800]
-script = ExtResource("5_n533p")
+[node name="ArcadeCamera" type="Camera2D" parent="." unique_id=1122779151]
+script = ExtResource("8_tpuwk")
 
-[node name="HUD" type="CanvasLayer" parent="." unique_id=102271061]
-script = ExtResource("6_bst6e")
+[node name="HUD" type="CanvasLayer" parent="." unique_id=2125715156]
+script = ExtResource("9_aehqo")

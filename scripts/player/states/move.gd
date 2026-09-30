@@ -33,7 +33,7 @@ func physics_update(delta: float) -> void:
 
 func _animate() -> void:
 	var cfg := player.config
-	var vx := absf(player.velocity.x)
+	var vx := absf(player.velocity.x) / player.speed_multiplier
 	if vx > cfg.move_speed + 20.0:
 		player.animator.play_animation(PlayerAnimator.RUN)
 		player.animator.set_playback_speed(clampf(vx / cfg.run_speed, 0.8, 1.3))

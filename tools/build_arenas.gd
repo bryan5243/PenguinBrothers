@@ -29,6 +29,8 @@ const SCREENS := {
 		"platforms": [[24, 300, 560], [660, 936, 560], [330, 630, 448],
 			[24, 260, 336], [700, 936, 336], [280, 680, 224]],
 		"blocks": [Rect2(452, 624, 56, 48)],
+		"objects": [["barrel", Vector2(330, 652)], ["barrel", Vector2(820, 540)], ["crate", Vector2(250, 560)],
+			["crate", Vector2(140, 336)], ["stone_block", Vector2(480, 224)]],
 		"p1": Vector2(120, 672), "p2": Vector2(840, 672),
 	},
 	"res://scenes/stages/world_01/World01_Stage01_B.tscn": {
@@ -36,6 +38,8 @@ const SCREENS := {
 		"platforms": [[250, 710, 560], [24, 330, 448], [630, 936, 448],
 			[330, 630, 336], [24, 250, 224], [710, 936, 224]],
 		"blocks": [Rect2(24, 624, 64, 48), Rect2(872, 624, 64, 48)],
+		"objects": [["barrel", Vector2(480, 540)], ["crate", Vector2(120, 448)], ["crate", Vector2(840, 448)],
+			["stone_block", Vector2(480, 336)]],
 		"p1": Vector2(150, 672), "p2": Vector2(810, 672),
 	},
 }
@@ -84,6 +88,20 @@ func _build(path: String, d: Dictionary) -> bool:
 	var items := Node2D.new()
 	items.name = "Items"
 	_add(items, arena_root)
+	# Barriles y objetos destruibles (barril: origen en el centro; caja/bloque: en la base).
+	var counts := {}
+	for o in d.get("objects", []):
+		var kind: String = o[0]
+		counts[kind] = counts.get(kind, 0) + 1
+		var node: Node2D
+		if kind == "barrel":
+			node = (load("res://scenes/objects/Barrel.tscn") as PackedScene).instantiate(PackedScene.GEN_EDIT_STATE_INSTANCE)
+		else:
+			node = (load("res://scenes/objects/Destructible.tscn") as PackedScene).instantiate(PackedScene.GEN_EDIT_STATE_INSTANCE)
+			node.set("data", load("res://data/destructibles/%s.tres" % kind))
+		node.name = "%s%d" % [kind.to_pascal_case(), counts[kind]]
+		node.position = o[1]
+		_add(node, items)
 
 	var spawner := Node2D.new()
 	spawner.name = "PlayerSpawner"
