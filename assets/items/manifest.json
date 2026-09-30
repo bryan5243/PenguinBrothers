@@ -1,0 +1,22 @@
+{
+  "items": {
+    "cherry": "assets/items/cherry.png",
+    "banana": "assets/items/banana.png",
+    "orange": "assets/items/orange.png",
+    "apple": "assets/items/apple.png",
+    "grape": "assets/items/grape.png",
+    "watermelon": "assets/items/watermelon.png",
+    "pineapple": "assets/items/pineapple.png",
+    "melon": "assets/items/melon.png",
+    "cake": "assets/items/cake.png",
+    "armor": "assets/items/armor.png",
+    "boots": "assets/items/boots.png",
+    "fire": "assets/items/fire.png",
+    "one_up": "assets/items/one_up.png"
+  },
+  "objects": {
+    "crate": "assets/objects/crate.png",
+    "stone_block": "assets/objects/stone_block.png",
+    "barrel": "assets/objects/barrel.png"
+  }
+}
