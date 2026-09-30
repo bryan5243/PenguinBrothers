@@ -119,6 +119,22 @@ func _crouch_slide_crawl() -> void:
 	Input.action_release("p1_crouch")
 	await _wait_until(func() -> bool: return not _in(&"Slide"), 60)
 
+	# Arcade (sin correr): agacharse caminando también desliza; quieto, solo se agacha.
+	p.config.run_enabled = false
+	await _place(Vector2(160, GROUND_Y))
+	Input.action_press("p1_move_right")
+	await t.wait_frames(12)
+	Input.action_press("p1_crouch")
+	await t.wait_frames(3)
+	t.check(_in(&"Slide") and absf(p.velocity.x) > p.config.move_speed,
+		"sin correr: caminar + agacharse = deslizamiento")
+	var start_x := p.global_position.x
+	Input.action_release("p1_move_right")
+	Input.action_release("p1_crouch")
+	await _wait_until(func() -> bool: return not _in(&"Slide"), 60)
+	t.check(p.global_position.x - start_x > 60.0 and not p.is_low, "se desliza un tramo y se levanta")
+	p.config.run_enabled = true
+
 	# Bajo el túnel no puede levantarse, pero puede gatear hasta salir.
 	for a in InputManager.COMMANDS:
 		Input.action_release("p1_" + a)

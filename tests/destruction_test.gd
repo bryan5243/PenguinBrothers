@@ -95,6 +95,9 @@ func _barrel_as_weapon() -> void:
 	var score := ScoreManager.scores[0]
 	var damage := barrel.data.hit_damage
 	await _press("p1_interact")
+	t.check(is_instance_valid(barrel) and barrel.sprite.visible and not p1.animator.carrying
+		and p1.animator.sprite_frames.get_frame_count(&"carry_barrel_throw") == 1,
+		"al lanzarlo el barril se ve al instante y el pingüino ya no lo tiene dibujado")
 	var hit := false
 	for i in 60:
 		await t.wait_frames(1)
