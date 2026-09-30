@@ -75,20 +75,55 @@ func _flip_up() -> void:
 
 
 func _flip_down() -> void:
-	# Desde el piso de arriba, otra plataforma abre hacia abajo.
+	# Desde el piso de arriba, otra plataforma gira hacia abajo: quien va encima se queda
+	# pegado boca abajo unos segundos y luego cae al piso de abajo.
 	await _place(p1, rot_far.global_position)
-	await t.wait_frames(rot_far.data.cooldown > 0.0 and int(rot_far.data.cooldown * 60.0) + 2)
-	var y0 := p1.global_position.y
+	await t.wait_frames(int(rot_far.data.cooldown * 60.0) + 2)
 	await _press("p1_crouch")
-	for i in 40:
+	for i in 60:
+		if rot_far.state == RotatingPlatform.State.HANGING:
+			break
 		await t.wait_frames(1)
-	t.check(p1.global_position.y > y0 + 20.0, "abajo sobre la plataforma: se abre y cae al piso de abajo")
+	t.check(rot_far.state == RotatingPlatform.State.HANGING and p1.is_stuck(),
+		"abajo sobre la plataforma: queda pegado boca abajo")
+	t.check(is_equal_approx(p1.animator.rotation, PI) and p1.global_position.y > rot_far.global_position.y + 10.0,
+		"boca abajo y bajo el disco")
+	t.check(rot_far.disk.scale.y < 0.0, "la plataforma se queda boca abajo")
+	var y_stuck := p1.global_position.y
+	await t.wait_frames(int(rot_far.data.stick_time * 60.0 * 0.5))
+	t.check(p1.is_stuck() and absf(p1.global_position.y - y_stuck) < 1.0 and p1.velocity == Vector2.ZERO,
+		"sigue pegado mientras dura (no se mueve)")
+	Input.action_press("p1_move_right")
+	Input.action_press("p1_jump")
+	await t.wait_frames(6)
+	Input.action_release("p1_move_right")
+	Input.action_release("p1_jump")
+	t.check(p1.is_stuck() and absf(p1.global_position.x - rot_far.global_position.x) < 1.0,
+		"pegado no puede moverse ni saltar")
+	await t.wait_frames(int(rot_far.data.stick_time * 60.0 * 0.5) + 30)
+	t.check(not p1.is_stuck() and is_zero_approx(p1.animator.rotation), "pasado el tiempo lo suelta derecho")
 	for i in 120:
 		if p1.is_on_floor():
 			break
 		await t.wait_frames(1)
 	t.check(p1.is_on_floor() and p1.global_position.y > rot_far.global_position.y + 50.0,
-		"aterriza más abajo que la plataforma")
+		"y cae al piso de abajo")
+	t.check(rot_far.disk.scale.y > 0.0, "la plataforma se endereza al soltarlo")
+	# Un golpe lo suelta antes de tiempo.
+	await t.wait_frames(int(rot_far.data.cooldown * 60.0) + 20)
+	await _place(p1, rot_far.global_position)
+	rot_far.start_flip(RotatingPlatform.DOWN)
+	for i in 60:
+		if p1.is_stuck():
+			break
+		await t.wait_frames(1)
+	p1.health.kill(null)
+	await t.wait_frames(6)
+	t.check(not p1.is_stuck() and is_zero_approx(p1.animator.rotation), "si muere pegado, se suelta")
+	await t.wait_frames(int((rot_far.data.stick_time + rot_far.data.cooldown) * 60.0) + 40)
+	if not p1.is_alive():
+		p1.respawn()
+		await t.wait_frames(10)
 
 
 func _cooldown_and_busy() -> void:

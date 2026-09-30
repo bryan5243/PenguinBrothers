@@ -162,6 +162,10 @@ func _run() -> void:
 	var objective: RefCounted = load("res://tests/objective_test.gd").new()
 	await objective.run(self)
 
+	print("== Arcade: diseño de pantallas (Fases 8-9)")
+	var levels: RefCounted = load("res://tests/level_test.gd").new()
+	await levels.run(self)
+
 	print("== Escena Main")
 	check(ProjectSettings.get_setting("application/run/main_scene") == "res://scenes/main/Main.tscn", "Main es la escena principal")
 	var main := (load("res://scenes/main/Main.tscn") as PackedScene).instantiate()
