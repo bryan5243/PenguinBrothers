@@ -19,8 +19,8 @@ que siga al jugador.** Referencia de diseño: `docs/GAME_DESIGN.md`.
 | 5 | Enemigos (base con IDLE/PATROL/CHASE/ATTACK/HURT/DEAD, `EnemySpawner`) | ✅ Completada |
 | 6 | Plataformas giratorias (`RotatingPlatform.tscn`, giro de 180°) | ✅ Completada |
 | 7 | Llave y puerta (`KeyItem.tscn`, `ExitDoor.tscn`) | ✅ Completada |
-| 8 | Pantalla 1 (World01_Stage01_A completa) | Siguiente |
-| 9 | Pantalla 2 (World01_Stage01_B completa) | Pendiente |
+| 8 | Pantalla 1 (World01_Stage01_A completa) | ✅ Completada |
+| 9 | Pantalla 2 (World01_Stage01_B completa) | Siguiente |
 | 10 | Puntuación (combos, puntos flotantes, bonificaciones, récord) | Pendiente |
 | 11 | Mundo 1 – Isla Palmera (resto de fases) | Pendiente |
 | 12 | Jefe Orca Ninja (arena fija, varias fases) | Pendiente |
@@ -155,6 +155,24 @@ que siga al jugador.** Referencia de diseño: `docs/GAME_DESIGN.md`.
 - `ObjectiveData` (`data/items/objective.tres`): tamaños, tiempos y alcance de llave y puerta.
 - `tools/build_arenas.gd`: `key_position` (A) y `door` (B, arriba a la izquierda).
 - Pruebas: 351 comprobaciones (25 nuevas, `tests/objective_test.gd`).
+
+### Fase 8 – Pantalla 1 (World01_Stage01_A completa)
+
+- **Plataformas giratorias: boca abajo.** Además de subir (arriba), al girar hacia **abajo** los
+  de encima dan la vuelta con la plataforma y quedan **pegados boca abajo** a su parte de abajo
+  `stick_time` (2 s) sin poder moverse; luego la plataforma se endereza y los suelta, que caen al
+  piso de abajo. Herido o muerto se suelta antes. `Player.stick_to()` / `release_stuck()` /
+  `is_stuck()`; ajustes `stick_time`, `revert_time`, `stick_offset`, `stick_spread` en
+  `RotatingPlatformData`.
+- **Test de recorrido** (`tests/level_test.gd`): con el salto y la velocidad reales del pingüino
+  calcula qué pisos se alcanzan desde el inicio y exige que sean todos, más la llave (A), la puerta
+  (B), los barriles y cajas, y que cada plataforma giratoria suba a un piso. También revisa que las
+  entradas de enemigos estén dentro de la arena y las oleadas sean seguidas.
+- **Ritmo de la pantalla A:** los primeros enemigos entran algo más tarde (cangrejo izquierdo a los
+  2,5 s, derecho a los 4,5 s, gaviota a los 6 s) para dar tiempo de moverse.
+- Nueva referencia `assets/references/worlds/world_01_terrain_sprites.png` (terreno de acantilado,
+  puentes, escaleras, cascadas y agua), aún sin extraer.
+- Pruebas: 374 comprobaciones (16 nuevas de recorrido + las de «pegado»).
 
 ## Historial: etapa 1 (formato plataformas con scroll, sustituido)
 

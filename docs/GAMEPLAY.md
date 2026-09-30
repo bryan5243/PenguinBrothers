@@ -375,10 +375,13 @@ laboratorio de movimiento (legado).
 | Acción | Control |
 |---|---|
 | Subir al piso de arriba | Estar sobre la plataforma y pulsar **Arriba** |
-| Bajar al piso de abajo | Estar sobre la plataforma quieto y pulsar **Abajo** |
+| Quedar pegado boca abajo y caer al piso de abajo | Estar sobre la plataforma quieto y pulsar **Abajo** |
 
 - Los dos jugadores pueden ir encima y salen juntos. Las bombas y barriles en reposo encima salen
   despedidos. Los enemigos no la activan.
+- **Arriba** lanza al piso de arriba. **Abajo** da la vuelta a los de encima con la plataforma: quedan
+  **pegados boca abajo** ~2 s (no se mueven ni saltan; un golpe los suelta), la plataforma se endereza
+  y caen al piso de abajo. Con enemigos cerca es un riesgo.
 - Gira ~0,4 s (con un temblor previo de 0,15 s) y espera 0,6 s antes de poder usarse otra vez.
 - Las que están en el suelo solo suben. Ajustes en `data/platforms/rotating_platform.tres`; la
   altura de lanzamiento de cada una se elige en `tools/build_arenas.gd` (`rotators`).
