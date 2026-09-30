@@ -369,3 +369,16 @@ General: mundo, nivel, tiempo y botón de pausa. Adaptado a móvil.
 `ArcadeCamera` (`scripts/arena/arcade_camera.gd`): **fija**, encuadra la arena completa (960×720) y
 solo tiembla un poco con las explosiones. No sigue a nadie. `CoopCamera` queda solo para el
 laboratorio de movimiento (legado).
+
+## Plataformas giratorias
+
+| Acción | Control |
+|---|---|
+| Subir al piso de arriba | Estar sobre la plataforma y pulsar **Arriba** |
+| Bajar al piso de abajo | Estar sobre la plataforma quieto y pulsar **Abajo** |
+
+- Los dos jugadores pueden ir encima y salen juntos. Las bombas y barriles en reposo encima salen
+  despedidos. Los enemigos no la activan.
+- Gira ~0,4 s (con un temblor previo de 0,15 s) y espera 0,6 s antes de poder usarse otra vez.
+- Las que están en el suelo solo suben. Ajustes en `data/platforms/rotating_platform.tres`; la
+  altura de lanzamiento de cada una se elige en `tools/build_arenas.gd` (`rotators`).

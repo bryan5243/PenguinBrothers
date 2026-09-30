@@ -17,8 +17,8 @@ que siga al jugador.** Referencia de diseño: `docs/GAME_DESIGN.md`.
 | 3 | Bombas arcade (física controlada, área visible, niveles de poder 1–4) | ✅ Completada |
 | 4 | Barriles y destrucción del escenario (`Barrel.tscn`, destructibles con drop_table) | ✅ Completada |
 | 5 | Enemigos (base con IDLE/PATROL/CHASE/ATTACK/HURT/DEAD, `EnemySpawner`) | ✅ Completada |
-| 6 | Plataformas giratorias (`RotatingPlatform.tscn`, giro de 180°) | Siguiente |
-| 7 | Llave y puerta (`KeyItem.tscn`, `ExitDoor.tscn`) | Pendiente |
+| 6 | Plataformas giratorias (`RotatingPlatform.tscn`, giro de 180°) | ✅ Completada |
+| 7 | Llave y puerta (`KeyItem.tscn`, `ExitDoor.tscn`) | Siguiente |
 | 8 | Pantalla 1 (World01_Stage01_A completa) | Pendiente |
 | 9 | Pantalla 2 (World01_Stage01_B completa) | Pendiente |
 | 10 | Puntuación (combos, puntos flotantes, bonificaciones, récord) | Pendiente |
@@ -119,6 +119,24 @@ que siga al jugador.** Referencia de diseño: `docs/GAME_DESIGN.md`.
   re-escalar en juego; la máscara del mar sale del movimiento real entre fotogramas.
 - Deslizarse activado en el arcade: abajo mientras se camina (no requiere correr).
 - Pruebas: 303 comprobaciones.
+
+### Fase 6 – Plataformas giratorias
+
+- `RotatingPlatform` (`scripts/platforms/`, `scenes/platforms/RotatingPlatform.tscn`): disco de
+  madera con superficie atravesable. Un jugador encima pulsa **arriba** → tiembla (`windup_time`),
+  gira (`flip_time`) y lo lanza hacia arriba (`launch_height`, ajustable por plataforma);
+  **abajo** → se abre y los de encima caen al piso inferior (`can_flip_down` = falso en las que
+  están a ras de suelo). Sale con ella todo lo que va encima: los dos jugadores y las bombas o
+  barriles en reposo (despedidos). Tras girar espera `cooldown`; mientras gira no se puede pisar.
+- Ajustes en `RotatingPlatformData` (`data/platforms/rotating_platform.tres`).
+- `Player.launch(velocity)` (lanzamiento externo: pasa a caer/saltar sin romper los estados) y
+  `PlayerInput.up_pressed` / `crouch_pressed` (flancos de pulsación).
+- `tools/build_arenas.gd`: clave `rotators` por pantalla (posición de la superficie, altura de
+  lanzamiento, ¿abre hacia abajo?) y poste de madera debajo. Pantalla A: 560→448 y 448→224;
+  pantalla B: dos desde el suelo hasta los tablones de 448. La pantalla A acorta su tablón de 448
+  y la B mueve los puntos de inicio para dejar sitio.
+- Clave de sonido `platform_flip` registrada (sin archivo de audio todavía).
+- Pruebas: 326 comprobaciones (23 nuevas, `tests/rotating_platform_test.gd`).
 
 ## Historial: etapa 1 (formato plataformas con scroll, sustituido)
 

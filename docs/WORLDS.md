@@ -50,7 +50,7 @@ Las pantallas de la 1-1 usan las piezas de `world_01_tileset_isla_palmera.png`, 
 | Andamios | `post_rope.png` | Postes automáticos bajo los extremos de las plataformas |
 | Caja, barril, bloque de piedra | `crate.png`, `barrel.png`, `stone_blocks.png` | Objetos de la Fase 4 |
 | Decoración | palmeras, arbustos, flores, castillo de arena, bandera, cartel... | Capa trasera (`Decor`) y delantera (`FrontDecor`), sin colisión |
-| Reservadas | `rotating_disk.png`, `key.png`, `door.png`, `door_portal.png`, `ladder.png`, `spike_fence.png`... | Plataformas giratorias (F6), llave y puerta (F7), escaleras y peligros |
+| Reservadas | `key.png`, `door.png`, `door_portal.png`, `ladder.png`, `spike_fence.png`... | Llave y puerta (F7), escaleras y peligros |
 
 La colisión nunca depende del dibujo: las arenas siguen siendo rectángulos exactos definidos en
 `tools/build_arenas.gd` (plataformas, bloques, decoración por pantalla en `decor` / `front_decor`).
@@ -66,3 +66,10 @@ con la desviación entre fotogramas dentro de la franja del mar (olas, espuma y 
 base quieta y, encima, solo el mar fundiendo un fotograma con el siguiente (`frame_time`). Los
 fotogramas están alineados pero generados por separado: reproducidos enteros, el cielo y la
 vegetación temblarían, por eso solo se funde el mar.
+
+## Plataformas giratorias
+
+`rotating_disk.png` (disco de la hoja de tiles) es el dibujo de `RotatingPlatform`; se escala al ancho
+de su colisión (104 px). Se definen por pantalla en `tools/build_arenas.gd` (`rotators`) y llevan
+un poste (`post_rope.png`) debajo cuando no están a ras de suelo. `rotating_platform.png` (con pie)
+queda disponible.
