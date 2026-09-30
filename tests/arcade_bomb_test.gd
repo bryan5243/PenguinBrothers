@@ -18,6 +18,8 @@ func run(test: Node) -> void:
 	StageManager.screen_index = 0
 	GameManager.start_new_game(GameManager.GameMode.COOP)
 	arena = (load(StageManager.stage.screens[0]) as PackedScene).instantiate() as Arena
+	for item in arena.get_node("Items").get_children():
+		item.free()
 	t.get_tree().root.add_child(arena)
 	await t.wait_frames(10)
 	p1 = arena.players[0]

@@ -275,6 +275,9 @@ func _main_transition() -> void:
 func _load_arena(index: int) -> Arena:
 	var stage := load(STAGE) as StageData
 	var a := (load(stage.screens[index]) as PackedScene).instantiate() as Arena
+	# Sin barriles ni cajas: estas pruebas no deben depender del botín aleatorio.
+	for item in a.get_node("Items").get_children():
+		item.free()
 	t.get_tree().root.add_child(a)
 	await t.wait_frames(10)
 	return a
