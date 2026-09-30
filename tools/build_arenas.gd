@@ -193,11 +193,21 @@ func _background(title: String) -> void:
 	bg.name = "Background"
 	bg.z_index = -10
 	_add(bg, arena_root)
-	var sky := Sprite2D.new()
-	sky.name = "Island"
-	sky.texture = load(ART + "background.png")
-	sky.centered = false
-	_add(sky, bg)
+	# Fondo animado: playa fija y franja de mar que se mueve (ver AnimatedBackdrop).
+	var backdrop := Node2D.new()
+	backdrop.name = "Backdrop"
+	backdrop.set_script(load("res://scripts/arena/animated_backdrop.gd"))
+	var manifest: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(ART + "backdrop/manifest.json"))
+	backdrop.set("base", load(ART + "backdrop/" + manifest["base"]))
+	var frames: Array[Texture2D] = []
+	for f in manifest["frames"]:
+		frames.append(load(ART + "backdrop/" + f))
+	backdrop.set("frames", frames)
+	backdrop.set("sea_mask", load(ART + "backdrop/" + manifest["sea_mask"]))
+	var sb: Array = manifest["sky_bottom"]
+	backdrop.set("sky_bottom", Color(sb[0], sb[1], sb[2]))
+	backdrop.set("sky_top", Color(sb[0], sb[1], sb[2]).darkened(0.35))
+	_add(backdrop, bg)
 	var label := Label.new()
 	label.text = title
 	label.position = Vector2(WALL_W + 12, HUD_H + CEIL_H + 6)
