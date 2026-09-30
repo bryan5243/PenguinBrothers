@@ -18,6 +18,7 @@ const SOUND_LIBRARY := {
 	"jump": "res://audio/sfx/jump.wav",
 	"land": "res://audio/sfx/land.wav",
 	"slide": "res://audio/sfx/slide.wav",
+	"platform_flip": "res://audio/sfx/platform_flip.wav",
 	"bomb_place": "res://audio/sfx/bomb_place.wav",
 	"bomb_throw": "res://audio/sfx/bomb_throw.wav",
 	"bomb_kick": "res://audio/sfx/bomb_kick.wav",

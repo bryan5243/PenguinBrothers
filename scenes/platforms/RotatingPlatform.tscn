@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/platforms/rotating_platform.gd" id="1_rot"]
+[ext_resource type="Resource" path="res://data/platforms/rotating_platform.tres" id="2_data"]
+
+[node name="RotatingPlatform" type="StaticBody2D"]
+collision_layer = 32
+collision_mask = 0
+script = ExtResource("1_rot")
+data = ExtResource("2_data")
+
+[node name="Disk" type="Sprite2D" parent="."]
+
+[node name="Shape" type="CollisionShape2D" parent="."]
+one_way_collision = true
+
+[node name="RiderZone" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 26
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RiderZone"]

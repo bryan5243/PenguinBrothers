@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="RotatingPlatformData" format=3]
+
+[ext_resource type="Script" path="res://scripts/core/data/rotating_platform_data.gd" id="1_rpd"]
+[ext_resource type="Texture2D" path="res://assets/worlds/world_01/rotating_disk.png" id="2_disk"]
+
+[resource]
+script = ExtResource("1_rpd")
+texture = ExtResource("2_disk")
